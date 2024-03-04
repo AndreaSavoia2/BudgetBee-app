@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name="table_user")
+@Table(name="table_users")
 public class User {
 
     @Id
@@ -18,9 +18,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    //Foreign key
-//    @Column(name = "id_budget")
-//    private Integer id_budget;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_budget")
+    private Budget budget;
 
     public User() {
 
@@ -53,6 +53,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Budget getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
     }
 
     @Override
