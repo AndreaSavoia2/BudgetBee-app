@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User save(User user);
+    User saveUser(User user);
 
     User findUserById(Integer id);
 
