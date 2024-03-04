@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface BudgetService {
 
-    Budget save(Budget budget);
+    Budget saveBudget(Budget budget);
 
     Budget findBudgetById(Integer id);
 
-    List<Budget> findBudgetsAll();
+    List<Budget> findAllBudgets();
 
-    boolean deleteById(Integer id);
+    boolean deleteBudgetById(Integer id);
 }

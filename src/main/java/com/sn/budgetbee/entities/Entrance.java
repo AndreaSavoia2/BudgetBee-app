@@ -22,6 +22,11 @@ public class Entrance {
     @Column(name = "transaction_date")
     private Date transactionDate;
 
+    @ManyToOne(cascade ={CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="id_budget")
+    private Budget budget;
+
     public Entrance(){
 
     }
@@ -30,6 +35,14 @@ public class Entrance {
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
+    }
+
+    public Budget getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
     }
 
     public Integer getId() {
@@ -71,6 +84,7 @@ public class Entrance {
                 ", transaction=" + transaction +
                 ", description='" + description + '\'' +
                 ", transactionDate=" + transactionDate +
+                ", budget=" + budget +
                 '}';
     }
 }

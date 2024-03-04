@@ -5,11 +5,11 @@ import com.sn.budgetbee.entities.Exit;
 import java.util.List;
 
 public interface ExitService {
-    Exit save(Exit budget);
+    Exit saveExit(Exit exit);
 
-    Exit findBudgetById(Integer id);
+    Exit findExitById(Integer id);
 
-    List<Exit> findBudgetsAll();
+    List<Exit> findAllExits();
 
-    boolean deleteById(Integer id);
+    boolean deleteExitById(Integer id);
 }

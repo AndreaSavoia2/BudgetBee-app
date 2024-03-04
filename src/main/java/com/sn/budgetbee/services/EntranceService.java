@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface EntranceService {
 
-    Entrance save(Entrance budget);
+    Entrance saveEntrance(Entrance entrance);
 
-    Entrance findBudgetById(Integer id);
+    Entrance findEntranceById(Integer id);
 
-    List<Entrance> findBudgetsAll();
+    List<Entrance> findEntrancesAll();
 
-    boolean deleteById(Integer id);
+    boolean deleteEntranceById(Integer id);
 }

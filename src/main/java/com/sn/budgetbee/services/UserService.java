@@ -10,7 +10,12 @@ public interface UserService {
 
     User findUserById(Integer id);
 
-    List<User> findUsersAll();
+    List<User> findAllUsers();
 
-    boolean deleteById(Integer id);
+    boolean deleteUserById(Integer id);
+
+    boolean checkLogin(String username, String password);
+
+    boolean UsernameIsPresent(String username);
+
 }
