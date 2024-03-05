@@ -1,35 +1,48 @@
 package com.sn.budgetbee.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.sn.budgetbee.entities.Budget;
+import com.sn.budgetbee.services.BudgetService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class BudgetController implements ControllerInterface<BudgetController>{
-    @Override
-    public List<BudgetController> GetAllElements() {
-        return null;
+public class BudgetController implements ControllerInterface<Budget> {
+
+    private final BudgetService SERVICE;
+
+    public BudgetController(BudgetService service) {
+        this.SERVICE = service;
     }
 
     @Override
-    public BudgetController GetElementById(Integer id) {
-        return null;
+    @GetMapping("/budgets")
+    public List<Budget> GetAllElements() {
+        return SERVICE.findAllBudgets();
     }
 
     @Override
-    public BudgetController SetElement(BudgetController budgetController) {
-        return null;
+    @GetMapping("/budgets/{budgetId}")
+    public Budget GetElementById(@PathVariable Integer id) {
+        return SERVICE.findBudgetById(id);
     }
 
     @Override
-    public BudgetController UpdateElement(BudgetController budgetController) {
-        return null;
+    @PostMapping("/budgets")
+    public Budget SetElement(@RequestBody Budget budget) {
+        return SERVICE.saveBudget(budget);
     }
 
     @Override
-    public boolean DeleteElementById(Integer id) {
-        return false;
+    @PutMapping("/budgets")
+    public Budget UpdateElement(Budget budget) {
+        return SERVICE.saveBudget(budget);
+    }
+
+    @Override
+    @DeleteMapping("/budgets/{budgetId}")
+    public boolean DeleteElementById(@RequestParam Integer id) {
+        return SERVICE.deleteBudgetById(id);
     }
 }

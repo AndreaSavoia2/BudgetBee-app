@@ -67,14 +67,14 @@ public class UserServiceImpl implements UserService{
 
     // Metodi unici per la User Service non sono da copiare nelle altre implementazioni --------------------------------
     @Override
-    public boolean checkLogin(String username, String password) {
+    public Integer checkLogin(Integer id, String username, String password) {
         List<User> users = USER_DAO.findAll();
         for (User user: users) {
             if(user.getUsername().equals(username) && PASSWORD_ENCODER.matches(password, user.getPassword())){
-                return true;
+                return user.getId();
             }
         }
-        return false;
+        return null;
     }
 
     @Override
