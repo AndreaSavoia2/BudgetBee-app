@@ -24,7 +24,7 @@ public class BudgetController implements ControllerInterface<Budget> {
 
     @Override
     @GetMapping("/budgets/{budgetId}")
-    public Budget GetElementById(@PathVariable Integer id) {
+    public Budget GetElementById(@PathVariable("budgetId") Integer id) {
         return SERVICE.findBudgetById(id);
     }
 
@@ -36,13 +36,13 @@ public class BudgetController implements ControllerInterface<Budget> {
 
     @Override
     @PutMapping("/budgets")
-    public Budget UpdateElement(Budget budget) {
+    public Budget UpdateElement(@RequestBody Budget budget) {
         return SERVICE.saveBudget(budget);
     }
 
     @Override
     @DeleteMapping("/budgets/{budgetId}")
-    public boolean DeleteElementById(@RequestParam Integer id) {
+    public boolean DeleteElementById(@PathVariable("budgetId") Integer id) {
         return SERVICE.deleteBudgetById(id);
     }
 }

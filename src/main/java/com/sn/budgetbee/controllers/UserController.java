@@ -44,14 +44,24 @@ public class UserController implements ControllerInterface<User>/* L'interfaccia
     // Metodo che richiama il metodo presente nella service per aggiornare un elemento nella tabella
     @Override
     @PutMapping("/users")
-    public User UpdateElement(User user) {
+    public User UpdateElement(@RequestBody User user) {
         return SERVICE.saveUser(user);
     }
 
     // Metodo che richiama il metodo presente nella service per eliminare un elemento nella tabella
     @Override
     @DeleteMapping("/users/{userId}")
-    public boolean DeleteElementById(@RequestParam Integer id) {
+    public boolean DeleteElementById(@PathVariable("userId") Integer id) {
         return SERVICE.deleteUserById(id);
+    }
+
+    @GetMapping("/users/login")
+    public @ResponseBody Integer Login(@RequestParam String username, @RequestParam String password) {
+        return SERVICE.checkLogin(username, password);
+    }
+
+    @GetMapping("/users/checkusers")
+    public @ResponseBody boolean CheckUsername(@RequestParam String username) {
+        return SERVICE.UsernameIsPresent(username);
     }
 }

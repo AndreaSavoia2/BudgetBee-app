@@ -38,13 +38,13 @@ public class ExitController implements ControllerInterface<Exit>{
 
     @Override
     @PutMapping("/exits")
-    public Exit UpdateElement(Exit exit) {
+    public Exit UpdateElement(@RequestBody Exit exit) {
         return SERVICE.saveExit(exit);
     }
 
     @Override
     @DeleteMapping("/exits/{exitId}")
-    public boolean DeleteElementById(@RequestParam Integer id) {
+    public boolean DeleteElementById(@PathVariable("exitId") Integer id) {
         return SERVICE.deleteExitById(id);
     }
 }

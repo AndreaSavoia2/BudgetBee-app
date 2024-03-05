@@ -36,13 +36,13 @@ public class EntranceController implements  ControllerInterface<Entrance>{
 
     @Override
     @PutMapping("/entrances")
-    public Entrance UpdateElement(Entrance entrance) {
+    public Entrance UpdateElement(@RequestBody Entrance entrance) {
         return SERVICE.saveEntrance(entrance);
     }
 
     @Override
     @DeleteMapping("/entrances/{entranceId}")
-    public boolean DeleteElementById(@RequestParam Integer id) {
+    public boolean DeleteElementById(@PathVariable("entranceId") Integer id) {
         return SERVICE.deleteEntranceById(id);
     }
 }
