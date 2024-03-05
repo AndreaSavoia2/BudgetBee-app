@@ -16,6 +16,12 @@ public class Budget {
     @Column(name = "budget")
     private Double budget;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "budget")
+    private List<Exit> exits;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "budget")
+    private List<Entrance> entrances;
+
     public Budget() {
 
     }
