@@ -24,7 +24,7 @@ public class ExitController implements ControllerInterface<Exit>{
     }
 
     @Override
-    @GetMapping("/exits{exitId}")
+    @GetMapping("/exits/{exitId}")
     public Exit GetElementById(@PathVariable("exitId")Integer id) {
         return SERVICE.findExitById(id);
     }

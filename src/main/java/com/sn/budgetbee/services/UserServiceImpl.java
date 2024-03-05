@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean UsernameIsPresent(String username) {
         User user = USER_DAO.findUserByName(username);
-        return user == null;
+        return user != null;
     }
 
 }
