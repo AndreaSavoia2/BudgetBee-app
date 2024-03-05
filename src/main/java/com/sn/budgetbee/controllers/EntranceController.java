@@ -31,6 +31,7 @@ public class EntranceController implements  ControllerInterface<Entrance>{
     @Override
     @PostMapping("/entrances")
     public Entrance SetElement(@RequestBody Entrance entrance) {
+        entrance.setId(0);
         return SERVICE.saveEntrance(entrance);
     }
 

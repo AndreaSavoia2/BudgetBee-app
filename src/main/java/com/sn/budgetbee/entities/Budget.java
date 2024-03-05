@@ -22,6 +22,9 @@ public class Budget {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "budget")
     private List<Entrance> entrances;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "budget")
+    private User user;
+
     public Budget() {
 
     }

@@ -31,6 +31,7 @@ public class BudgetController implements ControllerInterface<Budget> {
     @Override
     @PostMapping("/budgets")
     public Budget SetElement(@RequestBody Budget budget) {
+        budget.setId(0);
         return SERVICE.saveBudget(budget);
     }
 
