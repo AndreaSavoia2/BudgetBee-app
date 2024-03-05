@@ -6,33 +6,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class EntranceServiceImpl implements EntranceService{
 
-    private EntranceDAO entranceDAO;
+    private final EntranceDAO ENTRANCE_DAO;
 
     @Autowired
     public EntranceServiceImpl(EntranceDAO entranceDAO) {
-        this.entranceDAO = entranceDAO;
+        this.ENTRANCE_DAO = entranceDAO;
     }
 
     @Override
     public Entrance saveEntrance(Entrance entrance) {
-        return null;
+        return ENTRANCE_DAO.save(entrance);
     }
 
     @Override
     public Entrance findEntranceById(Integer id) {
-        return null;
+        Optional<Entrance> result = ENTRANCE_DAO.findById(id);
+        Entrance entrance = null;
+
+        if(result.isPresent()){
+            entrance = result.get();
+        }else{
+            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+        }
+
+        return entrance;
     }
 
     @Override
     public List<Entrance> findEntrancesAll() {
-        return null;
+        return ENTRANCE_DAO.findAll();
     }
 
     @Override
     public boolean deleteEntranceById(Integer id) {
-        return false;
+        Optional<Entrance> result = ENTRANCE_DAO.findById(id);
+
+        if(result.isPresent()){
+            ENTRANCE_DAO.deleteById(id);
+            return true;
+        }else{
+            throw new RuntimeException("NO ID USER FOUND ERROR: :" + id);
+        }
     }
 }
