@@ -13,4 +13,6 @@ public interface BudgetService {
     List<Budget> findAllBudgets();
 
     boolean deleteBudgetById(Integer id);
+
+    Budget movementOnBudget(Integer id,Double movement);
 }

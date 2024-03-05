@@ -18,32 +18,32 @@ public class EntranceController implements  ControllerInterface<Entrance>{
 
     @Override
     @GetMapping("/entrances")
-    public List<Entrance> GetAllElements() {
+    public List<Entrance> getAllElements() {
         return SERVICE.findEntrancesAll();
     }
 
     @Override
     @GetMapping("/entrances/{entranceId}")
-    public Entrance GetElementById(@PathVariable("entranceId") Integer id) {
+    public Entrance getElementById(@PathVariable("entranceId") Integer id) {
         return SERVICE.findEntranceById(id);
     }
 
     @Override
     @PostMapping("/entrances")
-    public Entrance SetElement(@RequestBody Entrance entrance) {
+    public Entrance setElement(@RequestBody Entrance entrance) {
         entrance.setId(0);
         return SERVICE.saveEntrance(entrance);
     }
 
     @Override
     @PutMapping("/entrances")
-    public Entrance UpdateElement(@RequestBody Entrance entrance) {
+    public Entrance updateElement(@RequestBody Entrance entrance) {
         return SERVICE.saveEntrance(entrance);
     }
 
     @Override
     @DeleteMapping("/entrances/{entranceId}")
-    public boolean DeleteElementById(@PathVariable("entranceId") Integer id) {
+    public boolean deleteElementById(@PathVariable("entranceId") Integer id) {
         return SERVICE.deleteEntranceById(id);
     }
 }

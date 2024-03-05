@@ -18,32 +18,37 @@ public class BudgetController implements ControllerInterface<Budget> {
 
     @Override
     @GetMapping("/budgets")
-    public List<Budget> GetAllElements() {
+    public List<Budget> getAllElements() {
         return SERVICE.findAllBudgets();
     }
 
     @Override
     @GetMapping("/budgets/{budgetId}")
-    public Budget GetElementById(@PathVariable("budgetId") Integer id) {
+    public Budget getElementById(@PathVariable("budgetId") Integer id) {
         return SERVICE.findBudgetById(id);
     }
 
     @Override
     @PostMapping("/budgets")
-    public Budget SetElement(@RequestBody Budget budget) {
+    public Budget setElement(@RequestBody Budget budget) {
         budget.setId(0);
         return SERVICE.saveBudget(budget);
     }
 
     @Override
     @PutMapping("/budgets")
-    public Budget UpdateElement(@RequestBody Budget budget) {
+    public Budget updateElement(@RequestBody Budget budget) {
         return SERVICE.saveBudget(budget);
     }
 
     @Override
     @DeleteMapping("/budgets/{budgetId}")
-    public boolean DeleteElementById(@PathVariable("budgetId") Integer id) {
+    public boolean deleteElementById(@PathVariable("budgetId") Integer id) {
         return SERVICE.deleteBudgetById(id);
+    }
+
+    @PutMapping("/budgets/calculate")
+    public @ResponseBody Budget calcolateBudget(@RequestParam Integer id, @RequestParam Double movement){
+        return SERVICE.movementOnBudget(id,movement);
     }
 }

@@ -1,17 +1,15 @@
 package com.sn.budgetbee.controllers;
 
-import com.sn.budgetbee.entities.User;
-
 import java.util.List;
 
 public interface ControllerInterface<T> {
 
-    List<T> GetAllElements();
-    T GetElementById(Integer id);
+    List<T> getAllElements();
+    T getElementById(Integer id);
 
-    T SetElement(T t);
+    T setElement(T t);
 
-    T UpdateElement(T t);
+    T updateElement(T t);
 
-    boolean DeleteElementById(Integer id);
+    boolean deleteElementById(Integer id);
 }

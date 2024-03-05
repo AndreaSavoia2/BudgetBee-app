@@ -22,21 +22,21 @@ public class UserController implements ControllerInterface<User>/* L'interfaccia
     // Metodo che richiama il metodo presente nella service per restituite la lista completa della tabella
     @Override
     @GetMapping("/users") // l'indirizzo per accedere alla lista (es: host/api/users)
-    public List<User> GetAllElements() {
+    public List<User> getAllElements() {
         return SERVICE.findAllUsers();
     }
 
     // Metodo che richiama il metodo presente nella service per restituite l'elemento corrispondente all'id
     @Override
     @GetMapping("/users/{userId}") // l'indirizzo per accedere alla lista dove UserId corrisponde all'id nel parametro id (es: host/api/users/2)
-    public User GetElementById(@PathVariable("userId") Integer id) {
+    public User getElementById(@PathVariable("userId") Integer id) {
         return SERVICE.findUserById(id);
     }
 
     // Metodo che richiama il metodo presente nella service per salvare un nuovo elemento nella tabella
     @Override
     @PostMapping("/users")
-    public User SetElement(@RequestBody User user) {
+    public User setElement(@RequestBody User user) {
         user.setId(0); // si imposta l'id a 0 per far capire al db che si tratta di un utente non esistente
         return SERVICE.saveUser(user);
     }
@@ -44,24 +44,24 @@ public class UserController implements ControllerInterface<User>/* L'interfaccia
     // Metodo che richiama il metodo presente nella service per aggiornare un elemento nella tabella
     @Override
     @PutMapping("/users")
-    public User UpdateElement(@RequestBody User user) {
+    public User updateElement(@RequestBody User user) {
         return SERVICE.saveUser(user);
     }
 
     // Metodo che richiama il metodo presente nella service per eliminare un elemento nella tabella
     @Override
     @DeleteMapping("/users/{userId}")
-    public boolean DeleteElementById(@PathVariable("userId") Integer id) {
+    public boolean deleteElementById(@PathVariable("userId") Integer id) {
         return SERVICE.deleteUserById(id);
     }
 
     @GetMapping("/users/login")
-    public @ResponseBody Integer Login(@RequestParam String username, @RequestParam String password) {
+    public @ResponseBody Integer login(@RequestParam String username, @RequestParam String password) {
         return SERVICE.checkLogin(username, password);
     }
 
     @GetMapping("/users/checkusers")
-    public @ResponseBody boolean CheckUsername(@RequestParam String username) {
+    public @ResponseBody boolean checkUsername(@RequestParam String username) {
         return SERVICE.UsernameIsPresent(username);
     }
 }

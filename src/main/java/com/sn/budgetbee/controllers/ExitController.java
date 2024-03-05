@@ -18,33 +18,33 @@ public class ExitController implements ControllerInterface<Exit>{
 
     @Override
     @GetMapping("/exits")
-    public List<Exit> GetAllElements() {
+    public List<Exit> getAllElements() {
 
         return SERVICE.findAllExits();
     }
 
     @Override
     @GetMapping("/exits/{exitId}")
-    public Exit GetElementById(@PathVariable("exitId")Integer id) {
+    public Exit getElementById(@PathVariable("exitId")Integer id) {
         return SERVICE.findExitById(id);
     }
 
     @Override
     @PostMapping("/exits")
-    public Exit SetElement(@RequestBody Exit exit) {
+    public Exit setElement(@RequestBody Exit exit) {
         exit.setId(0);
         return SERVICE.saveExit(exit);
     }
 
     @Override
     @PutMapping("/exits")
-    public Exit UpdateElement(@RequestBody Exit exit) {
+    public Exit updateElement(@RequestBody Exit exit) {
         return SERVICE.saveExit(exit);
     }
 
     @Override
     @DeleteMapping("/exits/{exitId}")
-    public boolean DeleteElementById(@PathVariable("exitId") Integer id) {
+    public boolean deleteElementById(@PathVariable("exitId") Integer id) {
         return SERVICE.deleteExitById(id);
     }
 }
