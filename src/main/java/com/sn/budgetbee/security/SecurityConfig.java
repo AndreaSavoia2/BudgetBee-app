@@ -23,11 +23,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests( configurer ->
                 configurer
-                        .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/**/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/**/**").hasRole("ADMIN")
         );
 
         http.httpBasic(Customizer.withDefaults());
