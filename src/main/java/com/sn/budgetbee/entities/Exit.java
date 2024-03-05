@@ -20,7 +20,7 @@ public class Exit {
     private String description;
 
     @Column(name = "transaction_date")
-    private Date transactionDate;
+    private String transactionDate;
 
     @ManyToOne(cascade ={CascadeType.DETACH, CascadeType.MERGE,
                         CascadeType.PERSIST, CascadeType.REFRESH})
@@ -31,7 +31,7 @@ public class Exit {
 
     }
 
-    public Exit(Double transaction, String description, Date transactionDate) {
+    public Exit(Double transaction, String description, String transactionDate) {
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
@@ -69,11 +69,11 @@ public class Exit {
         this.description = description;
     }
 
-    public Date getTransactionDate() {
+    public String getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
     }
 

@@ -26,9 +26,15 @@ public class UserServiceImpl implements UserService{
     // Metodo per salvare o modificare un utente già esistente
     @Override
     public User saveUser(User user) {
-        String encodePassword = this.PASSWORD_ENCODER.encode(user.getPassword()); //necessario alla crypto non copiare nelle altre Implementazioni
-        user.setPassword(encodePassword); //necessario alla crypto non copiare nelle altre Implementazioni
-        return USER_DAO.save(user);
+
+        if(this.UsernameIsPresent(user.getUsername())){
+            String encodePassword = this.PASSWORD_ENCODER.encode(user.getPassword()); //necessario alla crypto non copiare nelle altre Implementazioni
+            user.setPassword(encodePassword); //necessario alla crypto non copiare nelle altre Implementazioni
+            return USER_DAO.save(user);
+        }else{
+            throw new RuntimeException("ERROR USERNAME GIA PRESENTE NEL DATABASE");
+        }
+
     }
 
     // Metodo che restituisce un elemento in base al suo id
