@@ -1,5 +1,6 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.User;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface UserService {
     User findUserById(Integer id);
 
     List<User> findAllUsers();
+
+    List<UserDTO> findAllUsers2();
 
     boolean deleteUserById(Integer id);
 

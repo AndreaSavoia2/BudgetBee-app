@@ -1,5 +1,6 @@
 package com.sn.budgetbee.controllers;
 
+import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.User;
 import com.sn.budgetbee.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class UserController implements ControllerInterface<User>/* L'interfaccia
     @GetMapping("/users") // l'indirizzo per accedere alla lista (es: host/api/users)
     public List<User> getAllElements() {
         return SERVICE.findAllUsers();
+    }
+
+    @GetMapping("/users2") // l'indirizzo per accedere alla lista (es: host/api/users)
+    public List<UserDTO> getAllElements2() {
+        return SERVICE.findAllUsers2();
     }
 
     // Metodo che richiama il metodo presente nella service per restituite l'elemento corrispondente all'id

@@ -1,5 +1,6 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.User;
 import com.sn.budgetbee.repos.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +58,19 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> findAllUsers() {
         return USER_DAO.findAll();
+    }
+
+    @Override
+    public List<UserDTO> findAllUsers2() {
+
+        List<User> users = USER_DAO.findAll();
+        List<UserDTO> usersDto = new ArrayList<>();
+
+        for (User user: users){
+            usersDto.add(new UserDTO(user.getId(),user.getUsername()));
+        }
+
+        return usersDto;
     }
 
     // Metodo che elimina un entità dalla tabella in base al suo id
