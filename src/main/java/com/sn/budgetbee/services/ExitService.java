@@ -14,4 +14,8 @@ public interface ExitService {
     boolean deleteExitById(Integer id);
 
     List<Exit> exitListByIdBudget(Integer id);
+
+    List<Exit> exitListByCategoryAndMonth(Integer id, String month);
+
+    List<Exit> exitListByCategoryAndYear(Integer id, String year);
 }

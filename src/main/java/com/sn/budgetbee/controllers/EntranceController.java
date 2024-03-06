@@ -31,6 +31,16 @@ public class EntranceController implements  ControllerInterface<Entrance>{
     @GetMapping("/entrances/{budgetId}")
     public List<Entrance> getElementByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
 
+    @GetMapping("/entrances/{budgetId}/{month}")
+    public List<Entrance> getElementByBudgetIdAndMonth(@PathVariable("budgetId") Integer id, @PathVariable("month") String month) {
+        return SERVICE.entranceListByCategoryAndMonth(id, month);
+    }
+
+    @GetMapping("/entrances/{budgetId}/{year}")
+    public List<Entrance> getElementByBudgetIdAndYear(@PathVariable("budgetId") Integer id, @PathVariable("year") String year) {
+        return SERVICE.entranceListByCategoryAndYear(id, year);
+    }
+
     @Override
     @PostMapping("/entrances")
     public Entrance setElement(@RequestBody Entrance entrance) {

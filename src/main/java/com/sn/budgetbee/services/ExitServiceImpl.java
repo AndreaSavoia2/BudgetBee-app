@@ -57,4 +57,14 @@ public class ExitServiceImpl implements ExitService{
     public List<Exit> exitListByIdBudget(Integer id) {
         return EXIT_DAO.findExitsByBudgetId(id);
     }
+
+    @Override
+    public List<Exit> exitListByCategoryAndMonth(Integer id, String month) {
+        return EXIT_DAO.findTotalExitByCategoryAndMonth(id, month);
+    }
+
+    @Override
+    public List<Exit> exitListByCategoryAndYear(Integer id, String year) {
+        return EXIT_DAO.findTotalExitByCategoryAndYear(id, year);
+    }
 }

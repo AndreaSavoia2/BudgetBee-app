@@ -15,4 +15,8 @@ public interface EntranceService {
     boolean deleteEntranceById(Integer id);
 
     List<Entrance> entranceListByIdBudget(Integer id);
+
+    List<Entrance> entranceListByCategoryAndMonth(Integer id, String month);
+
+    List<Entrance> entranceListByCategoryAndYear(Integer id, String year);
 }

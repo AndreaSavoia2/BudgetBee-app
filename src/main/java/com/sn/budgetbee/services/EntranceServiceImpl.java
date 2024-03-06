@@ -58,4 +58,15 @@ public class EntranceServiceImpl implements EntranceService{
     public List<Entrance> entranceListByIdBudget(Integer id) {
         return ENTRANCE_DAO.findEntranceByBudgetId(id);
     }
+
+    @Override
+    public List<Entrance> entranceListByCategoryAndMonth(Integer id, String month) {
+        return ENTRANCE_DAO.findTotalEntranceByCategoryAndMonth(id, month);
+    }
+
+    @Override
+    public List<Entrance> entranceListByCategoryAndYear(Integer id, String year) {
+        return ENTRANCE_DAO.findTotalEntranceByCategoryAndYear(id, year);
+    }
+
 }

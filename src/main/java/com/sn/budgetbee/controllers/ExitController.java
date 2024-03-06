@@ -30,7 +30,18 @@ public class ExitController implements ControllerInterface<Exit>{
     }
 
     @GetMapping("/exits/{budgetId}")
-    public List<Exit> getElemenByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
+    public List<Exit> getElementByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
+
+    @GetMapping("/exits/{budgetId}/{month}")
+    public List<Exit> getElementByCategoryAndMonth(@PathVariable("budgetId") Integer id, @PathVariable("month") String month) {
+        return SERVICE.exitListByCategoryAndMonth(id, month);
+    }
+
+    @GetMapping("/exits/{budgetId}/{year}")
+    public List<Exit> getElementByCategoryAndYear(@PathVariable("budgetId") Integer id, @PathVariable("year") String year) {
+        return SERVICE.exitListByCategoryAndYear(id, year);
+    }
+
 
     @Override
     @PostMapping("/exits")
