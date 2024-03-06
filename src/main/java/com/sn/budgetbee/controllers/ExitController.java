@@ -1,5 +1,6 @@
 package com.sn.budgetbee.controllers;
 
+import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.services.ExitService;
 import org.springframework.web.bind.annotation.*;
@@ -32,16 +33,15 @@ public class ExitController implements ControllerInterface<Exit>{
     @GetMapping("/exits/{budgetId}")
     public List<Exit> getElementByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
 
-    @GetMapping("/exits/{budgetId}/{month}")
-    public List<Exit> getElementByCategoryAndMonth(@PathVariable("budgetId") Integer id, @PathVariable("month") String month) {
-        return SERVICE.exitListByCategoryAndMonth(id, month);
+    @GetMapping("/exits/filter/month")
+    public @ResponseBody List<Exit> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
+        return SERVICE.exitListByCategoryAndYear(id, month);
     }
 
-    @GetMapping("/exits/{budgetId}/{year}")
-    public List<Exit> getElementByCategoryAndYear(@PathVariable("budgetId") Integer id, @PathVariable("year") String year) {
+    @GetMapping("/exits/filter/year")
+    public @ResponseBody List<Exit> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.exitListByCategoryAndYear(id, year);
     }
-
 
     @Override
     @PostMapping("/exits")

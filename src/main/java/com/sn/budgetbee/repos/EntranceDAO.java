@@ -17,7 +17,7 @@ public interface EntranceDAO extends JpaRepository<Entrance, Integer> {
             "FROM Entrance e " +
             "RIGHT JOIN e.budget b " +
             "WHERE b.id = :budgetId " +
-            "AND DATE_FORMAT(e.transactionDate, '%m') = :month GROUP BY e.category")
+            "AND DATE_FORMAT(e.transactionDate, '%Y/%m') = :month GROUP BY e.category")
     List<Entrance> findTotalEntranceByCategoryAndMonth(@Param("budgetId") Integer budgetId, @Param("month") String month);
 
     @Query("SELECT SUM(e.transaction) as total, e.category " +

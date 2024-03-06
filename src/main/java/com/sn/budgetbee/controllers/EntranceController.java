@@ -31,13 +31,13 @@ public class EntranceController implements  ControllerInterface<Entrance>{
     @GetMapping("/entrances/{budgetId}")
     public List<Entrance> getElementByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
 
-    @GetMapping("/entrances/{budgetId}/{month}")
-    public List<Entrance> getElementByBudgetIdAndMonth(@PathVariable("budgetId") Integer id, @PathVariable("month") String month) {
+    @GetMapping("/entrances/filter/month")
+    public @ResponseBody List<Entrance> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
         return SERVICE.entranceListByCategoryAndMonth(id, month);
     }
 
-    @GetMapping("/entrances/{budgetId}/{year}")
-    public List<Entrance> getElementByBudgetIdAndYear(@PathVariable("budgetId") Integer id, @PathVariable("year") String year) {
+    @GetMapping("/entrances/filter/year")
+    public @ResponseBody List<Entrance> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.entranceListByCategoryAndYear(id, year);
     }
 

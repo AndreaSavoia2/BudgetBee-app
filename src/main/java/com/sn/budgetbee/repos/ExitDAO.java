@@ -16,7 +16,7 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "FROM Exit x " +
             "RIGHT JOIN x.budget b " +
             "WHERE b.id = :budgetId " +
-            "AND DATE_FORMAT(x.transactionDate, '%m') = :month GROUP BY x.category")
+            "AND DATE_FORMAT(x.transactionDate, '%Y/%m') = :month GROUP BY x.category")
     List<Exit> findTotalExitByCategoryAndMonth(@Param("budgetId") Integer budgetId, @Param("month") String month);
 
     @Query("SELECT SUM(x.transaction) as totale, x.category " +
