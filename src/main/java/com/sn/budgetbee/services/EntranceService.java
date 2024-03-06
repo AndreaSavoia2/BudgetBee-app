@@ -13,4 +13,6 @@ public interface EntranceService {
     List<Entrance> findEntrancesAll();
 
     boolean deleteEntranceById(Integer id);
+
+    List<Entrance> entranceListByIdBudget(Integer id);
 }

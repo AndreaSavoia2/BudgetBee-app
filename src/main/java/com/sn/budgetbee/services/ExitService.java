@@ -12,4 +12,6 @@ public interface ExitService {
     List<Exit> findAllExits();
 
     boolean deleteExitById(Integer id);
+
+    List<Exit> exitListByIdBudget(Integer id);
 }

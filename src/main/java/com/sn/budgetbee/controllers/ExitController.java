@@ -29,6 +29,9 @@ public class ExitController implements ControllerInterface<Exit>{
         return SERVICE.findExitById(id);
     }
 
+    @GetMapping("/exits/{budgetId}")
+    public List<Exit> getElemenByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
+
     @Override
     @PostMapping("/exits")
     public Exit setElement(@RequestBody Exit exit) {

@@ -53,4 +53,9 @@ public class EntranceServiceImpl implements EntranceService{
             throw new RuntimeException("NO ID USER FOUND ERROR: :" + id);
         }
     }
+
+    @Override
+    public List<Entrance> entranceListByIdBudget(Integer id) {
+        return ENTRANCE_DAO.findEntranceByBudgetId(id);
+    }
 }

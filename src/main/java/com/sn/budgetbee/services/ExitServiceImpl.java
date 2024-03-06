@@ -52,4 +52,9 @@ public class ExitServiceImpl implements ExitService{
             throw new RuntimeException("NO ID USER FOUND ERROR: :" + id);
         }
     }
+
+    @Override
+    public List<Exit> exitListByIdBudget(Integer id) {
+        return EXIT_DAO.findExitsByBudgetId(id);
+    }
 }

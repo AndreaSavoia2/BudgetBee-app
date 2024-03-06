@@ -28,6 +28,9 @@ public class EntranceController implements  ControllerInterface<Entrance>{
         return SERVICE.findEntranceById(id);
     }
 
+    @GetMapping("/entrances/{budgetId}")
+    public List<Entrance> getElementByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
+
     @Override
     @PostMapping("/entrances")
     public Entrance setElement(@RequestBody Entrance entrance) {
