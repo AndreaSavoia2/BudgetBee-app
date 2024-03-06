@@ -8,7 +8,6 @@ public enum ExitCategories {
     ABBONAMENTI,
     CARBURANTE,
     VIAGGI,
-    RISTORANTE,
     ISTRUZIONE,
     ABBIGLIAMENTO,
     HOBBY,
