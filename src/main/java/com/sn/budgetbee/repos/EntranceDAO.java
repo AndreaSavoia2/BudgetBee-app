@@ -39,5 +39,5 @@ public interface EntranceDAO extends JpaRepository<Entrance, Integer> {
             "RIGHT JOIN e.budget b " +
             "WHERE b.id = :budgetId " +
             "AND DATE_FORMAT(e.transactionDate, '%Y') = :year GROUP BY e.category")
-    Integer findTotalEntraceByYear(@Param("budgetId") Integer budgetId, @Param("month") String year);
+    Integer findTotalEntraceByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
 }
