@@ -3,7 +3,7 @@ package com.sn.budgetbee.utils;
 public enum ExitCategories {
     BONIFICO,
     SPESA,
-    BOLETTE,
+    BOLLETTE,
     ASSICURAZIONI,
     ABBONAMENTI,
     CARBURANTE,
