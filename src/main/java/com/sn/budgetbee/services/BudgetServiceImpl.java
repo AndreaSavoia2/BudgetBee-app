@@ -57,9 +57,9 @@ public class BudgetServiceImpl implements BudgetService{
     @Override
     public Budget movementOnBudget(Integer id,Double movement) {
         Budget budget = this.findBudgetById(id);
-        double operascion = budget.getBudget();
-        operascion += movement;
-        budget.setBudget(operascion);
+        double operation = budget.getBudget();
+        operation += movement;
+        budget.setBudget(operation);
         return this.saveBudget(budget);
     }
 
