@@ -25,6 +25,7 @@ public class SecurityConfig {
                 configurer
                         .requestMatchers(HttpMethod.GET, "/api/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/**/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/**/**/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/**/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/**/**").hasRole("ADMIN")

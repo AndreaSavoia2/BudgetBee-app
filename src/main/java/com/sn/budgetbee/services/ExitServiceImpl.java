@@ -1,5 +1,6 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.repos.ExitDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +60,12 @@ public class ExitServiceImpl implements ExitService{
     }
 
     @Override
-    public List<Exit> exitListByCategoryAndMonth(Integer id, String month) {
+    public List<FilterExitDTO> exitListByCategoryAndMonth(Integer id, String month) {
         return EXIT_DAO.findTotalExitByCategoryAndMonth(id, month);
     }
 
     @Override
-    public List<Exit> exitListByCategoryAndYear(Integer id, String year) {
+    public List<FilterExitDTO> exitListByCategoryAndYear(Integer id, String year) {
         return EXIT_DAO.findTotalExitByCategoryAndYear(id, year);
     }
 }

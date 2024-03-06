@@ -1,5 +1,6 @@
 package com.sn.budgetbee.controllers;
 
+import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.services.ExitService;
@@ -34,12 +35,12 @@ public class ExitController implements ControllerInterface<Exit>{
     public List<Exit> getElementByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
 
     @GetMapping("/exits/filter/month")
-    public @ResponseBody List<Exit> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
-        return SERVICE.exitListByCategoryAndYear(id, month);
+    public @ResponseBody List<FilterExitDTO> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
+        return SERVICE.exitListByCategoryAndMonth(id, month);
     }
 
     @GetMapping("/exits/filter/year")
-    public @ResponseBody List<Exit> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
+    public @ResponseBody List<FilterExitDTO> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.exitListByCategoryAndYear(id, year);
     }
 

@@ -25,6 +25,7 @@ public class Entrance {
     private String transactionDate;
 
     @Column(name="category")
+    @Enumerated(EnumType.STRING)
     private EntranceCategories category;
 
     @ManyToOne(cascade ={CascadeType.DETACH, CascadeType.MERGE,
@@ -36,10 +37,11 @@ public class Entrance {
 
     }
 
-    public Entrance(Double transaction, String description, String transactionDate){
+    public Entrance(Double transaction, String description, String transactionDate, EntranceCategories category) {
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
+        this.category = category;
     }
 
     public EntranceCategories getCategory() {
