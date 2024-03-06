@@ -44,6 +44,12 @@ public class ExitController implements ControllerInterface<Exit>{
         return SERVICE.exitListByCategoryAndYear(id, year);
     }
 
+    @GetMapping("/exits/total/month")
+    public @ResponseBody Integer getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.exitByMonth(id, month); }
+
+    @GetMapping("/exits/total/year")
+    public @ResponseBody Integer getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.exitByYear(id, year); }
+
     @Override
     @PostMapping("/exits")
     public Exit setElement(@RequestBody Exit exit) {

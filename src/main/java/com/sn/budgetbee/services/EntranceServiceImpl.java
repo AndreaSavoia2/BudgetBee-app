@@ -1,5 +1,6 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.FilterEntranceDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.repos.EntranceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,13 +61,23 @@ public class EntranceServiceImpl implements EntranceService{
     }
 
     @Override
-    public List<Entrance> entranceListByCategoryAndMonth(Integer id, String month) {
+    public List<FilterEntranceDTO> entranceListByCategoryAndMonth(Integer id, String month) {
         return ENTRANCE_DAO.findTotalEntranceByCategoryAndMonth(id, month);
     }
 
     @Override
-    public List<Entrance> entranceListByCategoryAndYear(Integer id, String year) {
+    public List<FilterEntranceDTO> entranceListByCategoryAndYear(Integer id, String year) {
         return ENTRANCE_DAO.findTotalEntranceByCategoryAndYear(id, year);
+    }
+
+    @Override
+    public Integer entraceByMonth(Integer id, String month) {
+        return ENTRANCE_DAO.findTotalEntraceByMonth(id, month);
+    }
+
+    @Override
+    public Integer entraceByYear(Integer id, String year) {
+        return ENTRANCE_DAO.findTotalEntraceByYear(id, year);
     }
 
 }

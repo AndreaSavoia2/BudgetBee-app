@@ -1,5 +1,6 @@
 package com.sn.budgetbee.controllers;
 
+import com.sn.budgetbee.dto.FilterEntranceDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.services.EntranceService;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +33,20 @@ public class EntranceController implements  ControllerInterface<Entrance>{
     public List<Entrance> getElementByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
 
     @GetMapping("/entrances/filter/month")
-    public @ResponseBody List<Entrance> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
+    public @ResponseBody List<FilterEntranceDTO> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
         return SERVICE.entranceListByCategoryAndMonth(id, month);
     }
 
     @GetMapping("/entrances/filter/year")
-    public @ResponseBody List<Entrance> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
+    public @ResponseBody List<FilterEntranceDTO> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.entranceListByCategoryAndYear(id, year);
     }
+
+    @GetMapping("/entrances/total/month")
+    public @ResponseBody Integer getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.entraceByMonth(id, month); }
+
+    @GetMapping("/entrances/total/year")
+    public @ResponseBody Integer getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.entraceByYear(id, year); }
 
     @Override
     @PostMapping("/entrances")
