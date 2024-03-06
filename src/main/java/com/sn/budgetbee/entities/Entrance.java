@@ -1,5 +1,7 @@
 package com.sn.budgetbee.entities;
 
+import com.sn.budgetbee.utils.EntranceCategories;
+import com.sn.budgetbee.utils.ExitCategories;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -22,6 +24,9 @@ public class Entrance {
     @Column(name = "transaction_date")
     private String transactionDate;
 
+    @Column(name="category")
+    private EntranceCategories category;
+
     @ManyToOne(cascade ={CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name="id_budget")
@@ -35,6 +40,14 @@ public class Entrance {
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
+    }
+
+    public EntranceCategories getCategory() {
+        return category;
+    }
+
+    public void setCategory(EntranceCategories category) {
+        this.category = category;
     }
 
     public Budget getBudget() {
