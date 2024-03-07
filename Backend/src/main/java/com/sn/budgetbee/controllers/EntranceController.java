@@ -56,10 +56,10 @@ public class EntranceController implements  ControllerInterface<Entrance> , Cont
     }
 
     @GetMapping("/entrances/total/month")
-    public @ResponseBody Integer getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.entraceByMonth(id, month); }
+    public @ResponseBody Double getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.entraceByMonth(id, month); }
 
     @GetMapping("/entrances/total/year")
-    public @ResponseBody Integer getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.entraceByYear(id, year); }
+    public @ResponseBody Double getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.entraceByYear(id, year); }
 
     @Override
     @PostMapping("/entrances")

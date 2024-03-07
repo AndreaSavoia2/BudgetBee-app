@@ -27,7 +27,7 @@ public interface EntranceService {
 
     List<FilterEntranceDTO> entranceListByCategoryAndYear(Integer id, String year);
 
-    Integer entraceByMonth(Integer id, String month);
+    Double entraceByMonth(Integer id, String month);
 
-    Integer entraceByYear(Integer id, String year);
+    Double entraceByYear(Integer id, String year);
 }

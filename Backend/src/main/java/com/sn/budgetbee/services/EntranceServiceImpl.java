@@ -110,12 +110,12 @@ public class EntranceServiceImpl implements EntranceService{
     }
 
     @Override
-    public Integer entraceByMonth(Integer id, String month) {
+    public Double entraceByMonth(Integer id, String month) {
         return ENTRANCE_DAO.findTotalEntraceByMonth(id, month);
     }
 
     @Override
-    public Integer entraceByYear(Integer id, String year) {
+    public Double entraceByYear(Integer id, String year) {
         return ENTRANCE_DAO.findTotalEntraceByYear(id, year);
     }
 

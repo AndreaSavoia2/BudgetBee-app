@@ -31,14 +31,14 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "FROM Exit x " +
             "RIGHT JOIN x.budget b " +
             "WHERE b.id = :budgetId " +
-            "AND DATE_FORMAT(x.transactionDate, '%Y/%m') = :month GROUP BY x.category")
-    Integer findTotalExitByMonth(@Param("budgetId") Integer budgetId, @Param("month") String month);
+            "AND DATE_FORMAT(x.transactionDate, '%Y/%m') = :month ")
+    Double findTotalExitByMonth(@Param("budgetId") Integer budgetId, @Param("month") String month);
 
     @Query("SELECT SUM(x.transaction) " +
             "FROM Exit x " +
             "RIGHT JOIN x.budget b " +
             "WHERE b.id = :budgetId " +
-            "AND DATE_FORMAT(x.transactionDate, '%Y') = :year GROUP BY x.category")
-    Integer findTotalExitByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
+            "AND DATE_FORMAT(x.transactionDate, '%Y') = :year ")
+    Double findTotalExitByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
 
 }

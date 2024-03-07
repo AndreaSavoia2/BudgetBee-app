@@ -25,7 +25,7 @@ public interface ExitService {
 
     List<FilterExitDTO> exitListByCategoryAndYear(Integer id, String year);
 
-    Integer exitByMonth(Integer id, String month);
+    Double exitByMonth(Integer id, String month);
 
-    Integer exitByYear(Integer id, String year);
+    Double exitByYear(Integer id, String year);
 }

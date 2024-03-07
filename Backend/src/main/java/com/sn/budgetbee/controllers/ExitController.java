@@ -58,10 +58,10 @@ public class ExitController implements ControllerInterface<Exit> , ControlletDto
     }
 
     @GetMapping("/exits/total/month")
-    public @ResponseBody Integer getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.exitByMonth(id, month); }
+    public @ResponseBody  Double getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.exitByMonth(id, month); }
 
     @GetMapping("/exits/total/year")
-    public @ResponseBody Integer getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.exitByYear(id, year); }
+    public @ResponseBody  Double getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.exitByYear(id, year); }
 
     @Override
     @PostMapping("/exits")
