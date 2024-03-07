@@ -54,6 +54,22 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    @Override
+    public UserDTO findUserById2(Integer id) {
+        Optional<User> result = USER_DAO.findById(id);
+        User user = null;
+        UserDTO userDTO = null;
+
+        if(result.isPresent()){
+            user = result.get();
+            userDTO = new UserDTO(user.getId(),user.getUsername());
+        }else{
+            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+        }
+
+        return userDTO;
+    }
+
     // Metodo che restituisce la lista completa degli elementi della tabella
     @Override
     public List<User> findAllUsers() {

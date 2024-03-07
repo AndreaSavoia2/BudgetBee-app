@@ -1,5 +1,6 @@
 package com.sn.budgetbee.controllers;
 
+import com.sn.budgetbee.dto.EntranceDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.services.EntranceService;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class EntranceController implements  ControllerInterface<Entrance>{
+public class EntranceController implements  ControllerInterface<Entrance> , ControlletDtoInterface<EntranceDTO> {
 
     private final EntranceService SERVICE;
 
@@ -29,8 +30,20 @@ public class EntranceController implements  ControllerInterface<Entrance>{
         return SERVICE.findEntranceById(id);
     }
 
-    @GetMapping("/entrances/{budgetId}")
-    public List<Entrance> getElementByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
+    @Override
+    @GetMapping("/entrances2")
+    public List<EntranceDTO> getAllElementsDto() {
+        return SERVICE.findAllEntrance2();
+    }
+
+    @Override
+    @GetMapping("/entrances2/{entranceId}")
+    public EntranceDTO getElementDtoById(@PathVariable("entranceId") Integer id) {
+        return SERVICE.findEntranceById2(id);
+    }
+
+    @GetMapping("/entrances/budgetid/{budgetId}")
+    public List<EntranceDTO> getElementByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
 
     @GetMapping("/entrances/filter/month")
     public @ResponseBody List<FilterEntranceDTO> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
@@ -66,4 +79,5 @@ public class EntranceController implements  ControllerInterface<Entrance>{
     public boolean deleteElementById(@PathVariable("entranceId") Integer id) {
         return SERVICE.deleteEntranceById(id);
     }
+
 }

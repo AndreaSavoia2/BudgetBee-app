@@ -1,5 +1,6 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.entities.Exit;
 
@@ -12,9 +13,13 @@ public interface ExitService {
 
     List<Exit> findAllExits();
 
+    ExitDTO findExitById2(Integer id);
+
+    List<ExitDTO> findAllExits2();
+
     boolean deleteExitById(Integer id);
 
-    List<Exit> exitListByIdBudget(Integer id);
+    List<ExitDTO> exitListByIdBudget(Integer id);
 
     List<FilterExitDTO> exitListByCategoryAndMonth(Integer id, String month);
 

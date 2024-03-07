@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api") // infirizzo per accedere alle api
-public class UserController implements ControllerInterface<User>/* L'interfaccia ControllerInterface è un interfaccia con tipi generici condivisa tra le classi controller */{
+public class UserController implements ControllerInterface<User> , ControlletDtoInterface<UserDTO>/* L'interfaccia ControllerInterface è un interfaccia con tipi generici condivisa tra le classi controller */{
 
     //Implementazione della dipendenza con la service
     private final UserService SERVICE;
@@ -28,8 +28,14 @@ public class UserController implements ControllerInterface<User>/* L'interfaccia
     }
 
     @GetMapping("/users2") // l'indirizzo per accedere alla lista (es: host/api/users)
-    public List<UserDTO> getAllElements2() {
+    public List<UserDTO> getAllElementsDto() {
         return SERVICE.findAllUsers2();
+    }
+
+    @Override
+    @GetMapping("/users2/{userId}") // l'indirizzo per accedere alla lista dove UserId corrisponde all'id nel parametro id (es: host/api/users/2)
+    public UserDTO getElementDtoById(@PathVariable("userId") Integer id) {
+        return SERVICE.findUserById2(id);
     }
 
     // Metodo che richiama il metodo presente nella service per restituite l'elemento corrispondente all'id

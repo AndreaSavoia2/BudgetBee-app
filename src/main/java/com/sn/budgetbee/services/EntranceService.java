@@ -1,5 +1,7 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.EntranceDTO;
+import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
 import com.sn.budgetbee.entities.Entrance;
 
@@ -13,9 +15,13 @@ public interface EntranceService {
 
     List<Entrance> findEntrancesAll();
 
+    EntranceDTO findEntranceById2(Integer id);
+
+    List<EntranceDTO> findAllEntrance2();
+
     boolean deleteEntranceById(Integer id);
 
-    List<Entrance> entranceListByIdBudget(Integer id);
+    List<EntranceDTO> entranceListByIdBudget(Integer id);
 
     List<FilterEntranceDTO> entranceListByCategoryAndMonth(Integer id, String month);
 

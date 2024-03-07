@@ -1,11 +1,15 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterExitDTO;
+import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.Exit;
+import com.sn.budgetbee.entities.User;
 import com.sn.budgetbee.repos.ExitDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +47,34 @@ public class ExitServiceImpl implements ExitService{
     public List<Exit> findAllExits() { return EXIT_DAO.findAll();}
 
     @Override
+    public ExitDTO findExitById2(Integer id) {
+        Optional<Exit> result = EXIT_DAO.findById(id);
+        Exit exit = null;
+        ExitDTO exitDTO = null;
+
+        if(result.isPresent()){
+            exit = result.get();
+            exitDTO = new ExitDTO(exit.getId(),exit.getTransaction(),exit.getDescription(), exit.getTransactionDate(), exit.getCategory());
+        }else{
+            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+        }
+
+        return exitDTO;
+    }
+
+    @Override
+    public List<ExitDTO> findAllExits2() {
+        List<Exit> exits = EXIT_DAO.findAll();
+        List<ExitDTO> exitsDTO = new ArrayList<>();
+
+        for (Exit exit: exits){
+            exitsDTO.add(new ExitDTO(exit.getId(),exit.getTransaction(),exit.getDescription(), exit.getTransactionDate(),exit.getCategory()));
+        }
+
+        return exitsDTO;
+    }
+
+    @Override
     public boolean deleteExitById(Integer id) {
         Optional<Exit> result = EXIT_DAO.findById(id);
 
@@ -55,8 +87,14 @@ public class ExitServiceImpl implements ExitService{
     }
 
     @Override
-    public List<Exit> exitListByIdBudget(Integer id) {
-        return EXIT_DAO.findExitsByBudgetId(id);
+    public List<ExitDTO> exitListByIdBudget(Integer id) {
+        List<Exit> exits = EXIT_DAO.findExitsByBudgetId(id);
+        List<ExitDTO> exitsDTO = new ArrayList<>();
+
+        for (Exit exit : exits){
+            exitsDTO.add(new ExitDTO(exit.getId(),exit.getTransaction(),exit.getDescription(), exit.getTransactionDate(),exit.getCategory()));
+        }
+        return exitsDTO;
     }
 
     @Override
