@@ -1,7 +1,9 @@
 package com.sn.budgetbee.services;
 
 import com.sn.budgetbee.dto.UserDTO;
+import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.entities.User;
+import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,11 +19,13 @@ public class UserServiceImpl implements UserService{
 
     private final UserDAO USER_DAO;
     private final PasswordEncoder PASSWORD_ENCODER; //necessario alla crypto non copiare nelle altre Implementazioni
+    private final BudgetDAO BUDGET_DAO;
 
     // Iniettore delle dipendenze
     @Autowired
-    public UserServiceImpl(UserDAO userDAO){
+    public UserServiceImpl(UserDAO userDAO, BudgetDAO budgetDAO){
         this.USER_DAO = userDAO;
+        this.BUDGET_DAO = budgetDAO;
         this.PASSWORD_ENCODER = new BCryptPasswordEncoder(); //necessario alla crypto non copiare nelle altre Implementazioni
     }
 
@@ -56,13 +60,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO findUserById2(Integer id) {
-        Optional<User> result = USER_DAO.findById(id);
+        Optional<User> resultUser = USER_DAO.findById(id);
         User user = null;
         UserDTO userDTO = null;
 
-        if(result.isPresent()){
-            user = result.get();
-            userDTO = new UserDTO(user.getId(),user.getUsername());
+        if(resultUser.isPresent()){
+            user = resultUser.get();
+            userDTO = new UserDTO(user.getId(),user.getUsername(), BUDGET_DAO.findBudgetsByUserId(user.getId()));
         }else{
             throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
         }
@@ -82,8 +86,10 @@ public class UserServiceImpl implements UserService{
         List<User> users = USER_DAO.findAll();
         List<UserDTO> usersDto = new ArrayList<>();
 
+
         for (User user: users){
-            usersDto.add(new UserDTO(user.getId(),user.getUsername()));
+
+            usersDto.add(new UserDTO(user.getId(),user.getUsername(),BUDGET_DAO.findBudgetsByUserId(user.getId())));
         }
 
         return usersDto;
