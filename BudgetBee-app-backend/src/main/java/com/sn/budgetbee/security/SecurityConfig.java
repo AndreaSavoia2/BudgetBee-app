@@ -36,7 +36,7 @@ public class SecurityConfig {
         );
 
         http.httpBasic(Customizer.withDefaults());
-        http.csrf(csrg -> csrg.disable());
+        //http.csrf(csrg -> csrg.disable());
 
         return http.build();
     }
