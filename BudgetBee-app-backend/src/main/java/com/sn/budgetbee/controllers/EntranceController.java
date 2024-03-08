@@ -24,27 +24,15 @@ public class EntranceController implements  ControllerInterface<Entrance> , Cont
     }
 
     @Override
-    @GetMapping("/entrances")
-    public List<Entrance> getAllElements() {
-        return SERVICE.findEntrancesAll();
-    }
-
-    @Override
-    @GetMapping("/entrances/{entranceId}")
-    public Entrance getElementById(@PathVariable("entranceId") Integer id) {
-        return SERVICE.findEntranceById(id);
-    }
-
-    @Override
     @GetMapping("/entrances2")
     public List<EntranceDTO> getAllElementsDto() {
-        return SERVICE.findAllEntrance2();
+        return SERVICE.findAllEntrance();
     }
 
     @Override
     @GetMapping("/entrances2/{entranceId}")
     public EntranceDTO getElementDtoById(@PathVariable("entranceId") Integer id) {
-        return SERVICE.findEntranceById2(id);
+        return SERVICE.findEntranceById(id);
     }
 
     @GetMapping("/entrances/budgetid/{budgetId}")

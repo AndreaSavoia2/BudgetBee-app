@@ -30,26 +30,7 @@ public class EntranceServiceImpl implements EntranceService{
     }
 
     @Override
-    public Entrance findEntranceById(Integer id) {
-        Optional<Entrance> result = ENTRANCE_DAO.findById(id);
-        Entrance entrance = null;
-
-        if(result.isPresent()){
-            entrance = result.get();
-        }else{
-            throw new RuntimeException("NO ID ENTRANCE FOUND: " + id);
-        }
-
-        return entrance;
-    }
-
-    @Override
-    public List<Entrance> findEntrancesAll() {
-        return ENTRANCE_DAO.findAll();
-    }
-
-    @Override
-    public EntranceDTO findEntranceById2(Integer id) {
+    public EntranceDTO findEntranceById(Integer id) {
         Optional<Entrance> result = ENTRANCE_DAO.findById(id);
         Entrance entrance = null;
         EntranceDTO entranceDTO = null;
@@ -65,7 +46,7 @@ public class EntranceServiceImpl implements EntranceService{
     }
 
     @Override
-    public List<EntranceDTO> findAllEntrance2() {
+    public List<EntranceDTO> findAllEntrance() {
         List<Entrance> exits = ENTRANCE_DAO.findAll();
         List<EntranceDTO> entrancesDTO = new ArrayList<>();
 

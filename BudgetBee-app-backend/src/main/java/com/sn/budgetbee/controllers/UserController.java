@@ -26,27 +26,15 @@ public class UserController implements ControllerInterface<User> , ControlletDto
     }
 
     // Metodo che richiama il metodo presente nella service per restituite la lista completa della tabella
-    @Override
     @GetMapping("/users") // l'indirizzo per accedere alla lista (es: host/api/users)
-    public List<User> getAllElements() {
-        return SERVICE.findAllUsers();
-    }
-
-    @GetMapping("/users2") // l'indirizzo per accedere alla lista (es: host/api/users)
     public List<UserDTO> getAllElementsDto() {
-        return SERVICE.findAllUsers2();
-    }
-
-    @Override
-    @GetMapping("/users2/{userId}") // l'indirizzo per accedere alla lista dove UserId corrisponde all'id nel parametro id (es: host/api/users/2)
-    public UserDTO getElementDtoById(@PathVariable("userId") Integer id) {
-        return SERVICE.findUserById2(id);
+        return SERVICE.findAllUsers();
     }
 
     // Metodo che richiama il metodo presente nella service per restituite l'elemento corrispondente all'id
     @Override
     @GetMapping("/users/{userId}") // l'indirizzo per accedere alla lista dove UserId corrisponde all'id nel parametro id (es: host/api/users/2)
-    public User getElementById(@PathVariable("userId") Integer id) {
+    public UserDTO getElementDtoById(@PathVariable("userId") Integer id) {
         return SERVICE.findUserById(id);
     }
 

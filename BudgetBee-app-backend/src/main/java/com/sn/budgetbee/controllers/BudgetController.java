@@ -21,13 +21,11 @@ public class BudgetController implements ControllerInterface<Budget> {
         this.SERVICE = service;
     }
 
-    @Override
     @GetMapping("/budgets")
     public List<Budget> getAllElements() {
         return SERVICE.findAllBudgets();
     }
 
-    @Override
     @GetMapping("/budgets/{budgetId}")
     public Budget getElementById(@PathVariable("budgetId") Integer id) {
         return SERVICE.findBudgetById(id);

@@ -9,13 +9,9 @@ public interface UserService {
 
     User saveUser(User user);
 
-    User findUserById(Integer id);
+    UserDTO findUserById(Integer id);
 
-    UserDTO findUserById2(Integer id);
-
-    List<User> findAllUsers();
-
-    List<UserDTO> findAllUsers2();
+    List<UserDTO> findAllUsers();
 
     boolean deleteUserById(Integer id);
 

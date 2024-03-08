@@ -31,24 +31,7 @@ public class ExitServiceImpl implements ExitService{
     }
 
     @Override
-    public Exit findExitById(Integer id) {
-        Optional<Exit> result = EXIT_DAO.findById(id);
-        Exit exit = null;
-
-        if(result.isPresent()){
-            exit = result.get();
-        }else{
-            throw new EntranceNotFoundException("NO ID EXIT FOUND: " + id);
-        }
-
-        return exit;
-    }
-
-    @Override
-    public List<Exit> findAllExits() { return EXIT_DAO.findAll();}
-
-    @Override
-    public ExitDTO findExitById2(Integer id) {
+    public ExitDTO findExitById(Integer id) {
         Optional<Exit> result = EXIT_DAO.findById(id);
         Exit exit = null;
         ExitDTO exitDTO = null;
@@ -64,7 +47,7 @@ public class ExitServiceImpl implements ExitService{
     }
 
     @Override
-    public List<ExitDTO> findAllExits2() {
+    public List<ExitDTO> findAllExits() {
         List<Exit> exits = EXIT_DAO.findAll();
         List<ExitDTO> exitsDTO = new ArrayList<>();
 

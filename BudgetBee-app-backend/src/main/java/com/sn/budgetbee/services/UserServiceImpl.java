@@ -51,21 +51,7 @@ public class UserServiceImpl implements UserService{
 
     // Metodo che restituisce un elemento in base al suo id
     @Override
-    public User findUserById(Integer id) {
-        Optional<User> result = USER_DAO.findById(id);
-        User user = null;
-
-        if(result.isPresent()){
-            user = result.get();
-        }else{
-            throw new UserNotFoundException("NO ID USER FOUND: " + id);
-        }
-
-        return user;
-    }
-
-    @Override
-    public UserDTO findUserById2(Integer id) {
+    public UserDTO findUserById(Integer id) {
         Optional<User> resultUser = USER_DAO.findById(id);
         User user = null;
         UserDTO userDTO = null;
@@ -82,12 +68,7 @@ public class UserServiceImpl implements UserService{
 
     // Metodo che restituisce la lista completa degli elementi della tabella
     @Override
-    public List<User> findAllUsers() {
-        return USER_DAO.findAll();
-    }
-
-    @Override
-    public List<UserDTO> findAllUsers2() {
+    public List<UserDTO> findAllUsers() {
 
         List<User> users = USER_DAO.findAll();
         List<UserDTO> usersDto = new ArrayList<>();

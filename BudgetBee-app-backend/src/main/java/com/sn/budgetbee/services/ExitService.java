@@ -9,13 +9,9 @@ import java.util.List;
 public interface ExitService {
     Exit saveExit(Exit exit);
 
-    Exit findExitById(Integer id);
+    ExitDTO findExitById(Integer id);
 
-    List<Exit> findAllExits();
-
-    ExitDTO findExitById2(Integer id);
-
-    List<ExitDTO> findAllExits2();
+    List<ExitDTO> findAllExits();
 
     boolean deleteExitById(Integer id);
 

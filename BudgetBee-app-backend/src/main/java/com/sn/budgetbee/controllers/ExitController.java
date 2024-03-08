@@ -24,27 +24,14 @@ public class ExitController implements ControllerInterface<Exit> , ControlletDto
 
     @Override
     @GetMapping("/exits")
-    public List<Exit> getAllElements() {
-
+    public List<ExitDTO> getAllElementsDto() {
         return SERVICE.findAllExits();
     }
 
     @Override
     @GetMapping("/exits/{exitId}")
-    public Exit getElementById(@PathVariable("exitId")Integer id) {
-        return SERVICE.findExitById(id);
-    }
-
-    @Override
-    @GetMapping("/exits2")
-    public List<ExitDTO> getAllElementsDto() {
-        return SERVICE.findAllExits2();
-    }
-
-    @Override
-    @GetMapping("/exits2/{exitId}")
     public ExitDTO getElementDtoById(@PathVariable("exitId") Integer id) {
-        return SERVICE.findExitById2(id);
+        return SERVICE.findExitById(id);
     }
 
     @GetMapping("/exits/budgetid/{budgetId}")

@@ -11,13 +11,9 @@ public interface EntranceService {
 
     Entrance saveEntrance(Entrance entrance);
 
-    Entrance findEntranceById(Integer id);
+    EntranceDTO findEntranceById(Integer id);
 
-    List<Entrance> findEntrancesAll();
-
-    EntranceDTO findEntranceById2(Integer id);
-
-    List<EntranceDTO> findAllEntrance2();
+    List<EntranceDTO> findAllEntrance();
 
     boolean deleteEntranceById(Integer id);
 
@@ -30,4 +26,5 @@ public interface EntranceService {
     Double entraceByMonth(Integer id, String month);
 
     Double entraceByYear(Integer id, String year);
+
 }
