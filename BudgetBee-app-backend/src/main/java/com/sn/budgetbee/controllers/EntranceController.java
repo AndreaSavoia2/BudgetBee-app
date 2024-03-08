@@ -24,37 +24,45 @@ public class EntranceController implements  ControllerInterface<Entrance> , Cont
     }
 
     @Override
+    @CrossOrigin
     @GetMapping("/entrances2")
     public List<EntranceDTO> getAllElementsDto() {
         return SERVICE.findAllEntrance();
     }
 
     @Override
+    @CrossOrigin
     @GetMapping("/entrances2/{entranceId}")
     public EntranceDTO getElementDtoById(@PathVariable("entranceId") Integer id) {
         return SERVICE.findEntranceById(id);
     }
 
+    @CrossOrigin
     @GetMapping("/entrances/budgetid/{budgetId}")
     public List<EntranceDTO> getElementByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
 
+    @CrossOrigin
     @GetMapping("/entrances/filter/month")
     public @ResponseBody List<FilterEntranceDTO> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
         return SERVICE.entranceListByCategoryAndMonth(id, month);
     }
 
+    @CrossOrigin
     @GetMapping("/entrances/filter/year")
     public @ResponseBody List<FilterEntranceDTO> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.entranceListByCategoryAndYear(id, year);
     }
 
+    @CrossOrigin
     @GetMapping("/entrances/total/month")
     public @ResponseBody Double getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.entraceByMonth(id, month); }
 
+    @CrossOrigin
     @GetMapping("/entrances/total/year")
     public @ResponseBody Double getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.entraceByYear(id, year); }
 
     @Override
+    @CrossOrigin
     @PostMapping("/entrances")
     public Entrance setElement(@RequestBody Entrance entrance) {
         entrance.setId(0);
@@ -62,12 +70,14 @@ public class EntranceController implements  ControllerInterface<Entrance> , Cont
     }
 
     @Override
+    @CrossOrigin
     @PutMapping("/entrances")
     public Entrance updateElement(@RequestBody Entrance entrance) {
         return SERVICE.saveEntrance(entrance);
     }
 
     @Override
+    @CrossOrigin
     @DeleteMapping("/entrances/{entranceId}")
     public boolean deleteElementById(@PathVariable("entranceId") Integer id) {
         return SERVICE.deleteEntranceById(id);

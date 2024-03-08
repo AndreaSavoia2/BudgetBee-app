@@ -21,17 +21,20 @@ public class BudgetController implements ControllerInterface<Budget> {
         this.SERVICE = service;
     }
 
+    @CrossOrigin
     @GetMapping("/budgets")
     public List<Budget> getAllElements() {
         return SERVICE.findAllBudgets();
     }
 
+    @CrossOrigin
     @GetMapping("/budgets/{budgetId}")
     public Budget getElementById(@PathVariable("budgetId") Integer id) {
         return SERVICE.findBudgetById(id);
     }
 
     @Override
+    @CrossOrigin
     @PostMapping("/budgets")
     public Budget setElement(@RequestBody Budget budget) {
         budget.setId(0);
@@ -39,17 +42,20 @@ public class BudgetController implements ControllerInterface<Budget> {
     }
 
     @Override
+    @CrossOrigin
     @PutMapping("/budgets")
     public Budget updateElement(@RequestBody Budget budget) {
         return SERVICE.saveBudget(budget);
     }
 
     @Override
+    @CrossOrigin
     @DeleteMapping("/budgets/{budgetId}")
     public boolean deleteElementById(@PathVariable("budgetId") Integer id) {
         return SERVICE.deleteBudgetById(id);
     }
 
+    @CrossOrigin
     @PutMapping("/budgets/calculate")
     public @ResponseBody Budget calcolateBudget(@RequestParam Integer id, @RequestParam Double movement){
         return SERVICE.movementOnBudget(id,movement);

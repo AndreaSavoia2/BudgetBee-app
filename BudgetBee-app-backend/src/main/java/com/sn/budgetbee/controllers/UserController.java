@@ -26,6 +26,7 @@ public class UserController implements ControllerInterface<User> , ControlletDto
     }
 
     // Metodo che richiama il metodo presente nella service per restituite la lista completa della tabella
+    @CrossOrigin
     @GetMapping("/users") // l'indirizzo per accedere alla lista (es: host/api/users)
     public List<UserDTO> getAllElementsDto() {
         return SERVICE.findAllUsers();
@@ -33,6 +34,7 @@ public class UserController implements ControllerInterface<User> , ControlletDto
 
     // Metodo che richiama il metodo presente nella service per restituite l'elemento corrispondente all'id
     @Override
+    @CrossOrigin
     @GetMapping("/users/{userId}") // l'indirizzo per accedere alla lista dove UserId corrisponde all'id nel parametro id (es: host/api/users/2)
     public UserDTO getElementDtoById(@PathVariable("userId") Integer id) {
         return SERVICE.findUserById(id);
@@ -40,6 +42,7 @@ public class UserController implements ControllerInterface<User> , ControlletDto
 
     // Metodo che richiama il metodo presente nella service per salvare un nuovo elemento nella tabella
     @Override
+    @CrossOrigin
     @PostMapping("/users")
     public User setElement(@RequestBody User user) {
         user.setId(0); // si imposta l'id a 0 per far capire al db che si tratta di un utente non esistente
@@ -48,6 +51,7 @@ public class UserController implements ControllerInterface<User> , ControlletDto
 
     // Metodo che richiama il metodo presente nella service per aggiornare un elemento nella tabella
     @Override
+    @CrossOrigin
     @PutMapping("/users")
     public User updateElement(@RequestBody User user) {
         return SERVICE.saveUser(user);
@@ -55,16 +59,19 @@ public class UserController implements ControllerInterface<User> , ControlletDto
 
     // Metodo che richiama il metodo presente nella service per eliminare un elemento nella tabella
     @Override
+    @CrossOrigin
     @DeleteMapping("/users/{userId}")
     public boolean deleteElementById(@PathVariable("userId") Integer id) {
         return SERVICE.deleteUserById(id);
     }
 
+    @CrossOrigin
     @GetMapping("/users/login")
     public @ResponseBody Integer login(@RequestParam String username, @RequestParam String password) {
         return SERVICE.checkLogin(username, password);
     }
 
+    @CrossOrigin
     @GetMapping("/users/checkusers")
     public @ResponseBody boolean checkUsername(@RequestParam String username) {
         return SERVICE.UsernameIsPresent(username);
