@@ -3,7 +3,12 @@ package com.sn.budgetbee.controllers;
 import com.sn.budgetbee.dto.EntranceDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
 import com.sn.budgetbee.entities.Entrance;
+import com.sn.budgetbee.exception.EntranceNotFoundException;
+import com.sn.budgetbee.exception.ErrorResponseData;
+import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.services.EntranceService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -80,4 +85,17 @@ public class EntranceController implements  ControllerInterface<Entrance> , Cont
         return SERVICE.deleteEntranceById(id);
     }
 
+    //Exception---------
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponseData> handleException(EntranceNotFoundException exc){
+
+        ErrorResponseData error = new ErrorResponseData();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

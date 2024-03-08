@@ -5,6 +5,7 @@ import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.entities.Exit;
+import com.sn.budgetbee.exception.EntranceNotFoundException;
 import com.sn.budgetbee.repos.EntranceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class EntranceServiceImpl implements EntranceService{
         if(result.isPresent()){
             entrance = result.get();
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+            throw new RuntimeException("NO ID ENTRANCE FOUND: " + id);
         }
 
         return entrance;
@@ -57,7 +58,7 @@ public class EntranceServiceImpl implements EntranceService{
             entrance = result.get();
             entranceDTO = new EntranceDTO(entrance.getId(),entrance.getTransaction(),entrance.getDescription(), entrance.getTransactionDate(), entrance.getCategory());
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+            throw new EntranceNotFoundException("NO ID ENTRANCE FOUND: " + id);
         }
 
         return entranceDTO;
@@ -83,7 +84,7 @@ public class EntranceServiceImpl implements EntranceService{
             ENTRANCE_DAO.deleteById(id);
             return true;
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: :" + id);
+            throw new EntranceNotFoundException("NO ID ENTRANCE FOUND: " + id);
         }
     }
 

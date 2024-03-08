@@ -1,7 +1,12 @@
 package com.sn.budgetbee.controllers;
 
 import com.sn.budgetbee.entities.Budget;
+import com.sn.budgetbee.exception.BudgetNotFoundExceprion;
+import com.sn.budgetbee.exception.ErrorResponseData;
+import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.services.BudgetService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,5 +55,19 @@ public class BudgetController implements ControllerInterface<Budget> {
     @PutMapping("/budgets/calculate")
     public @ResponseBody Budget calcolateBudget(@RequestParam Integer id, @RequestParam Double movement){
         return SERVICE.movementOnBudget(id,movement);
+    }
+
+    //Exception---------
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponseData> handleException(BudgetNotFoundExceprion exc){
+
+        ErrorResponseData error = new ErrorResponseData();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }

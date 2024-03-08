@@ -2,8 +2,13 @@ package com.sn.budgetbee.controllers;
 
 import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.User;
+import com.sn.budgetbee.exception.ErrorResponseData;
+import com.sn.budgetbee.exception.UserAlreadyExistsException;
+import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,5 +80,31 @@ public class UserController implements ControllerInterface<User> , ControlletDto
     @GetMapping("/users/checkusers")
     public @ResponseBody boolean checkUsername(@RequestParam String username) {
         return SERVICE.UsernameIsPresent(username);
+    }
+
+    //Exception---------
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponseData> handleException(UserNotFoundException exc){
+
+        ErrorResponseData error = new ErrorResponseData();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponseData> handleException(UserAlreadyExistsException exc){
+
+        ErrorResponseData error = new ErrorResponseData();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }

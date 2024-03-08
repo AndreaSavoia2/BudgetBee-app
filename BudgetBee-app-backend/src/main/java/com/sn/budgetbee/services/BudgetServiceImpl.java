@@ -1,6 +1,7 @@
 package com.sn.budgetbee.services;
 
 import com.sn.budgetbee.entities.Budget;
+import com.sn.budgetbee.exception.BudgetNotFoundExceprion;
 import com.sn.budgetbee.repos.BudgetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class BudgetServiceImpl implements BudgetService{
         if(result.isPresent()){
             budget = result.get();
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+            throw new BudgetNotFoundExceprion("NO ID BUDGET FOUND: " + id);
         }
 
         return budget;
@@ -50,7 +51,7 @@ public class BudgetServiceImpl implements BudgetService{
             BUDGET_DAO.deleteById(id);
             return true;
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: :" + id);
+            throw new BudgetNotFoundExceprion("NO ID BUDGET FOUND: " + id);
         }
     }
 

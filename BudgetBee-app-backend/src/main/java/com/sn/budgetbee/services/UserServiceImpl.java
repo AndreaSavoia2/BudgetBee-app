@@ -3,12 +3,18 @@ package com.sn.budgetbee.services;
 import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.entities.User;
+import com.sn.budgetbee.exception.ErrorResponseData;
+import com.sn.budgetbee.exception.UserAlreadyExistsException;
+import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +44,7 @@ public class UserServiceImpl implements UserService{
             user.setPassword(encodePassword); //necessario alla crypto non copiare nelle altre Implementazioni
             return USER_DAO.save(user);
         }else{
-            throw new RuntimeException("ERROR USERNAME GIA PRESENTE NEL DATABASE");
+            throw new UserAlreadyExistsException("USER IS A UNIQUE FIELD IN THE DATABASE, THE VALUE ENTERED IS ALREADY PRESENT: " + user.getUsername());
         }
 
     }
@@ -52,7 +58,7 @@ public class UserServiceImpl implements UserService{
         if(result.isPresent()){
             user = result.get();
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+            throw new UserNotFoundException("NO ID USER FOUND: " + id);
         }
 
         return user;
@@ -68,7 +74,7 @@ public class UserServiceImpl implements UserService{
             user = resultUser.get();
             userDTO = new UserDTO(user.getId(),user.getUsername(), BUDGET_DAO.findBudgetsByUserId(user.getId()));
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: " + id);
+            throw new UserNotFoundException("NO ID USER FOUND: " + id);
         }
 
         return userDTO;
@@ -104,7 +110,7 @@ public class UserServiceImpl implements UserService{
             USER_DAO.deleteById(id);
             return true;
         }else{
-            throw new RuntimeException("NO ID USER FOUND ERROR: :" + id);
+            throw new UserNotFoundException("NO ID USER FOUND: " + id);
         }
     }
 

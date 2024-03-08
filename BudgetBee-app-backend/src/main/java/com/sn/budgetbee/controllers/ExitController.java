@@ -2,9 +2,12 @@ package com.sn.budgetbee.controllers;
 
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterExitDTO;
-import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.entities.Exit;
+import com.sn.budgetbee.exception.ErrorResponseData;
+import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.services.ExitService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -80,6 +83,20 @@ public class ExitController implements ControllerInterface<Exit> , ControlletDto
     @DeleteMapping("/exits/{exitId}")
     public boolean deleteElementById(@PathVariable("exitId") Integer id) {
         return SERVICE.deleteExitById(id);
+    }
+
+    //Exception---------
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponseData> handleException(ExitNotFoundException exc){
+
+        ErrorResponseData error = new ErrorResponseData();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
 }
