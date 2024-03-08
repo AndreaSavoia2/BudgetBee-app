@@ -2,6 +2,11 @@ package com.sn.budgetbee.entities;
 
 import jakarta.persistence.*;
 
+import javax.xml.crypto.Data;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 
 @Entity
 @Table(name="table_users")
@@ -17,6 +22,9 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name ="registration_date")
+    private Date registrationDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_budget")
@@ -71,4 +79,14 @@ public class User {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+    @PrePersist
+    public void prePersist() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Rome"));
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        this.registrationDate  = calendar.getTime();
+    }
+
 }

@@ -3,7 +3,9 @@ package com.sn.budgetbee.entities;
 import com.sn.budgetbee.utils.ExitCategories;
 import jakarta.persistence.*;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "table_exits")
@@ -21,7 +23,7 @@ public class Exit {
     private String description;
 
     @Column(name = "transaction_date")
-    private String transactionDate;
+    private Date transactionDate;
 
     @Column(name="category")
     @Enumerated(EnumType.STRING)
@@ -36,7 +38,7 @@ public class Exit {
 
     }
 
-    public Exit(Double transaction, String description, String transactionDate, ExitCategories category) {
+    public Exit(Double transaction, String description, Date transactionDate, ExitCategories category) {
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
@@ -83,11 +85,11 @@ public class Exit {
         this.description = description;
     }
 
-    public String getTransactionDate() {
+    public Date getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(String transactionDate) {
+    public void setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -100,5 +102,14 @@ public class Exit {
                 ", transactionDate=" + transactionDate +
                 ", budget=" + budget +
                 '}';
+    }
+
+    @PrePersist
+    public void prePersist() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Rome"));
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        this.transactionDate  = calendar.getTime();
     }
 }

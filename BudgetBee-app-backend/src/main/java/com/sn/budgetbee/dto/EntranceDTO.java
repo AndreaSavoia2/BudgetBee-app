@@ -2,15 +2,17 @@ package com.sn.budgetbee.dto;
 
 import com.sn.budgetbee.utils.EntranceCategories;
 
+import java.util.Date;
+
 public class EntranceDTO {
 
     private Integer id;
     private Double transaction;
     private String description;
-    private String transactionDate;
+    private Date transactionDate;
     private EntranceCategories category;
 
-    public EntranceDTO(Integer id, Double transaction, String description, String transactionDate, EntranceCategories category) {
+    public EntranceDTO(Integer id, Double transaction, String description, Date transactionDate, EntranceCategories category) {
         this.id = id;
         this.transaction = transaction;
         this.description = description;
@@ -42,11 +44,11 @@ public class EntranceDTO {
         this.description = description;
     }
 
-    public String getTransactionDate() {
+    public Date getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(String transactionDate) {
+    public void setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
     }
 
