@@ -1,24 +1,25 @@
 package com.sn.budgetbee.dto;
 
 import java.beans.ConstructorProperties;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class FilterExitListTotalDTO {
-    private String month;
+    private String transactionDate;
     private Double total;
 
-    @ConstructorProperties({"mouth","total"})
-    public FilterExitListTotalDTO(String month, Double total) {
-        this.month = month;
+    @ConstructorProperties({"transactionDate","total"})
+    public FilterExitListTotalDTO(String transactionDate, Double total) {
+        this.transactionDate = transactionDate;
         this.total = total;
     }
 
     public String getMonth() {
-        return month;
+        return transactionDate;
     }
 
     public void setMonth(String month) {
-        this.month = month;
+        this.transactionDate = month;
     }
 
     public Double getTotal() {
@@ -32,7 +33,7 @@ public class FilterExitListTotalDTO {
     @Override
     public String toString() {
         return "FilterExitListTotalDTO{" +
-                "month='" + month + '\'' +
+                "month='" + transactionDate + '\'' +
                 ", total=" + total +
                 '}';
     }

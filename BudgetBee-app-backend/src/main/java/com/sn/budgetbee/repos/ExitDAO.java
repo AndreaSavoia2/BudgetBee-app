@@ -42,12 +42,13 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "AND DATE_FORMAT(x.transactionDate, '%Y') = :year ")
     Double findTotalExitByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
 
-    @Query("SELECT NEW com.sn.budgetbee.dto.FilterExitListTotalDTO(x.transactionDate, SUM(x.transaction)) " +
-            "FROM Exit x " +
-            "RIGHT JOIN x.budget b " +
+    @Query("SELECT FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y') AS month, " +
+            "SUM(e.transaction) AS total " +
+            "FROM Exit e " +
+            "RIGHT JOIN e.budget b " +
             "WHERE b.id = :budgetId " +
-            "AND DATE_FORMAT(x.transactionDate, '%Y') = :year " +
-            "GROUP BY x.transactionDate")
-    List<FilterExitListTotalDTO> findTotalMonthExitListByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
+            "AND FUNCTION('DATE_FORMAT', e.transactionDate, '%Y') = :year " +
+            "GROUP BY FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y')")
+    List<Object[]> findTotalMonthExitListByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
 
 }

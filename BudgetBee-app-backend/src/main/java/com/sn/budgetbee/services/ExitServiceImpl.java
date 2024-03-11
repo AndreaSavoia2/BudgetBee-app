@@ -132,6 +132,16 @@ public class ExitServiceImpl implements ExitService{
 
     @Override
     public List<FilterExitListTotalDTO> exitListTotalMonthByYear(Integer id, String year) {
-        return EXIT_DAO.findTotalMonthExitListByYear(id,year);
+        List<Object[]> resultList = EXIT_DAO.findTotalMonthExitListByYear(id, year);
+        List<FilterExitListTotalDTO> dtoList = new ArrayList<>();
+
+        for (Object[] result : resultList) {
+            String dateString = (String) result[0];
+            Double transactionSum = (Double) result[1];
+            FilterExitListTotalDTO dto = new FilterExitListTotalDTO(dateString, transactionSum);
+            dtoList.add(dto);
+        }
+
+        return dtoList;
     }
 }
