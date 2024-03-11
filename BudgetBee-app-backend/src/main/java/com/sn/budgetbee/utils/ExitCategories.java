@@ -12,5 +12,6 @@ public enum ExitCategories {
     ABBIGLIAMENTO,
     HOBBY,
     REGALI,
+    ANIMALI,
     ALTRO
 }

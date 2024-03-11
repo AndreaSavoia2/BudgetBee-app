@@ -1,6 +1,7 @@
 package com.sn.budgetbee.repos;
 
 import com.sn.budgetbee.dto.FilterExitDTO;
+import com.sn.budgetbee.dto.FilterExitListTotalDTO;
 import com.sn.budgetbee.entities.Exit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -40,5 +41,13 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "WHERE b.id = :budgetId " +
             "AND DATE_FORMAT(x.transactionDate, '%Y') = :year ")
     Double findTotalExitByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
+
+    @Query("SELECT NEW com.sn.budgetbee.dto.FilterExitListTotalDTO(x.transactionDate, SUM(x.transaction)) " +
+            "FROM Exit x " +
+            "RIGHT JOIN x.budget b " +
+            "WHERE b.id = :budgetId " +
+            "AND DATE_FORMAT(x.transactionDate, '%Y') = :year " +
+            "GROUP BY x.transactionDate")
+    List<FilterExitListTotalDTO> findTotalMonthExitListByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
 
 }

@@ -2,6 +2,7 @@ package com.sn.budgetbee.services;
 
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterExitDTO;
+import com.sn.budgetbee.dto.FilterExitListTotalDTO;
 import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.entities.User;
@@ -99,5 +100,10 @@ public class ExitServiceImpl implements ExitService{
     @Override
     public  Double exitByYear(Integer id, String year) {
         return  EXIT_DAO.findTotalExitByYear(id, year);
+    }
+
+    @Override
+    public List<FilterExitListTotalDTO> exitListTotalMonthByYear(Integer id, String year) {
+        return EXIT_DAO.findTotalMonthExitListByYear(id,year);
     }
 }

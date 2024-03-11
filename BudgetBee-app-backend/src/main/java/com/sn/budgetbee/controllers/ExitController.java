@@ -2,6 +2,7 @@ package com.sn.budgetbee.controllers;
 
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterExitDTO;
+import com.sn.budgetbee.dto.FilterExitListTotalDTO;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.exception.ErrorResponseData;
 import com.sn.budgetbee.exception.ExitNotFoundException;
@@ -80,6 +81,12 @@ public class ExitController implements ControllerInterface<Exit> , ControlletDto
     @DeleteMapping("/exits/{exitId}")
     public boolean deleteElementById(@PathVariable("exitId") Integer id) {
         return SERVICE.deleteExitById(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/exits/filter/mouthlist")
+    public @ResponseBody List<FilterExitListTotalDTO> getElementTotalMouthListByYear(@RequestParam Integer id, @RequestParam String year) {
+        return SERVICE.exitListTotalMonthByYear(id, year);
     }
 
     //Exception---------
