@@ -25,14 +25,14 @@ public class EntranceController implements  ControllerInterface<Entrance> , Cont
 
     @Override
     @CrossOrigin
-    @GetMapping("/entrances2")
+    @GetMapping("/entrances")
     public List<EntranceDTO> getAllElementsDto() {
         return SERVICE.findAllEntrance();
     }
 
     @Override
     @CrossOrigin
-    @GetMapping("/entrances2/{entranceId}")
+    @GetMapping("/entrances/{entranceId}")
     public EntranceDTO getElementDtoById(@PathVariable("entranceId") Integer id) {
         return SERVICE.findEntranceById(id);
     }

@@ -4,20 +4,20 @@ import java.beans.ConstructorProperties;
 import java.util.Date;
 
 public class FilterExitListTotalDTO {
-    private Date month;
+    private String month;
     private Double total;
 
     @ConstructorProperties({"mouth","total"})
-    public FilterExitListTotalDTO(Date month, Double total) {
+    public FilterExitListTotalDTO(String month, Double total) {
         this.month = month;
         this.total = total;
     }
 
-    public Date getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(Date month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 

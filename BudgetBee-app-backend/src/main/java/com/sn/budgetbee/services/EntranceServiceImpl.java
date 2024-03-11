@@ -10,6 +10,7 @@ import com.sn.budgetbee.repos.EntranceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,9 +36,17 @@ public class EntranceServiceImpl implements EntranceService{
         Entrance entrance = null;
         EntranceDTO entranceDTO = null;
 
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+
         if(result.isPresent()){
             entrance = result.get();
-            entranceDTO = new EntranceDTO(entrance.getId(),entrance.getTransaction(),entrance.getDescription(), entrance.getTransactionDate(), entrance.getCategory());
+            entranceDTO = new EntranceDTO(
+                    entrance.getId(),
+                    entrance.getTransaction(),entrance.getDescription(),
+                    entrance.getTransactionDate().format(formatterDate),
+                    entrance.getTransactionDate().format(formatterHor),
+                    entrance.getCategory());
         }else{
             throw new EntranceNotFoundException("NO ID ENTRANCE FOUND: " + id);
         }
@@ -47,11 +56,21 @@ public class EntranceServiceImpl implements EntranceService{
 
     @Override
     public List<EntranceDTO> findAllEntrance() {
-        List<Entrance> exits = ENTRANCE_DAO.findAll();
+        List<Entrance> entrances = ENTRANCE_DAO.findAll();
         List<EntranceDTO> entrancesDTO = new ArrayList<>();
 
-        for (Entrance entrance: exits){
-            entrancesDTO.add(new EntranceDTO(entrance.getId(),entrance.getTransaction(),entrance.getDescription(), entrance.getTransactionDate(), entrance.getCategory()));
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+
+
+        for (Entrance entrance: entrances){
+            entrancesDTO.add(new EntranceDTO(
+                    entrance.getId(),
+                    entrance.getTransaction(),
+                    entrance.getDescription(),
+                    entrance.getTransactionDate().format(formatterDate),
+                    entrance.getTransactionDate().format(formatterHor),
+                    entrance.getCategory()));
         }
 
         return entrancesDTO;
@@ -74,8 +93,18 @@ public class EntranceServiceImpl implements EntranceService{
         List<Entrance> entrances = ENTRANCE_DAO.findEntranceByBudgetId(id);
         List<EntranceDTO> entrancesDTO = new ArrayList<>();
 
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+
+
         for(Entrance entrance : entrances){
-            entrancesDTO.add(new EntranceDTO(entrance.getId(),entrance.getTransaction(),entrance.getDescription(), entrance.getTransactionDate(), entrance.getCategory()));
+            entrancesDTO.add(new EntranceDTO(
+                    entrance.getId(),
+                    entrance.getTransaction(),
+                    entrance.getDescription(),
+                    entrance.getTransactionDate().format(formatterDate),
+                    entrance.getTransactionDate().format(formatterHor),
+                    entrance.getCategory()));
         }
 
         return entrancesDTO;

@@ -4,6 +4,7 @@ import com.sn.budgetbee.utils.ExitCategories;
 import jakarta.persistence.CascadeType;
 
 import javax.xml.crypto.Data;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ExitDTO {
@@ -11,14 +12,16 @@ public class ExitDTO {
     private Integer id;
     private Double transaction;
     private String description;
-    private Date transactionDate;
+    private String transactionDate;
+    private String transactionHour;
     private ExitCategories category;
 
-    public ExitDTO(Integer id, Double transaction, String description, Date transactionDate, ExitCategories category) {
+    public ExitDTO(Integer id, Double transaction, String description, String transactionDate, String transactionHour, ExitCategories category) {
         this.id = id;
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
+        this.transactionHour = transactionHour;
         this.category = category;
     }
 
@@ -28,6 +31,22 @@ public class ExitDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTransactionhour() {
+        return transactionHour;
+    }
+
+    public void setTransactionhour(String transactionhour) {
+        this.transactionHour = transactionhour;
+    }
+
+    public ExitCategories getCategory() {
+        return category;
+    }
+
+    public void setCategory(ExitCategories category) {
+        this.category = category;
     }
 
     public Double getTransaction() {
@@ -46,11 +65,11 @@ public class ExitDTO {
         this.description = description;
     }
 
-    public Date getTransactionDate() {
+    public String getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
     }
 }
