@@ -48,7 +48,8 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "RIGHT JOIN e.budget b " +
             "WHERE b.id = :budgetId " +
             "AND FUNCTION('DATE_FORMAT', e.transactionDate, '%Y') = :year " +
-            "GROUP BY FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y')")
+            "GROUP BY FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y')" +
+            "ORDER BY FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y') ASC")
     List<Object[]> findTotalMonthExitListByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
 
 }
