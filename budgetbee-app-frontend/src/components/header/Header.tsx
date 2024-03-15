@@ -3,7 +3,7 @@ import "./Header.css";
 import icon from "../../img/bee.png";
 
 const Header = () => {
-  const apiUrl: any = process.env.REACT_APP_API_URL;
+  const apiUrl: any = process.env.REACT_APP_API_URL_BUDGET;
   const username = process.env.REACT_APP_USERNAME;
   const password = process.env.REACT_APP_PASSWORD;
   const [userData, setUserData] = useState<{ budget: number } | null>(null);
@@ -36,10 +36,14 @@ const Header = () => {
       <div className="containerHeader text-center grid items-center justify-center test rounded-br-3xl rounded-bl-3xl">
         <img src={icon} alt="" className="h-20 absolute" />
         <p className="text-3xl mt-20 mb-20 sm:mt-10 sm:mb-10">
-        € {userData && userData.budget}{" "}
+        € {userData?.budget}{" "}
         <p className="text-base sm:text-lg">Bilancio totale</p>
         </p>
       </div>
+      <div className="flex justify-between sm:mt-20 mt-10">
+          <p className="ml-10 transactions">TRANSACTIONS</p>
+          <button className="mr-10 see">SEE ALL</button>
+        </div>
     </>
   );
 };
