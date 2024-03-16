@@ -15,14 +15,16 @@ public class ExitDTO {
     private String transactionDate;
     private String transactionHour;
     private ExitCategories category;
+    private String iconLink;
 
-    public ExitDTO(Integer id, Double transaction, String description, String transactionDate, String transactionHour, ExitCategories category) {
+    public ExitDTO(Integer id, Double transaction, String description, String transactionDate, String transactionHour, ExitCategories category, String iconLink) {
         this.id = id;
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
         this.transactionHour = transactionHour;
         this.category = category;
+        this.iconLink = iconLink;
     }
 
     public Integer getId() {
@@ -31,22 +33,6 @@ public class ExitDTO {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getTransactionhour() {
-        return transactionHour;
-    }
-
-    public void setTransactionhour(String transactionhour) {
-        this.transactionHour = transactionhour;
-    }
-
-    public ExitCategories getCategory() {
-        return category;
-    }
-
-    public void setCategory(ExitCategories category) {
-        this.category = category;
     }
 
     public Double getTransaction() {
@@ -71,5 +57,29 @@ public class ExitDTO {
 
     public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    public String getTransactionHour() {
+        return transactionHour;
+    }
+
+    public void setTransactionHour(String transactionHour) {
+        this.transactionHour = transactionHour;
+    }
+
+    public ExitCategories getCategory() {
+        return category;
+    }
+
+    public void setCategory(ExitCategories category) {
+        this.category = category;
+    }
+
+    public String getIconLink() {
+        return iconLink;
+    }
+
+    public void setIconLink(String iconLink) {
+        this.iconLink = iconLink;
     }
 }

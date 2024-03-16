@@ -12,14 +12,16 @@ public class EntranceDTO {
     private String transactionDate;
     private String transactionHour;
     private EntranceCategories category;
+    private String iconLink;
 
-    public EntranceDTO(Integer id, Double transaction, String description, String transactionDate, String transactionHour, EntranceCategories category) {
+    public EntranceDTO(Integer id, Double transaction, String description, String transactionDate, String transactionHour, EntranceCategories category, String iconLink) {
         this.id = id;
         this.transaction = transaction;
         this.description = description;
         this.transactionDate = transactionDate;
         this.transactionHour = transactionHour;
         this.category = category;
+        this.iconLink = iconLink;
     }
 
     public Integer getId() {
@@ -69,4 +71,13 @@ public class EntranceDTO {
     public void setCategory(EntranceCategories category) {
         this.category = category;
     }
+
+    public String getIconLink() {
+        return iconLink;
+    }
+
+    public void setIconLink(String iconLink) {
+        this.iconLink = iconLink;
+    }
+
 }

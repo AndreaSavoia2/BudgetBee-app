@@ -7,6 +7,7 @@ import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
 import com.sn.budgetbee.repos.EntranceDAO;
+import com.sn.budgetbee.repos.EntranceIconDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,12 @@ import java.util.Optional;
 public class EntranceServiceImpl implements EntranceService{
 
     private final EntranceDAO ENTRANCE_DAO;
+    private final EntranceIconDAO ICON_DAO;
 
     @Autowired
-    public EntranceServiceImpl(EntranceDAO entranceDAO) {
-        this.ENTRANCE_DAO = entranceDAO;
+    public EntranceServiceImpl(EntranceDAO ENTRANCE_DAO, EntranceIconDAO ICON_DAO) {
+        this.ENTRANCE_DAO = ENTRANCE_DAO;
+        this.ICON_DAO = ICON_DAO;
     }
 
     @Override
@@ -41,12 +44,14 @@ public class EntranceServiceImpl implements EntranceService{
 
         if(result.isPresent()){
             entrance = result.get();
+            String link = ICON_DAO.findLink(entrance.getCategory());
             entranceDTO = new EntranceDTO(
                     entrance.getId(),
                     entrance.getTransaction(),entrance.getDescription(),
                     entrance.getTransactionDate().format(formatterDate),
                     entrance.getTransactionDate().format(formatterHor),
-                    entrance.getCategory());
+                    entrance.getCategory(),
+                    link);
         }else{
             throw new EntranceNotFoundException("NO ID ENTRANCE FOUND: " + id);
         }
@@ -62,15 +67,16 @@ public class EntranceServiceImpl implements EntranceService{
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
 
-
         for (Entrance entrance: entrances){
+            String link = ICON_DAO.findLink(entrance.getCategory());
             entrancesDTO.add(new EntranceDTO(
                     entrance.getId(),
                     entrance.getTransaction(),
                     entrance.getDescription(),
                     entrance.getTransactionDate().format(formatterDate),
                     entrance.getTransactionDate().format(formatterHor),
-                    entrance.getCategory()));
+                    entrance.getCategory(),
+                    link));
         }
 
         return entrancesDTO;
@@ -98,13 +104,15 @@ public class EntranceServiceImpl implements EntranceService{
 
 
         for(Entrance entrance : entrances){
+            String link = ICON_DAO.findLink(entrance.getCategory());
             entrancesDTO.add(new EntranceDTO(
                     entrance.getId(),
                     entrance.getTransaction(),
                     entrance.getDescription(),
                     entrance.getTransactionDate().format(formatterDate),
                     entrance.getTransactionDate().format(formatterHor),
-                    entrance.getCategory()));
+                    entrance.getCategory(),
+                    link));
         }
 
         return entrancesDTO;

@@ -3,11 +3,10 @@ package com.sn.budgetbee.services;
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.dto.FilterExitListTotalDTO;
-import com.sn.budgetbee.dto.UserDTO;
 import com.sn.budgetbee.entities.Exit;
-import com.sn.budgetbee.entities.User;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
 import com.sn.budgetbee.repos.ExitDAO;
+import com.sn.budgetbee.repos.ExitIconDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +19,12 @@ import java.util.Optional;
 public class ExitServiceImpl implements ExitService{
 
     private final ExitDAO EXIT_DAO;
+    private  final ExitIconDAO ICON_DAO;
 
     @Autowired
-    public ExitServiceImpl(ExitDAO exitDAO) {
-        this.EXIT_DAO = exitDAO;
+    public ExitServiceImpl(ExitDAO EXIT_DAO, ExitIconDAO ICON_DAO) {
+        this.EXIT_DAO = EXIT_DAO;
+        this.ICON_DAO = ICON_DAO;
     }
 
     @Override
@@ -43,13 +44,15 @@ public class ExitServiceImpl implements ExitService{
 
         if(result.isPresent()){
             exit = result.get();
+            String link = ICON_DAO.findLink(exit.getCategory());
             exitDTO = new ExitDTO(
                     exit.getId(),
                     exit.getTransaction(),
                     exit.getDescription(),
                     exit.getTransactionDate().format(formatterDate),
                     exit.getTransactionDate().format(formatterHor),
-                    exit.getCategory());
+                    exit.getCategory(),
+                    link);
         }else{
             throw new EntranceNotFoundException("NO ID EXIT FOUND: " + id);
         }
@@ -66,13 +69,15 @@ public class ExitServiceImpl implements ExitService{
         DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
 
         for (Exit exit: exits){
+            String link = ICON_DAO.findLink(exit.getCategory());
             exitsDTO.add(new ExitDTO(
                     exit.getId(),
                     exit.getTransaction(),
                     exit.getDescription(),
                     exit.getTransactionDate().format(formatterDate),
                     exit.getTransactionDate().format(formatterHor),
-                    exit.getCategory()));
+                    exit.getCategory(),
+                    link));
         }
 
         return exitsDTO;
@@ -99,13 +104,15 @@ public class ExitServiceImpl implements ExitService{
         DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
 
         for (Exit exit : exits){
+            String link = ICON_DAO.findLink(exit.getCategory());
             exitsDTO.add(new ExitDTO(
                     exit.getId(),
                     exit.getTransaction(),
                     exit.getDescription(),
                     exit.getTransactionDate().format(formatterDate),
                     exit.getTransactionDate().format(formatterHor),
-                    exit.getCategory()));
+                    exit.getCategory(),
+                    link));
         }
         return exitsDTO;
     }
