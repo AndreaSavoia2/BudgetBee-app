@@ -5,7 +5,7 @@ const Card = () => {
   const apiUrlExit: any = process.env.REACT_APP_API_URL_EXIT;
   const username = process.env.REACT_APP_USERNAME;
   const password = process.env.REACT_APP_PASSWORD;
-  const [transactions, setTransactions] = useState<any[]>([]);
+  const [transactions, setTransactions] = useState<any>(null);
   const basicAuthHeader = "Basic " + btoa(username + ":" + password);
 
   useEffect(() => {
@@ -31,28 +31,38 @@ const Card = () => {
   }, []);
 
   return (
-    <div className="max-w-3xl mx-auto">
-      {transactions.map((transaction) => (
-        <div
-          key={transaction.id}
-          className="max-w-sm w-full lg:max-w-full lg:flex"
-        >
-          <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"></div>
-          <div className="cardColor border p-4 flex flex-col justify-between leading-normal rounded-2xl">
-            <div className="mb-8">
-              <h3 className="text-gray-900 font-bold text-xl mb-2">
-                {transaction?.description}
-              </h3>
-              <p className="text-gray-700 text-base">
-                {transaction.transactionDate}
-              </p>
-              <p>{transaction.transaction}</p>
-            </div>
-          </div>
+    <>
+      <div className="max-w-3xl mx-auto flex items-center justify-center">
+        <div>
+          {transactions !== null &&
+            transactions.map((transaction: any) => (
+              <div
+                key={transaction.id}
+                className="max-w-sm cardColor rounded overflow-hidden shadow-lg h-full mt-10 mb-10 text-center sm:w-screen w-80"
+              >
+                <div className="px-6 py-4 h-full flex flex-col justify-between">
+                  <div>
+                    <div className="font-bold text-xl mb-2">
+                      {transaction?.description}
+                    </div>
+                    <p className="text-gray-700 text-base">
+                      <span className="flex justify-center">
+                        {transaction.transactionDate}
+                      </span>
+                    </p>
+                    <p className="text-gray-700 text-base">
+                      {transaction.transaction}€
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
+  
+  
 };
 
 export default Card;
