@@ -15,7 +15,7 @@ public interface UserService {
 
     boolean deleteUserById(Integer id);
 
-    Integer checkLogin(String username, String password);
+    UserDTO checkLogin(String username, String password);
 
     boolean UsernameIsPresent(String username);
 

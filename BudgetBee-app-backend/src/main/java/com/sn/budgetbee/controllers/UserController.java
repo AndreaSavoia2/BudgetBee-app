@@ -67,7 +67,7 @@ public class UserController implements ControllerInterface<User> , ControlletDto
 
     @CrossOrigin
     @GetMapping("/users/login")
-    public @ResponseBody Integer login(@RequestParam String username, @RequestParam String password) {
+    public @ResponseBody UserDTO login(@RequestParam String username, @RequestParam String password) {
         return SERVICE.checkLogin(username, password);
     }
 

@@ -107,11 +107,11 @@ public class UserServiceImpl implements UserService{
 
     // Metodi unici per la User Service non sono da copiare nelle altre implementazioni --------------------------------
     @Override
-    public Integer checkLogin(String username, String password) {
+    public UserDTO checkLogin(String username, String password) {
         List<User> users = USER_DAO.findAll();
         for (User user: users) {
             if(user.getUsername().equals(username) && PASSWORD_ENCODER.matches(password, user.getPassword())){
-                return user.getId();
+                return new UserDTO(user.getId(),user.getUsername(), BUDGET_DAO.findBudgetsByUserId(user.getId()));
             }
         }
         return null;
