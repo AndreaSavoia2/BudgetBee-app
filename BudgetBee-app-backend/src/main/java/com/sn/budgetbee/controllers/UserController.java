@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api") // infirizzo per accedere alle api
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController implements ControllerInterface<User> , ControlletDtoInterface<UserDTO>/* L'interfaccia ControllerInterface è un interfaccia con tipi generici condivisa tra le classi controller */{
 
     //Implementazione della dipendenza con la service

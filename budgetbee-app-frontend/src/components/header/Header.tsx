@@ -9,9 +9,11 @@ const Header = () => {
   const [userData, setUserData] = useState<{ budget: number } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const basicAuthHeader = "Basic " + btoa(username + ":" + password);
+  const jsonString: any = localStorage.getItem('user');
+  const budgetId = JSON.parse(jsonString);
 
   useEffect(() => {
-    fetch(apiUrl, {
+    fetch(`${apiUrl}/${budgetId.budget.id}`, {
       method: "GET",
       headers: {
         Authorization: basicAuthHeader,
@@ -67,10 +69,10 @@ const Header = () => {
             </ul>
           </div>
         )}
-        <p className="text-3xl mt-20 mb-20 sm:mt-10 sm:mb-10">
-          € {userData?.budget}{" "}
-          <span className="text-base sm:text-lg">Bilancio totale</span>
-        </p>
+        <div className="text-3xl mt-20 mb-20 sm:mt-10 sm:mb-10">
+      <p>€ {userData?.budget}</p>
+      <p className="text-base sm:text-lg">Bilancio totale</p>
+    </div>
       </div>
       <div className="flex justify-between sm:mt-20 mt-10">
         <p className="ml-10 transactions">TRANSACTIONS</p>

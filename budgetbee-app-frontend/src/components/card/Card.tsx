@@ -7,9 +7,11 @@ const Card = () => {
   const password = process.env.REACT_APP_PASSWORD;
   const [transactions, setTransactions] = useState<any>(null);
   const basicAuthHeader = "Basic " + btoa(username + ":" + password);
+  const jsonString: any = localStorage.getItem('user');
+  const budgetId = JSON.parse(jsonString);
 
   useEffect(() => {
-    fetch(apiUrlExit, {
+    fetch(`${apiUrlExit}/${budgetId.budget.id}`, {
       method: "GET",
       headers: {
         Authorization: basicAuthHeader,
@@ -38,7 +40,7 @@ const Card = () => {
             transactions.map((transaction: any) => (
               <div
                 key={transaction.id}
-                className="max-w-sm cardColor rounded overflow-hidden shadow-lg h-full mt-10 mb-10 text-center sm:w-screen w-80"
+                className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 mb-10 text-center sm:w-screen w-80"
               >
                 <div className="px-6 py-4 h-full flex flex-col justify-between">
                   <div>
