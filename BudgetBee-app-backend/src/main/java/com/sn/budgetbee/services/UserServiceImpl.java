@@ -44,6 +44,9 @@ public class UserServiceImpl implements UserService{
             if(!this.UsernameIsPresent(user.getUsername())){
                 String encodePassword = this.PASSWORD_ENCODER.encode(user.getPassword()); //necessario alla crypto non copiare nelle altre Implementazioni
                 user.setPassword(encodePassword); //necessario alla crypto non copiare nelle altre Implementazioni
+                if (user.getBudget() == null){
+                    user.setBudget(new Budget(0.00));
+                }
                 return USER_DAO.save(user);
             }else{
                 throw new UserAlreadyExistsException("USER IS A UNIQUE FIELD IN THE DATABASE, THE VALUE ENTERED IS ALREADY PRESENT: " + user.getUsername());
