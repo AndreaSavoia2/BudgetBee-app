@@ -1,5 +1,3 @@
-// Header.tsx
-
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import icon from "../../img/bee.png";
@@ -9,7 +7,7 @@ const Header = () => {
   const username = process.env.REACT_APP_USERNAME;
   const password = process.env.REACT_APP_PASSWORD;
   const [userData, setUserData] = useState<{ budget: number } | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false); // Stato per gestire l'apertura del menu
+  const [menuOpen, setMenuOpen] = useState(false);
   const basicAuthHeader = "Basic " + btoa(username + ":" + password);
 
   useEffect(() => {
@@ -34,22 +32,24 @@ const Header = () => {
       });
   }, []);
 
-  // Funzione per gestire il clic sull'icona dell'hamburger
   const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen); // Inverti lo stato del menu
+    setMenuOpen(!menuOpen);
   };
 
-  // Funzione per gestire il clic su un'opzione del menu
   const handleOptionClick = () => {
-    setMenuOpen(false); // Chiudi il menu quando viene cliccata un'opzione
+    setMenuOpen(false);
   };
 
   return (
     <>
       <div className="containerHeader text-center grid items-center justify-center test rounded-br-3xl rounded-bl-3xl">
-        <img src={icon} alt="" className="h-20 absolute mb-20 right-0" />
+        <img
+          src={icon}
+          alt=""
+          className="h-20 absolute mb-20 md:mb-10 right-0"
+        />
         <div
-          className="hamburger absolute mb-20 ml-5"
+          className="hamburger absolute mb-20 md:mb-10 ml-5"
           onClick={handleMenuToggle}
         >
           <div className={`line ${menuOpen ? "open" : ""}`}></div>
@@ -69,7 +69,7 @@ const Header = () => {
         )}
         <p className="text-3xl mt-20 mb-20 sm:mt-10 sm:mb-10">
           € {userData?.budget}{" "}
-          <p className="text-base sm:text-lg">Bilancio totale</p>
+          <span className="text-base sm:text-lg">Bilancio totale</span>
         </p>
       </div>
       <div className="flex justify-between sm:mt-20 mt-10">
