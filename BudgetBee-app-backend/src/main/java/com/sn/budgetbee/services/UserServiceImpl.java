@@ -37,7 +37,9 @@ public class UserServiceImpl implements UserService{
 
     // Metodo per salvare o modificare un utente già esistente
     @Override
-    public User saveUser(User user) {
+    public UserDTO saveUser(User user) {
+
+        User userConvertion;
 
         if(user.getId() == 0){
 
@@ -47,7 +49,13 @@ public class UserServiceImpl implements UserService{
                 if (user.getBudget() == null){
                     user.setBudget(new Budget(0.00));
                 }
-                return USER_DAO.save(user);
+
+                userConvertion= USER_DAO.save(user);
+                UserDTO userDTO = new UserDTO(
+                        userConvertion.getId(),
+                        userConvertion.getUsername(),
+                        userConvertion.getBudget());
+                return userDTO;
             }else{
                 throw new UserAlreadyExistsException("USER IS A UNIQUE FIELD IN THE DATABASE, THE VALUE ENTERED IS ALREADY PRESENT: " + user.getUsername());
             }
@@ -56,7 +64,7 @@ public class UserServiceImpl implements UserService{
 
             String encodePassword = this.PASSWORD_ENCODER.encode(user.getPassword()); //necessario alla crypto non copiare nelle altre Implementazioni
             user.setPassword(encodePassword); //necessario alla crypto non copiare nelle altre Implementazioni
-            return USER_DAO.save(user);
+            return null;
 
         }
 

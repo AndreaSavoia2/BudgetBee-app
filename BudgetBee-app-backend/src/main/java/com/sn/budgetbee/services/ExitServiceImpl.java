@@ -3,8 +3,10 @@ package com.sn.budgetbee.services;
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.dto.FilterExitListTotalDTO;
+import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
+import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.ExitDAO;
 import com.sn.budgetbee.repos.ExitIconDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +21,22 @@ import java.util.Optional;
 public class ExitServiceImpl implements ExitService{
 
     private final ExitDAO EXIT_DAO;
-    private  final ExitIconDAO ICON_DAO;
+    private final ExitIconDAO ICON_DAO;
+    private final BudgetDAO BADGET_DAO;
 
     @Autowired
-    public ExitServiceImpl(ExitDAO EXIT_DAO, ExitIconDAO ICON_DAO) {
+    public ExitServiceImpl(ExitDAO EXIT_DAO, ExitIconDAO ICON_DAO, BudgetDAO BADGET_DAO) {
         this.EXIT_DAO = EXIT_DAO;
         this.ICON_DAO = ICON_DAO;
+        this.BADGET_DAO = BADGET_DAO;
     }
 
     @Override
-    public Exit saveExit(Exit exit) {
-
+    public Exit saveExit(Exit exit /*Integer id*/) {
+        /*Budget budget = BADGET_DAO.findBudgetsByUserId(id);
+        double operation = budget.getBudget();
+        operation += exit.getTransaction();
+        budget.setBudget(operation);*/
         return EXIT_DAO.save(exit);
     }
 

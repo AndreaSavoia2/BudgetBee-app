@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api") // infirizzo per accedere alle api
 @CrossOrigin(origins = "http://localhost:3000")
-public class UserController implements ControllerInterface<User> , ControlletDtoInterface<UserDTO>/* L'interfaccia ControllerInterface è un interfaccia con tipi generici condivisa tra le classi controller */{
+public class UserController implements  ControlletDtoInterface<UserDTO>/* L'interfaccia ControllerInterface è un interfaccia con tipi generici condivisa tra le classi controller */{
 
     //Implementazione della dipendenza con la service
     private final UserService SERVICE;
@@ -42,24 +42,23 @@ public class UserController implements ControllerInterface<User> , ControlletDto
     }
 
     // Metodo che richiama il metodo presente nella service per salvare un nuovo elemento nella tabella
-    @Override
+    // Da sistamre con il tipo generico -----------------
     @CrossOrigin
     @PostMapping("/users")
-    public User setElement(@RequestBody User user) {
+    public UserDTO setElemen(@RequestBody User user) {
         user.setId(0); // si imposta l'id a 0 per far capire al db che si tratta di un utente non esistente
         return SERVICE.saveUser(user);
     }
 
     // Metodo che richiama il metodo presente nella service per aggiornare un elemento nella tabella
-    @Override
+    // Da sistamre con il tipo generico -----------------------
     @CrossOrigin
     @PutMapping("/users")
-    public User updateElement(@RequestBody User user) {
+    public UserDTO updateElement(@RequestBody User user) {
         return SERVICE.saveUser(user);
     }
 
     // Metodo che richiama il metodo presente nella service per eliminare un elemento nella tabella
-    @Override
     @CrossOrigin
     @DeleteMapping("/users/{userId}")
     public boolean deleteElementById(@PathVariable("userId") Integer id) {
