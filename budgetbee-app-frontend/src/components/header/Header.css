@@ -1,54 +1,53 @@
 .containerHeader {
-    background-color: #ffdb28;
+  background-color: #ffdb28;
 }
 
 .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 24px;
-    cursor: pointer;
-    z-index: 10;
-  }
-  
-  .line {
-    width: 30px;
-    height: 2px;
-    background-color: black;
-  }
-  .open:nth-child(1) {
-    transform: rotate(45deg) translate(4px, 4px);
-  }
-  
-  .open:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .open:nth-child(3) {
-    transform: rotate(-45deg) translate(3px, -3px);
-  }
-  .menu-options {
-    position: absolute;
-    top: 90px;
-    left: 0;
-    width: 200px; 
-    background-color: white;
-    border: 1px solid black;
-    padding: 10px;
-  }
-  
-  .menu-options ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .menu-options ul li {
-    padding: 10px 0;
-    cursor: pointer;
-  }
-  
-  .menu-options ul li:hover {
-    background-color: #f1f1f1;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.line {
+  width: 30px;
+  height: 2px;
+  background-color: black;
+}
+.open:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+
+.open:nth-child(2) {
+  opacity: 0;
+}
+
+.open:nth-child(3) {
+  transform: rotate(-45deg) translate(3px, -3px);
+}
+.menu-options {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 200px;
+  background-color: white;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.menu-options ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu-options ul li {
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.menu-options ul li:hover {
+  background-color: #f1f1f1;
+}

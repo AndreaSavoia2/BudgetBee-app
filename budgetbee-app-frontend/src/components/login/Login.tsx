@@ -70,9 +70,9 @@ const Login = ({ onSubmit }: LoginFormProps) => {
             placeholder="Password"
           />
         </div>
-        <a href="#" className="text-black hover:underline text-center">
-          Forget password?
-        </a>
+        {/* <a href="#" className="text-black hover:underline text-center">
+          Forgot password?
+        </a> */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-offset-2"

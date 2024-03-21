@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import icon from "../../img/bee.png";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const apiUrl: any = process.env.REACT_APP_API_URL_BUDGET;
@@ -9,8 +10,19 @@ const Header = () => {
   const [userData, setUserData] = useState<{ budget: number } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const basicAuthHeader = "Basic " + btoa(username + ":" + password);
-  const jsonString: any = localStorage.getItem('user');
+  const jsonString: any = localStorage.getItem("user");
   const budgetId = JSON.parse(jsonString);
+
+  const clearLocalStorageAndRefresh = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
+  const isMobileOrTablet = () => {
+    return window.innerWidth <= 768;
+  };
+
+  const [isMobileOrTabletView, setIsMobileOrTabletView] = useState(isMobileOrTablet());
 
   useEffect(() => {
     fetch(`${apiUrl}/${budgetId.budget.id}`, {
@@ -42,9 +54,21 @@ const Header = () => {
     setMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileOrTabletView(isMobileOrTablet());
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <div className="containerHeader text-center grid items-center justify-center test rounded-br-3xl rounded-bl-3xl">
+      <div className="containerHeader text-center grid items-center  test rounded-br-3xl rounded-bl-3xl">
         <img
           src={icon}
           alt=""
@@ -61,22 +85,32 @@ const Header = () => {
         {menuOpen && (
           <div className="menu-options">
             <ul>
-              <li onClick={handleOptionClick}>Option 1</li>
+              <li onClick={handleOptionClick}>Grafico</li>
               <hr />
-              <li onClick={handleOptionClick}>Option 2</li>
+              <li onClick={handleOptionClick}>Categorie</li>
               <hr />
-              <li onClick={handleOptionClick}>Option 3</li>
+              <li onClick={clearLocalStorageAndRefresh}>Log Out</li>
             </ul>
           </div>
         )}
         <div className="text-3xl mt-20 mb-20 sm:mt-10 sm:mb-10">
-      <p>€ {userData?.budget}</p>
-      <p className="text-base sm:text-lg">Bilancio totale</p>
-    </div>
+          <p>€ {userData?.budget}</p>
+          <p className="text-base sm:text-lg">Bilancio totale</p>
+        </div>
+        {isMobileOrTabletView && (
+          <div className="flex justify-between mb-5 ml-5 mr-5">
+            <button className="rounded-full font-bold bg-black w-32 h-16 text-white">
+              +
+            </button>
+            <button className="rounded-full font-bold bg-black w-32 h-16 text-white">
+              -
+            </button>
+          </div>
+        )}
       </div>
       <div className="flex justify-between sm:mt-20 mt-10">
         <p className="ml-10 transactions">TRANSACTIONS</p>
-        <button className="mr-10 see">SEE ALL</button>
+        <button className="mr-10">SEE ALL</button>
       </div>
     </>
   );

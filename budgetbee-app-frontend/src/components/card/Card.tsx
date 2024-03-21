@@ -7,7 +7,7 @@ const Card = () => {
   const password = process.env.REACT_APP_PASSWORD;
   const [transactions, setTransactions] = useState<any>(null);
   const basicAuthHeader = "Basic " + btoa(username + ":" + password);
-  const jsonString: any = localStorage.getItem('user');
+  const jsonString: any = localStorage.getItem("user");
   const budgetId = JSON.parse(jsonString);
 
   useEffect(() => {
@@ -32,12 +32,36 @@ const Card = () => {
       });
   }, []);
 
+  const isDesktop = () => {
+    return window.innerWidth > 768;
+  };
+
+  const [isDesktopView, setIsDesktopView] = useState(isDesktop());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktopView(isDesktop());
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <div className="max-w-3xl mx-auto flex items-center justify-center">
         <div>
+        {isDesktopView && (
+          <div className="grid justify-end mt-32 mr-5 right-0 fixed">
+          <button className="rounded-full mb-3 bg-black text-white w-16 h-16">+</button>
+          <button className="rounded-full bg-black text-white w-16 h-16">-</button>
+        </div>
+        )}
           {transactions !== null &&
-            transactions.map((transaction: any) => (
+            transactions.slice(0, 5).map((transaction: any) => (
               <div
                 key={transaction.id}
                 className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 mb-10 text-center sm:w-screen w-80"
@@ -61,10 +85,9 @@ const Card = () => {
             ))}
         </div>
       </div>
+      
     </>
   );
-  
-  
 };
 
 export default Card;
