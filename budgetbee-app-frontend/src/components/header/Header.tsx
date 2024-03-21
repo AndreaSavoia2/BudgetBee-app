@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Header.css";
 import icon from "../../img/bee.png";
-import { Link } from "react-router-dom";
 
 const Header = () => {
   const apiUrl: any = process.env.REACT_APP_API_URL_BUDGET;

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Home from "./components/home/Home";
 import Login from "./components/login/Login";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-const router = createBrowserRouter([{ path: "/", element: <Home /> }, {}]);
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Registration from "./components/Registration/Registration";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -20,8 +19,27 @@ function App() {
     localStorage.setItem("isAuthenticated", isAuthenticated.toString());
   }, [isAuthenticated]);
 
+  const handleRegistrationSubmit = () => {
+    setIsAuthenticated(true);
+  };
+
+  // Funzione che restituisce il componente corretto in base allo stato di autenticazione
+  const renderCorrectComponent = () => { // Imposta il tipo di ritorno a ReactNode
+    if (isAuthenticated) {
+      return <Home />;
+    } else {
+      return <Login onSubmit={handleLoginSubmit} />;
+    }
+  };
+
   return (
-    <>{isAuthenticated ? <Home /> : <Login onSubmit={handleLoginSubmit} />}</>
+    <Router>
+      <Routes>
+        {/* Passa la funzione 'renderCorrectComponent' come attributo 'element' */}
+        <Route path="/" element={renderCorrectComponent()} />
+        <Route path="/register" element={<Registration onSubmit={handleRegistrationSubmit} />} />
+      </Routes>
+    </Router>
   );
 }
 

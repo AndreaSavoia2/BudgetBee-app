@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import icon from "../../img/bee.png";
+import { Link } from "react-router-dom";
 
 interface LoginFormProps {
   onSubmit: (username: string, password: string) => void;
@@ -70,21 +71,20 @@ const Login = ({ onSubmit }: LoginFormProps) => {
             placeholder="Password"
           />
         </div>
-        {/* <a href="#" className="text-black hover:underline text-center">
-          Forgot password?
-        </a> */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-offset-2"
         >
           LOG IN
         </button>
+        <Link to='/register'>
         <button
           type="submit"
           className="w-full py-2 px-4 registrationButton rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
         >
-          REGISTRATION
+          Non sei registrato? Clicca qui
         </button>
+        </Link>
       </form>
     </div>
   );
