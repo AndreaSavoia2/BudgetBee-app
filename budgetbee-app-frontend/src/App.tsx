@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Login from "./components/login/Login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Registration from "./components/Registration/Registration";
+import AddTransaction from "./components/addTransaction/AddTransaction";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -23,22 +24,18 @@ function App() {
     setIsAuthenticated(true);
   };
 
-  const renderCorrectComponent = () => {
-    if (isAuthenticated) {
-      return <Home />;
-    } else {
-      return <Login onSubmit={handleLoginSubmit} />;
-    }
-  };
-
   return (
     <Router>
       <Routes>
-        <Route path="/" element={renderCorrectComponent()} />
+        <Route
+          path="/"
+          element={isAuthenticated ? <Home /> : <Login onSubmit={handleLoginSubmit} />}
+        />
         <Route
           path="/register"
           element={<Registration onSubmit={handleRegistrationSubmit} />}
         />
+        <Route path="/transaction" element={<AddTransaction />} />
       </Routes>
     </Router>
   );

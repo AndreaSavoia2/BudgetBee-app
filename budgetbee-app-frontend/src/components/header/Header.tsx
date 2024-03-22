@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import icon from "../../img/bee.png";
 
@@ -98,18 +99,16 @@ const Header = () => {
         </div>
         {isMobileOrTabletView && (
           <div className="flex justify-between mb-5 ml-5 mr-5">
-            <button className="rounded-full font-bold bg-black w-32 h-16 text-white">
+            <Link to='/transaction'><button className="rounded-full font-bold bg-black w-32 h-16 text-white">
               +
             </button>
-            <button className="rounded-full font-bold bg-black w-32 h-16 text-white">
+            </Link>
+            <Link to='/transaction'><button className="rounded-full font-bold bg-black w-32 h-16 text-white">
               -
             </button>
+            </Link>
           </div>
         )}
-      </div>
-      <div className="flex justify-between sm:mt-20 mt-10">
-        <p className="ml-10 transactions">TRANSACTIONS</p>
-        <button className="mr-10">SEE ALL</button>
       </div>
     </>
   );
