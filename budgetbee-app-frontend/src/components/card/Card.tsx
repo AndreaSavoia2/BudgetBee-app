@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Card.css";
+import { Link } from "react-router-dom";
 
 const Card = () => {
   const apiUrlExit: any = process.env.REACT_APP_API_URL_EXIT;
@@ -52,14 +53,26 @@ const Card = () => {
 
   return (
     <>
+      <div className="flex justify-between sm:mt-20 mt-10">
+        <p className="ml-10 transactions">TRANSACTIONS</p>
+        <button className="mr-10">SEE ALL</button>
+      </div>
       <div className="max-w-3xl mx-auto flex items-center justify-center">
         <div>
-        {isDesktopView && (
-          <div className="grid justify-end mt-32 mr-5 right-0 fixed">
-          <button className="rounded-full mb-3 bg-black text-white w-16 h-16">+</button>
-          <button className="rounded-full bg-black text-white w-16 h-16">-</button>
-        </div>
-        )}
+          {isDesktopView && (
+            <div className="grid justify-end mt-32 mr-5 right-0 fixed">
+              <Link to="/transaction">
+                <button className="rounded-full mb-3 bg-black text-white w-16 h-16">
+                  +
+                </button>
+              </Link>
+              <Link to="/transaction">
+                <button className="rounded-full mb-3 bg-black text-white w-16 h-16">
+                  -
+                </button>
+              </Link>
+            </div>
+          )}
           {transactions !== null &&
             transactions.slice(0, 5).map((transaction: any) => (
               <div
@@ -85,7 +98,6 @@ const Card = () => {
             ))}
         </div>
       </div>
-      
     </>
   );
 };

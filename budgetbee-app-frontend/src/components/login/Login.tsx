@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import icon from "../../img/bee.png";
 import { Link } from "react-router-dom";
@@ -36,13 +38,24 @@ const Login = ({ onSubmit }: LoginFormProps) => {
       onSubmit(username, password);
       localStorage.setItem("user", JSON.stringify(data));
     } catch (error) {
-      alert("Hai sbagliato la password o il nome utente. Riprova");
+      toast.error("Hai sbagliato la password o il nome utente. Riprova", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
       console.error("There was a problem with the fetch operation:", error);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen background">
+      <ToastContainer />
       <img src={icon} alt="" className="h-20" />
       <h1 className="text-4xl font-bold mb-4 text-center">
         Welcome to BudgetBee!
@@ -77,13 +90,13 @@ const Login = ({ onSubmit }: LoginFormProps) => {
         >
           LOG IN
         </button>
-        <Link to='/register'>
-        <button
-          type="submit"
-          className="w-full py-2 px-4 registrationButton rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
-        >
-          Non sei registrato? Clicca qui
-        </button>
+        <Link to="/register">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 registrationButton rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+          >
+            Non sei registrato? Clicca qui
+          </button>
         </Link>
       </form>
     </div>
