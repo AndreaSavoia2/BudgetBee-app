@@ -3,9 +3,11 @@ package com.sn.budgetbee.services;
 import com.sn.budgetbee.dto.EntranceDTO;
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
+import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
+import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.repos.EntranceDAO;
 import com.sn.budgetbee.repos.EntranceIconDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,31 @@ public class EntranceServiceImpl implements EntranceService{
 
     @Override
     public Entrance saveEntrance(Entrance entrance) {
-        return ENTRANCE_DAO.save(entrance);
+        double operation;
+
+        if(entrance.getId() == 0){
+
+            Budget budget = entrance.getBudget();
+            operation = budget.getBudget();
+            operation += entrance.getTransaction();
+            budget.setBudget(operation);
+            return ENTRANCE_DAO.save(entrance);
+
+        }else {
+
+            Budget budget = entrance.getBudget();
+            Optional<Entrance> result = ENTRANCE_DAO.findById(entrance.getId());
+            if(result.isPresent()){
+                Entrance rintegrescionExit = result.get();
+                operation = budget.getBudget();
+                double rintegrescion =  (rintegrescionExit.getTransaction() * -1) + entrance.getTransaction();
+                operation += rintegrescion;
+                budget.setBudget(operation);
+                return ENTRANCE_DAO.save(entrance);
+            }else{
+                throw new UserNotFoundException("NO ID USER FOUND: " + entrance.getId());
+            }
+        }
     }
 
     @Override
