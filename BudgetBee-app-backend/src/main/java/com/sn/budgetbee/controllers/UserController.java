@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api") // infirizzo per accedere alle api
 @CrossOrigin(origins = "http://localhost:3000")
-public class UserController implements  ControlletDtoInterface<UserDTO>/* L'interfaccia ControllerInterface è un interfaccia con tipi generici condivisa tra le classi controller */{
+public class UserController{
 
     //Implementazione della dipendenza con la service
     private final UserService SERVICE;
@@ -29,15 +29,14 @@ public class UserController implements  ControlletDtoInterface<UserDTO>/* L'inte
     // Metodo che richiama il metodo presente nella service per restituite la lista completa della tabella
     @CrossOrigin
     @GetMapping("/users") // l'indirizzo per accedere alla lista (es: host/api/users)
-    public List<UserDTO> getAllElementsDto() {
+    public List<UserDTO> getAllUser() {
         return SERVICE.findAllUsers();
     }
 
     // Metodo che richiama il metodo presente nella service per restituite l'elemento corrispondente all'id
-    @Override
     @CrossOrigin
     @GetMapping("/users/{userId}") // l'indirizzo per accedere alla lista dove UserId corrisponde all'id nel parametro id (es: host/api/users/2)
-    public UserDTO getElementDtoById(@PathVariable("userId") Integer id) {
+    public UserDTO getUserById(@PathVariable("userId") Integer id) {
         return SERVICE.findUserById(id);
     }
 
@@ -45,7 +44,7 @@ public class UserController implements  ControlletDtoInterface<UserDTO>/* L'inte
     // Da sistamre con il tipo generico -----------------
     @CrossOrigin
     @PostMapping("/users")
-    public UserDTO setElement(@RequestBody User user) {
+    public UserDTO setUser(@RequestBody User user) {
         user.setId(0); // si imposta l'id a 0 per far capire al db che si tratta di un utente non esistente
         return SERVICE.saveUser(user);
     }
@@ -54,14 +53,14 @@ public class UserController implements  ControlletDtoInterface<UserDTO>/* L'inte
     // Da sistamre con il tipo generico -----------------------
     @CrossOrigin
     @PutMapping("/users")
-    public UserDTO updateElement(@RequestBody User user) {
+    public UserDTO updatUser(@RequestBody User user) {
         return SERVICE.saveUser(user);
     }
 
     // Metodo che richiama il metodo presente nella service per eliminare un elemento nella tabella
     @CrossOrigin
     @DeleteMapping("/users/{userId}")
-    public boolean deleteElementById(@PathVariable("userId") Integer id) {
+    public boolean deleteUserById(@PathVariable("userId") Integer id) {
         return SERVICE.deleteUserById(id);
     }
 

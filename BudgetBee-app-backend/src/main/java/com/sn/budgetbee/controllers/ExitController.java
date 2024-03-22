@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class ExitController implements ControllerInterface<Exit> , ControlletDtoInterface<ExitDTO>{
+public class ExitController{
 
     private final ExitService SERVICE;
 
@@ -23,68 +23,64 @@ public class ExitController implements ControllerInterface<Exit> , ControlletDto
         this.SERVICE = service;
     }
 
-    @Override
     @CrossOrigin
     @GetMapping("/exits")
-    public List<ExitDTO> getAllElementsDto() {
+    public List<ExitDTO> getAllExits() {
         return SERVICE.findAllExits();
     }
 
-    @Override
     @CrossOrigin
     @GetMapping("/exits/{exitId}")
-    public ExitDTO getElementDtoById(@PathVariable("exitId") Integer id) {
+    public ExitDTO getExitById(@PathVariable("exitId") Integer id) {
         return SERVICE.findExitById(id);
     }
 
     @CrossOrigin
     @GetMapping("/exits/budgetid/{budgetId}")
-    public List<ExitDTO> getElementByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
+    public List<ExitDTO> getExitByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
 
     @CrossOrigin
     @GetMapping("/exits/filter/month")
-    public @ResponseBody List<FilterExitDTO> getElementByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
+    public @ResponseBody List<FilterExitDTO> getExitsByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
         return SERVICE.exitListByCategoryAndMonth(id, month);
     }
 
     @CrossOrigin
     @GetMapping("/exits/filter/year")
-    public @ResponseBody List<FilterExitDTO> getElementByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
+    public @ResponseBody List<FilterExitDTO> getExitsByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.exitListByCategoryAndYear(id, year);
     }
 
     @CrossOrigin
     @GetMapping("/exits/total/month")
-    public @ResponseBody  Double getElementByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.exitByMonth(id, month); }
+    public @ResponseBody  Double getExitsByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.exitByMonth(id, month); }
 
     @CrossOrigin
     @GetMapping("/exits/total/year")
-    public @ResponseBody  Double getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.exitByYear(id, year); }
+    public @ResponseBody  Double getExitsByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.exitByYear(id, year); }
 
     @CrossOrigin
     @PostMapping("/exits")
-    public Exit setElement(@RequestBody Exit exit) {
+    public Exit setExit(@RequestBody Exit exit) {
         exit.setId(0);
         return SERVICE.saveExit(exit);
     }
 
     @CrossOrigin
-    @Override
     @PutMapping("/exits")
-    public Exit updateElement(@RequestBody Exit exit) {
+    public Exit updateExit(@RequestBody Exit exit) {
         return SERVICE.saveExit(exit);
     }
 
     @CrossOrigin
-    @Override
     @DeleteMapping("/exits/{exitId}")
-    public boolean deleteElementById(@PathVariable("exitId") Integer id) {
+    public boolean deleteExitById(@PathVariable("exitId") Integer id) {
         return SERVICE.deleteExitById(id);
     }
 
     @CrossOrigin
     @GetMapping("/exits/filter/mouthlist")
-    public @ResponseBody List<FilterExitListTotalDTO> getElementTotalMouthListByYear(@RequestParam Integer id, @RequestParam String year) {
+    public @ResponseBody List<FilterExitListTotalDTO> getExitsTotalMouthListByYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.exitListTotalMonthByYear(id, year);
     }
 

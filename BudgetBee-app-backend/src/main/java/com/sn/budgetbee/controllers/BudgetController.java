@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class BudgetController implements ControllerInterface<Budget> {
+public class BudgetController{
 
     private final BudgetService SERVICE;
 
@@ -23,35 +23,32 @@ public class BudgetController implements ControllerInterface<Budget> {
 
     @CrossOrigin
     @GetMapping("/budgets")
-    public List<Budget> getAllElements() {
+    public List<Budget> getAllBudgets() {
         return SERVICE.findAllBudgets();
     }
 
     @CrossOrigin
     @GetMapping("/budgets/{budgetId}")
-    public Budget getElementById(@PathVariable("budgetId") Integer id) {
+    public Budget getBudgetById(@PathVariable("budgetId") Integer id) {
         return SERVICE.findBudgetById(id);
     }
 
-    @Override
     @CrossOrigin
     @PostMapping("/budgets")
-    public Budget setElement(@RequestBody Budget budget) {
+    public Budget setBudget(@RequestBody Budget budget) {
         budget.setId(0);
         return SERVICE.saveBudget(budget);
     }
 
-    @Override
     @CrossOrigin
     @PutMapping("/budgets")
-    public Budget updateElement(@RequestBody Budget budget) {
+    public Budget updateBudget(@RequestBody Budget budget) {
         return SERVICE.saveBudget(budget);
     }
 
-    @Override
     @CrossOrigin
     @DeleteMapping("/budgets/{budgetId}")
-    public boolean deleteElementById(@PathVariable("budgetId") Integer id) {
+    public boolean deleteBudgetById(@PathVariable("budgetId") Integer id) {
         return SERVICE.deleteBudgetById(id);
     }
 
