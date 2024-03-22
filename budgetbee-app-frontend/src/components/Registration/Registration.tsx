@@ -9,6 +9,7 @@ const Registration = ({ onSubmit }: FormProps) => {
   const passwordApi = process.env.REACT_APP_PASSWORD;
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [budget, setBudget] = useState<any>(0);
   const [registrationSuccess, setRegistrationSuccess] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -16,6 +17,10 @@ const Registration = ({ onSubmit }: FormProps) => {
     event.preventDefault();
     if (!username || !password) {
       setError("Username and password cannot be empty.");
+      return;
+    }
+    if (!budget || isNaN(parseInt(budget))) {
+      setError("Please enter a valid budget value.");
       return;
     }
     try {
@@ -28,15 +33,17 @@ const Registration = ({ onSubmit }: FormProps) => {
             Authorization: basicAuthHeader,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: username, password: password })
+          body: JSON.stringify({ username: username, password: password, budget:{budget: budget}})
         }
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      onSubmit(username, password);
+      onSubmit(username, password, budget);
       localStorage.setItem("user", JSON.stringify(data));
+      console.log(data);
+      
       setRegistrationSuccess(true);
     } catch (error) {
       alert("Something went wrong. Please try again.");
@@ -58,7 +65,7 @@ const Registration = ({ onSubmit }: FormProps) => {
       <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <div className="flex flex-col">
           <input
-            type="text"
+            type="username"
             id="username"
             name="username"
             className="px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -76,6 +83,17 @@ const Registration = ({ onSubmit }: FormProps) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+          />
+        </div>
+        <div className="flex flex-col">
+          <input
+            type="number"
+            id="budget"
+            name="budget"
+            className="px-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500"
+            value={budget + ''}
+            onChange={(e) => setBudget(parseFloat(e.target.value))}
+            placeholder="Imposta il tuo budget"
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}

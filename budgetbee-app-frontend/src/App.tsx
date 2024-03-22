@@ -23,8 +23,7 @@ function App() {
     setIsAuthenticated(true);
   };
 
-  // Funzione che restituisce il componente corretto in base allo stato di autenticazione
-  const renderCorrectComponent = () => { // Imposta il tipo di ritorno a ReactNode
+  const renderCorrectComponent = () => {
     if (isAuthenticated) {
       return <Home />;
     } else {
@@ -35,9 +34,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Passa la funzione 'renderCorrectComponent' come attributo 'element' */}
         <Route path="/" element={renderCorrectComponent()} />
-        <Route path="/register" element={<Registration onSubmit={handleRegistrationSubmit} />} />
+        <Route
+          path="/register"
+          element={<Registration onSubmit={handleRegistrationSubmit} />}
+        />
       </Routes>
     </Router>
   );

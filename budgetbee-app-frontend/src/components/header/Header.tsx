@@ -7,7 +7,7 @@ const Header = () => {
   const username = process.env.REACT_APP_USERNAME;
   const password = process.env.REACT_APP_PASSWORD;
   const [userData, setUserData] = useState<{ budget: number } | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const basicAuthHeader = "Basic " + btoa(username + ":" + password);
   const jsonString: any = localStorage.getItem("user");
   const budgetId = JSON.parse(jsonString);
