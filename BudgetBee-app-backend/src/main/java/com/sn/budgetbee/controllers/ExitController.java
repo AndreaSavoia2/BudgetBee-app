@@ -62,7 +62,6 @@ public class ExitController implements ControllerInterface<Exit> , ControlletDto
     public @ResponseBody  Double getElementByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.exitByYear(id, year); }
 
     @CrossOrigin
-    @Override
     @PostMapping("/exits")
     public Exit setElement(@RequestBody Exit exit) {
         exit.setId(0);

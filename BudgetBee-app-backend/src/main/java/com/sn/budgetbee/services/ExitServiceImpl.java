@@ -6,6 +6,7 @@ import com.sn.budgetbee.dto.FilterExitListTotalDTO;
 import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
+import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.ExitDAO;
 import com.sn.budgetbee.repos.ExitIconDAO;
@@ -32,12 +33,33 @@ public class ExitServiceImpl implements ExitService{
     }
 
     @Override
-    public Exit saveExit(Exit exit /*Integer id*/) {
-        /*Budget budget = BADGET_DAO.findBudgetsByUserId(id);
-        double operation = budget.getBudget();
-        operation += exit.getTransaction();
-        budget.setBudget(operation);*/
-        return EXIT_DAO.save(exit);
+    public Exit saveExit(Exit exit) {
+        double operation;
+
+        if(exit.getId() == 0){
+
+            Budget budget = exit.getBudget();
+            operation = budget.getBudget();
+            operation += exit.getTransaction();
+            budget.setBudget(operation);
+            return EXIT_DAO.save(exit);
+
+        }else {
+
+            Budget budget = exit.getBudget();
+            Optional<Exit> result = EXIT_DAO.findById(exit.getId());
+            if(result.isPresent()){
+                Exit rintegrescionExit = result.get();
+                operation = budget.getBudget();
+                double rintegrescion =  (rintegrescionExit.getTransaction() * -1) + exit.getTransaction();
+                operation += rintegrescion;
+                budget.setBudget(operation);
+                return EXIT_DAO.save(exit);
+            }else{
+                throw new UserNotFoundException("NO ID USER FOUND: " + exit.getId());
+            }
+
+        }
     }
 
     @Override

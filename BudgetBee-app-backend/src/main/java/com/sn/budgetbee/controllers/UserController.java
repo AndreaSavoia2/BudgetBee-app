@@ -45,7 +45,7 @@ public class UserController implements  ControlletDtoInterface<UserDTO>/* L'inte
     // Da sistamre con il tipo generico -----------------
     @CrossOrigin
     @PostMapping("/users")
-    public UserDTO setElemen(@RequestBody User user) {
+    public UserDTO setElement(@RequestBody User user) {
         user.setId(0); // si imposta l'id a 0 per far capire al db che si tratta di un utente non esistente
         return SERVICE.saveUser(user);
     }
