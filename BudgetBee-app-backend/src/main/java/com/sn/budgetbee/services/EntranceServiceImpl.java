@@ -8,6 +8,7 @@ import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
 import com.sn.budgetbee.exception.UserNotFoundException;
+import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.EntranceDAO;
 import com.sn.budgetbee.repos.EntranceIconDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,13 @@ public class EntranceServiceImpl implements EntranceService{
 
     private final EntranceDAO ENTRANCE_DAO;
     private final EntranceIconDAO ICON_DAO;
+    private final BudgetDAO BUDGET_DAO;
 
     @Autowired
-    public EntranceServiceImpl(EntranceDAO ENTRANCE_DAO, EntranceIconDAO ICON_DAO) {
+    public EntranceServiceImpl(EntranceDAO ENTRANCE_DAO, EntranceIconDAO ICON_DAO, BudgetDAO BUDGET_DAO) {
         this.ENTRANCE_DAO = ENTRANCE_DAO;
         this.ICON_DAO = ICON_DAO;
+        this.BUDGET_DAO = BUDGET_DAO;
     }
 
     @Override
@@ -36,22 +39,31 @@ public class EntranceServiceImpl implements EntranceService{
 
         if(entrance.getId() == 0){
 
-            Budget budget = entrance.getBudget();
-            operation = budget.getBudget();
-            operation += entrance.getTransaction();
-            budget.setBudget(operation);
-            return ENTRANCE_DAO.save(entrance);
+            Optional<Budget> result = BUDGET_DAO.findById(entrance.getBudget().getId());
+            if (result.isPresent()){
+                Budget budget = result.get();
+                operation = budget.getBudget();
+                operation += entrance.getTransaction();
+                budget.setBudget(operation);
+                entrance.setBudget(budget);
+                return ENTRANCE_DAO.save(entrance);
+
+            }else {
+                throw new UserNotFoundException("NO ID BUDGET FOUND: " + entrance.getId());
+            }
 
         }else {
 
-            Budget budget = entrance.getBudget();
-            Optional<Entrance> result = ENTRANCE_DAO.findById(entrance.getId());
-            if(result.isPresent()){
-                Entrance rintegrescionExit = result.get();
+            Optional<Entrance> resultEntrance = ENTRANCE_DAO.findById(entrance.getId());
+            Optional<Budget> resultBudget = BUDGET_DAO.findById(entrance.getBudget().getId());
+            if(resultEntrance.isPresent() && resultBudget.isPresent()){
+                Entrance rintegrescionEntrance = resultEntrance.get();
+                Budget budget = resultBudget.get();
                 operation = budget.getBudget();
-                double rintegrescion =  (rintegrescionExit.getTransaction() * -1) + entrance.getTransaction();
+                double rintegrescion =  (rintegrescionEntrance.getTransaction() * -1) + entrance.getTransaction();
                 operation += rintegrescion;
                 budget.setBudget(operation);
+                entrance.setBudget(budget);
                 return ENTRANCE_DAO.save(entrance);
             }else{
                 throw new UserNotFoundException("NO ID USER FOUND: " + entrance.getId());
