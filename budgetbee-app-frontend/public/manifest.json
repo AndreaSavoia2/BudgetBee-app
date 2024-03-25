@@ -1,5 +1,5 @@
 {
-  "short_name": "React App",
+  "short_name": "BudgetBee",
   "name": "BudgetBee",
   "icons": [
     {
@@ -8,7 +8,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "bee.png",
+      "src": "beeMobileIcon.png",
       "type": "image/png",
       "sizes": "192x192"
     },

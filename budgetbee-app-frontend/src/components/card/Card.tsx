@@ -54,8 +54,8 @@ const Card = () => {
   return (
     <>
       <div className="flex justify-between sm:mt-20 mt-10">
-        <p className="ml-10 transactions">TRANSACTIONS</p>
-        <button className="mr-10">SEE ALL</button>
+        <p className="ml-10 transactions">TRANSAZIONI</p>
+        <button className="mr-10">DETTAGLI</button>
       </div>
       <div className="max-w-3xl mx-auto flex items-center justify-center">
         <div>
@@ -80,7 +80,6 @@ const Card = () => {
                 className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 mb-10 text-center sm:w-screen w-80"
               >
                 <div className="px-6 py-4 h-full flex flex-col justify-between">
-                  <div>
                     <div className="font-bold text-xl mb-2">
                       {transaction?.description}
                     </div>
@@ -92,7 +91,6 @@ const Card = () => {
                     <p className="text-gray-700 text-base">
                       {transaction.transaction}€
                     </p>
-                  </div>
                 </div>
               </div>
             ))}

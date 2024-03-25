@@ -1,13 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../header/Header";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 const AddTransaction = () => {
+  /* API */
+  const apiUrlPostExit: any = process.env.REACT_APP_API_URL_POST_EXIT;
+  const apiUrlPostEntrance: any = process.env.REACT_APP_API_URL_POST_ENTRANCE;
+  const usernameApi = process.env.REACT_APP_USERNAME;
+  const passwordApi = process.env.REACT_APP_PASSWORD;
+  const basicAuthHeader = "Basic " + btoa(usernameApi + ":" + passwordApi);
+  const idBudget: any = localStorage.getItem("user");
+  const pars: any = JSON.parse(idBudget);
+
+  /* FORM */
+  const [transactionType, setTransactionType] = useState<any>("Entrata");
+
+  const [formData, setFormData] = useState({
+    transaction: "",
+    description: "",
+    category: "",
+    budget: { id: pars.budget.id },
+  });
+
+  /* Funzioni */
+
+  const handleSelectChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const apiUrl =
+      transactionType === "Uscita" ? apiUrlPostExit : apiUrlPostEntrance;
+    console.log(apiUrl);
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          Authorization: basicAuthHeader,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      console.log(formData);
+      
+      //window.location.reload();
+    } catch (error) {
+      console.error("Error while posting transaction:", error);
+      toast.error("C'è stato un errore durante l'invio della transazione. Controlla i campi e riprova.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        });
+    }
+  };
+  
   return (
     <>
       <Header />
       <div className="container mt-20 items-center">
-        <form className="max-w-md mx-auto">
-        <div className="relative z-0 w-full mb-5 group">
+      <ToastContainer
+    />
+        <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+          <div className="relative z-0 w-full mb-5 group">
             <label
               htmlFor="entranceOrExit"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -17,6 +90,7 @@ const AddTransaction = () => {
             <select
               id="entranceOrExit"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              onChange={(e) => setTransactionType(e.target.value)}
             >
               <option>Entrata</option>
               <option>Uscita</option>
@@ -30,6 +104,8 @@ const AddTransaction = () => {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               placeholder=" "
               required
+              value={formData.transaction}
+              onChange={handleSelectChange}
             />
             <label
               htmlFor="transaction"
@@ -46,6 +122,8 @@ const AddTransaction = () => {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               placeholder=" "
               required
+              value={formData.description}
+              onChange={handleSelectChange}
             />
             <label
               htmlFor="description"
@@ -64,18 +142,46 @@ const AddTransaction = () => {
             <select
               id="category"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              value={formData.category}
+              onChange={(event) =>
+                setFormData({ ...formData, category: event.target.value })
+              }
             >
-              <option>United States</option>
-              <option>Canada</option>
-              <option>France</option>
-              <option>Germany</option>
+              <option value="">Categoria:</option>
+              {transactionType === "Uscita" && (
+                <>
+                  <option value="BOLLETTE">BOLLETTE</option>
+                  <option value="ABBONAMENTI">ABBONAMENTI</option>
+                  <option value="CARBURANTE">CARBURANTE</option>
+                  <option value="BONIFICO">BONIFICO</option>
+                  <option value="SPESA">SPESA</option>
+                  <option value="ASSICURAZIONI">ASSICURAZIONI</option>
+                  <option value="ABBONAMENTI">ABBONAMENTI</option>
+                  <option value="VIAGGI">VIAGGI</option>
+                  <option value="HOBBY">HOBBY</option>
+                  <option value="ISTRUZIONE">ISTRUZIONE</option>
+                  <option value="ABBIGLIAMENTO">ABBIGLIAMENTO</option>
+                  <option value="REGALI">REGALI</option>
+                  <option value="ANIMALI">ANIMALI</option>
+                  <option value="ALTRO">ALTRO</option>
+                </>
+              )}
+              {transactionType === "Entrata" && (
+                <>
+                  <option value="BONIFICO">BONIFICO</option>
+                  <option value="RIMBORSO">RIMBORSO</option>
+                  <option value="REGALI">REGALI</option>
+                  <option value="STIPENDIO">STIPENDIO</option>
+                  <option value="ALTRO">ALTRO</option>
+                </>
+              )}
             </select>
           </div>
           <button
             type="submit"
             className="text-white bg-black hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-black-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-black-600 dark:hover:bg-black-700 dark:focus:ring-black-800"
           >
-            Submit
+            Invia
           </button>
         </form>
       </div>

@@ -22,7 +22,9 @@ const Header = () => {
     return window.innerWidth <= 768;
   };
 
-  const [isMobileOrTabletView, setIsMobileOrTabletView] = useState(isMobileOrTablet());
+  const [isMobileOrTabletView, setIsMobileOrTabletView] = useState(
+    isMobileOrTablet()
+  );
 
   useEffect(() => {
     fetch(`${apiUrl}/${budgetId.budget.id}`, {
@@ -68,7 +70,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="containerHeader text-center grid items-center  test rounded-br-3xl rounded-bl-3xl">
+      <div className="containerHeader text-center grid items-center test rounded-br-3xl rounded-bl-3xl">
         <img
           src={icon}
           alt=""
@@ -83,9 +85,15 @@ const Header = () => {
           <div className={`line ${menuOpen ? "open" : ""}`}></div>
         </div>
         {menuOpen && (
-          <div className="menu-options">
+          <div className="menu-options mt-12 md:mt-0">
             <ul>
-              <li onClick={handleOptionClick}>Grafico</li>
+              <Link to="/">
+                <li>Home</li>
+              </Link>
+              <hr />
+              <Link to="/transaction">
+                <li onClick={handleOptionClick}>Transazioni</li>
+              </Link>
               <hr />
               <li onClick={handleOptionClick}>Categorie</li>
               <hr />
@@ -99,13 +107,16 @@ const Header = () => {
         </div>
         {isMobileOrTabletView && (
           <div className="flex justify-between mb-5 ml-5 mr-5">
-            <Link to='/transaction'><button className="rounded-full font-bold bg-black w-32 h-16 text-white">
-              +
-            </button>
+            <Link to="/transaction">
+              <button className="rounded-full font-bold bg-black w-32 h-16 text-white">
+                Aggiungi Entrata
+              </button>
             </Link>
-            <Link to='/transaction'><button className="rounded-full font-bold bg-black w-32 h-16 text-white">
-              -
-            </button>
+            <Link to="/transaction">
+              <button className="rounded-full font-bold bg-black w-32 h-16 text-white">
+                Aggiungi <br />
+                Uscita
+              </button>
             </Link>
           </div>
         )}
