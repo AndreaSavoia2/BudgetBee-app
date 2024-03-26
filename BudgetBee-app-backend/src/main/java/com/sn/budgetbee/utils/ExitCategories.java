@@ -13,5 +13,9 @@ public enum ExitCategories {
     HOBBY,
     REGALI,
     ANIMALI,
-    ALTRO
+    ALTRO;
+
+    public boolean isEmpty() {
+        return values().length == 0;
+    }
 }

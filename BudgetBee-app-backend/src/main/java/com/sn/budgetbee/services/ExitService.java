@@ -30,4 +30,6 @@ public interface ExitService {
     List<FilterExitListTotalDTO> exitListTotalMonthByYear (Integer id, String year);
 
     List<ExitDTO> exitListByIdBudgetAndCategory(Integer id, ExitCategories category);
+
+    List<ExitDTO> exitListByIdBudgetAndDate(Integer id, String year, String month, ExitCategories category);
 }

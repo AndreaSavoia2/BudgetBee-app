@@ -15,6 +15,7 @@ import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +133,7 @@ public class ExitServiceImpl implements ExitService{
             EXIT_DAO.deleteById(id);
             return true;
         }else{
-            throw new EntranceNotFoundException("NO ID EXIT FOUND: " + id);
+            throw new ExitNotFoundException("NO ID EXIT FOUND: " + id);
         }
     }
 
@@ -213,5 +214,29 @@ public class ExitServiceImpl implements ExitService{
                     link));
         }
         return exitsDTO;
+    }
+
+    @Override
+    public List<ExitDTO> exitListByIdBudgetAndDate(Integer id, String year, String month, ExitCategories categories) {
+
+            List<Exit> exits = EXIT_DAO.findExitsByBudgetIdAndYearOrMonth(id,year,month,categories);
+            List<ExitDTO> exitsDTO = new ArrayList<>();
+
+            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+
+            for (Exit exit : exits){
+                String link = ICON_DAO.findLink(exit.getCategory());
+                exitsDTO.add(new ExitDTO(
+                        exit.getId(),
+                        exit.getTransaction(),
+                        exit.getDescription(),
+                        exit.getTransactionDate().format(formatterDate),
+                        exit.getTransactionDate().format(formatterHor),
+                        exit.getCategory(),
+                        link));
+            }
+            return exitsDTO;
+
     }
 }

@@ -36,10 +36,10 @@ public class ExitController{
         return SERVICE.findExitById(id);
     }
 
-    @CrossOrigin
+  /*  @CrossOrigin
     @GetMapping("/exits/budgetid/{budgetId}")
     public List<ExitDTO> getExitByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
-
+*/
     @CrossOrigin
     @GetMapping("/exits/filter/month")
     public @ResponseBody List<FilterExitDTO> getExitsByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
@@ -89,6 +89,29 @@ public class ExitController{
     @GetMapping("/exits/filter/category")
     public @ResponseBody List<ExitDTO> getAllExitByCategory(@RequestParam Integer id, @RequestParam ExitCategories category){
         return SERVICE.exitListByIdBudgetAndCategory(id,category);
+    }
+
+    @GetMapping("/exits/bybudgetid/{budgetId}")
+    public List<ExitDTO> getExitsByBudgetIdAndYearOrMonth(@PathVariable("budgetId")Integer budgetId, @RequestParam(value = "year", required = false) String year, @RequestParam(value = "month", required = false) String month, @RequestParam(value = "category", required = false) ExitCategories category) {
+
+        if(month != null && !month.isEmpty()){
+            if (year != null && !year.isEmpty()){
+                if(month.length() == 1){
+                    month = "0"+month;
+                }
+                month = month + "/" + year;
+                year = null;
+                return SERVICE.exitListByIdBudgetAndDate(budgetId, year, month, category);
+            }else{
+                throw new ExitNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
+            }
+        }else if(year != null && !year.isEmpty()){
+            return SERVICE.exitListByIdBudgetAndDate(budgetId, year, month , category);
+        }else if(category != null && !category.isEmpty()){
+            return SERVICE.exitListByIdBudgetAndCategory(budgetId,category);
+        }else{
+            return SERVICE.exitListByIdBudget(budgetId);
+        }
     }
 
     //Exception---------
