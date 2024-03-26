@@ -3,6 +3,7 @@ package com.sn.budgetbee.repos;
 import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.dto.FilterExitListTotalDTO;
 import com.sn.budgetbee.entities.Exit;
+import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +12,11 @@ import java.util.List;
 
 public interface ExitDAO extends JpaRepository<Exit, Integer> {
 
-    @Query("SELECT x FROM Exit x JOIN x.budget b WHERE b.id = :budgetId")
+    @Query("SELECT x FROM Exit x JOIN x.budget b WHERE b.id = :budgetId ORDER BY FUNCTION('DATE_FORMAT', x.transactionDate, '%d/%m/%Y') DESC")
     List<Exit> findExitsByBudgetId(@Param("budgetId") Integer budgetId);
+
+    @Query("SELECT x FROM Exit x JOIN x.budget b WHERE b.id = :budgetId AND x.category = :category ORDER BY FUNCTION('DATE_FORMAT', x.transactionDate, '%d/%m/%Y') DESC")
+    List<Exit> findExitsByBudgetIdAndCategory(@Param("budgetId") Integer budgetId, @Param("category") ExitCategories category);
 
     @Query("SELECT NEW com.sn.budgetbee.dto.FilterExitDTO(x.category, SUM(x.transaction)) " +
             "FROM Exit x " +

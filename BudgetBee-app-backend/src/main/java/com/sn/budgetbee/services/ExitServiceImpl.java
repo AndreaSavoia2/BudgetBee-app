@@ -11,6 +11,7 @@ import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.ExitDAO;
 import com.sn.budgetbee.repos.ExitIconDAO;
+import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -94,7 +95,7 @@ public class ExitServiceImpl implements ExitService{
                     exit.getCategory(),
                     link);
         }else{
-            throw new EntranceNotFoundException("NO ID EXIT FOUND: " + id);
+            throw new ExitNotFoundException("NO ID EXIT FOUND: " + id);
         }
 
         return exitDTO;
@@ -190,5 +191,27 @@ public class ExitServiceImpl implements ExitService{
         }
 
         return dtoList;
+    }
+
+    @Override
+    public List<ExitDTO> exitListByIdBudgetAndCategory(Integer id, ExitCategories category) {
+        List<Exit> exits = EXIT_DAO.findExitsByBudgetIdAndCategory(id,category);
+        List<ExitDTO> exitsDTO = new ArrayList<>();
+
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+
+        for (Exit exit : exits){
+            String link = ICON_DAO.findLink(exit.getCategory());
+            exitsDTO.add(new ExitDTO(
+                    exit.getId(),
+                    exit.getTransaction(),
+                    exit.getDescription(),
+                    exit.getTransactionDate().format(formatterDate),
+                    exit.getTransactionDate().format(formatterHor),
+                    exit.getCategory(),
+                    link));
+        }
+        return exitsDTO;
     }
 }

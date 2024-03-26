@@ -11,6 +11,8 @@ import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.EntranceDAO;
 import com.sn.budgetbee.repos.EntranceIconDAO;
+import com.sn.budgetbee.utils.EntranceCategories;
+import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -174,6 +176,30 @@ public class EntranceServiceImpl implements EntranceService{
     @Override
     public Double entraceByYear(Integer id, String year) {
         return ENTRANCE_DAO.findTotalEntraceByYear(id, year);
+    }
+
+    @Override
+    public List<EntranceDTO> entranceListByIdBudgetAndCategory(Integer id, EntranceCategories category) {
+        List<Entrance> entrances = ENTRANCE_DAO.findEntranceByBudgetIdAndCategory(id, category);
+        List<EntranceDTO> entrancesDTO = new ArrayList<>();
+
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+
+
+        for(Entrance entrance : entrances){
+            String link = ICON_DAO.findLink(entrance.getCategory());
+            entrancesDTO.add(new EntranceDTO(
+                    entrance.getId(),
+                    entrance.getTransaction(),
+                    entrance.getDescription(),
+                    entrance.getTransactionDate().format(formatterDate),
+                    entrance.getTransactionDate().format(formatterHor),
+                    entrance.getCategory(),
+                    link));
+        }
+
+        return entrancesDTO;
     }
 
 }

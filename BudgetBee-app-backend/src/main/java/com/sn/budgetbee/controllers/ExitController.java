@@ -7,6 +7,7 @@ import com.sn.budgetbee.entities.Exit;
 import com.sn.budgetbee.exception.ErrorResponseData;
 import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.services.ExitService;
+import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -82,6 +83,12 @@ public class ExitController{
     @GetMapping("/exits/filter/mouthlist")
     public @ResponseBody List<FilterExitListTotalDTO> getExitsTotalMouthListByYear(@RequestParam Integer id, @RequestParam String year) {
         return SERVICE.exitListTotalMonthByYear(id, year);
+    }
+
+    @CrossOrigin
+    @GetMapping("/exits/filter/category")
+    public @ResponseBody List<ExitDTO> getAllExitByCategory(@RequestParam Integer id, @RequestParam ExitCategories category){
+        return SERVICE.exitListByIdBudgetAndCategory(id,category);
     }
 
     //Exception---------

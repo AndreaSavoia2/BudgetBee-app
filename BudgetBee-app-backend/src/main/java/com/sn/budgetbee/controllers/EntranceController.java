@@ -1,12 +1,15 @@
 package com.sn.budgetbee.controllers;
 
 import com.sn.budgetbee.dto.EntranceDTO;
+import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
 import com.sn.budgetbee.exception.ErrorResponseData;
 import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.services.EntranceService;
+import com.sn.budgetbee.utils.EntranceCategories;
+import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,6 +79,12 @@ public class EntranceController{
     @DeleteMapping("/entrances/{entranceId}")
     public boolean deleteEntranceById(@PathVariable("entranceId") Integer id) {
         return SERVICE.deleteEntranceById(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/entrances/filter/category")
+    public @ResponseBody List<EntranceDTO> getAllentranceByCategory(@RequestParam Integer id, @RequestParam EntranceCategories category){
+        return SERVICE.entranceListByIdBudgetAndCategory(id,category);
     }
 
     //Exception---------
