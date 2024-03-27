@@ -19,9 +19,7 @@ public interface ExitService {
 
     List<ExitDTO> exitListByIdBudget(Integer id);
 
-    List<FilterExitDTO> exitListByCategoryAndMonth(Integer id, String month);
-
-    List<FilterExitDTO> exitListByCategoryAndYear(Integer id, String year);
+    List<FilterExitDTO> exitTotalByCategory(Integer idBudget, String month, String year);
 
     Double exitByMonth(Integer id, String month);
 

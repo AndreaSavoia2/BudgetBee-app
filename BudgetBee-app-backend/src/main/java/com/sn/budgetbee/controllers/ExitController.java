@@ -36,22 +36,6 @@ public class ExitController{
         return SERVICE.findExitById(id);
     }
 
-  /*  @CrossOrigin
-    @GetMapping("/exits/budgetid/{budgetId}")
-    public List<ExitDTO> getExitByBudgetId(@PathVariable("budgetId")Integer id) {return SERVICE.exitListByIdBudget(id); }
-*/
-    @CrossOrigin
-    @GetMapping("/exits/filter/month")
-    public @ResponseBody List<FilterExitDTO> getExitsByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
-        return SERVICE.exitListByCategoryAndMonth(id, month);
-    }
-
-    @CrossOrigin
-    @GetMapping("/exits/filter/year")
-    public @ResponseBody List<FilterExitDTO> getExitsByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
-        return SERVICE.exitListByCategoryAndYear(id, year);
-    }
-
     @CrossOrigin
     @GetMapping("/exits/total/month")
     public @ResponseBody  Double getExitsByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.exitByMonth(id, month); }
@@ -79,6 +63,7 @@ public class ExitController{
         return SERVICE.deleteExitById(id);
     }
 
+    //restituisce totale per ogni anno utile al grafico
     @CrossOrigin
     @GetMapping("/exits/filter/mouthlist")
     public @ResponseBody List<FilterExitListTotalDTO> getExitsTotalMouthListByYear(@RequestParam Integer id, @RequestParam String year) {
@@ -91,6 +76,7 @@ public class ExitController{
         return SERVICE.exitListByIdBudgetAndCategory(id,category);
     }
 
+    @CrossOrigin
     @GetMapping("/exits/bybudgetid/{budgetId}")
     public List<ExitDTO> getExitsByBudgetIdAndYearOrMonth(@PathVariable("budgetId")Integer budgetId, @RequestParam(value = "year", required = false) String year, @RequestParam(value = "month", required = false) String month, @RequestParam(value = "category", required = false) ExitCategories category) {
 
@@ -114,6 +100,27 @@ public class ExitController{
         }
     }
 
+    @CrossOrigin
+    @GetMapping("/exits/totalforbudgetid/{budgetId}")
+    public @ResponseBody List<FilterExitDTO> getTotalCategoryByBudgetId(@PathVariable("budgetId")Integer budgetId, @RequestParam(value = "year", required = false) String year, @RequestParam(value = "month", required = false) String month) {
+
+        if(month != null && !month.isEmpty()){
+            if (year != null && !year.isEmpty()){
+                if(month.length() == 1){
+                    month = "0"+month;
+                }
+                month = month + "/" + year;
+                year = null;
+                return SERVICE.exitTotalByCategory(budgetId, month, year);
+            }else{
+                throw new ExitNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
+            }
+        }else if(year != null && !year.isEmpty()){
+            return SERVICE.exitTotalByCategory(budgetId, month, year);
+        }else{
+            throw new ExitNotFoundException("ERROR: INSERIMENTO DATI NON CORETTI");
+        }
+    }
     //Exception---------
 
     @ExceptionHandler
