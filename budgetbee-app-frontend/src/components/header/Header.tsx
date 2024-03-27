@@ -2,20 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import icon from "../../img/bee.png";
+import { fetchUserData } from "../../services/fetchBudgetHeader";
 
 const Header = () => {
-  const apiUrl: any = process.env.REACT_APP_API_URL_BUDGET;
-  const username = process.env.REACT_APP_USERNAME;
-  const password = process.env.REACT_APP_PASSWORD;
   const [userData, setUserData] = useState<{ budget: number } | null>(null);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const basicAuthHeader = "Basic " + btoa(username + ":" + password);
   const jsonString: any = localStorage.getItem("user");
   const budgetId = JSON.parse(jsonString);
 
   const clearLocalStorageAndRefresh = () => {
     localStorage.clear();
-    window.location.reload();
+    window.location.href = "/";
   };
 
   const isMobileOrTablet = () => {
@@ -27,19 +24,7 @@ const Header = () => {
   );
 
   useEffect(() => {
-    fetch(`${apiUrl}/${budgetId.budget.id}`, {
-      method: "GET",
-      headers: {
-        Authorization: basicAuthHeader,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
+    fetchUserData(budgetId.budget.id)
       .then((data) => {
         setUserData(data);
       })
@@ -67,7 +52,6 @@ const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
   return (
     <>
       <div className="containerHeader text-center grid items-center test rounded-br-3xl rounded-bl-3xl">
@@ -92,10 +76,12 @@ const Header = () => {
               </Link>
               <hr />
               <Link to="/transaction">
-                <li onClick={handleOptionClick}>Transazioni</li>
+                <li>Transazioni</li>
               </Link>
               <hr />
-              <li onClick={handleOptionClick}>Categorie</li>
+              <Link to="/details">
+                <li onClick={handleOptionClick}>Dettagli</li>
+              </Link>
               <hr />
               <li onClick={clearLocalStorageAndRefresh}>Log Out</li>
             </ul>

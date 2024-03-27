@@ -5,6 +5,7 @@ import Login from "./components/login/Login";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Registration from "./components/Registration/Registration";
 import AddTransaction from "./components/addTransaction/AddTransaction";
+import Details from "./components/details/Details";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -36,6 +37,7 @@ function App() {
           element={<Registration onSubmit={handleRegistrationSubmit} />}
         />
         <Route path="/transaction" element={<AddTransaction />} />
+        <Route path='/details' element={<Details />} />
       </Routes>
     </Router>
   );

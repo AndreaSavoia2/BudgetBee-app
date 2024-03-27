@@ -4,12 +4,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import icon from "../../img/bee.png";
 import { FormProps } from '../../interfaces/FormProps';
 import { Navigate, Link } from 'react-router-dom';
+import { checkUsernameAvailability, registerUser } from '../../services/fetchRegister';
 
 const Registration = ({ onSubmit }: FormProps) => {
-  const apiUrlRegister: any = process.env.REACT_APP_API_URL_REGISTER;
-  const apiUrlCheckUser: any = process.env.CHECKUSER;
-  const usernameApi = process.env.REACT_APP_USERNAME;
-  const passwordApi = process.env.REACT_APP_PASSWORD;
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [budget, setBudget] = useState<any>(0);
@@ -37,47 +34,13 @@ const Registration = ({ onSubmit }: FormProps) => {
       return;
     }
     try {
-      const basicAuthHeader = "Basic " + btoa(usernameApi + ":" + passwordApi);
-
-      try {
-        const response = await fetch(
-          `${apiUrlCheckUser}?username=${username}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: basicAuthHeader,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (response.ok) {
-          const postUser = await fetch(
-            `${apiUrlRegister}`,
-            {
-              method: "POST",
-              headers: {
-                Authorization: basicAuthHeader,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ username: username, password: password, budget: { budget: budget } })
-            }
-          );
-
-          if (!postUser.ok) {
-            throw new Error("Network response was not ok");
-          }
-
-          const data = await postUser.json();
-          onSubmit(username, password, budget);
-          localStorage.setItem("user", JSON.stringify(data));
-
-          setRegistrationSuccess(true);
-        } else {
-          setError("Username already exists. Please choose a different username.");
-        }
-      } catch (error) {
-        throw new Error("checking if username already exists");
+      const usernameAvailable = await checkUsernameAvailability(username);
+      if (usernameAvailable) {
+        const userData = await registerUser(username, password, budget);
+        onSubmit(username, password, budget);
+        setRegistrationSuccess(true);
+      } else {
+        setError("Username già esistente, scegline uno diverso.");
       }
     } catch (error) {
       toast.error('Username già esistente, scegline uno diverso.', {
@@ -91,14 +54,12 @@ const Registration = ({ onSubmit }: FormProps) => {
         theme: "dark",
         transition: Bounce,
         });
-      console.error("There was a problem with the fetch operation:", error);
     }
   };
   
   if (registrationSuccess) {
     return <Navigate to="/" />;
   }
-
   return (
     <>
     <div className="flex flex-col items-center justify-center min-h-screen background">

@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../header/Header";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { postTransaction } from "../../services/fetchTransaction";
 
 const AddTransaction = () => {
-  /* API */
-  const apiUrlPostExit: any = process.env.REACT_APP_API_URL_POST_EXIT;
-  const apiUrlPostEntrance: any = process.env.REACT_APP_API_URL_POST_ENTRANCE;
-  const usernameApi = process.env.REACT_APP_USERNAME;
-  const passwordApi = process.env.REACT_APP_PASSWORD;
-  const basicAuthHeader = "Basic " + btoa(usernameApi + ":" + passwordApi);
   const idBudget: any = localStorage.getItem("user");
-  const pars: any = JSON.parse(idBudget);
+  const parse: any = JSON.parse(idBudget);
 
   /* FORM */
   const [transactionType, setTransactionType] = useState<any>("Entrata");
@@ -19,7 +14,7 @@ const AddTransaction = () => {
     transaction: "",
     description: "",
     category: "",
-    budget: { id: pars.budget.id },
+    budget: { id: parse.budget.id },
   });
 
   /* Funzioni */
@@ -37,26 +32,15 @@ const AddTransaction = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const apiUrl =
-      transactionType === "Uscita" ? apiUrlPostExit : apiUrlPostEntrance;
-    console.log(apiUrl);
-
     try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          Authorization: basicAuthHeader,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      await postTransaction(formData, transactionType);
+      setFormData({
+        transaction: "",
+        description: "",
+        category: "",
+        budget: { id: parse.budget.id },
       });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log(formData);
-      
-      //window.location.reload();
+      window.location.href = "/"
     } catch (error) {
       console.error("Error while posting transaction:", error);
       toast.error("C'è stato un errore durante l'invio della transazione. Controlla i campi e riprova.", {
@@ -69,7 +53,7 @@ const AddTransaction = () => {
         progress: undefined,
         theme: "dark",
         transition: Bounce,
-        });
+      });
     }
   };
   
