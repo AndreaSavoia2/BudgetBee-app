@@ -37,12 +37,29 @@ public class ExitController{
     }
 
     @CrossOrigin
-    @GetMapping("/exits/total/month")
-    public @ResponseBody  Double getExitsByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.exitByMonth(id, month); }
+    @GetMapping("/exits/total/bybudgetid/{budgetId}")
+    public @ResponseBody Double getTotalExit(@PathVariable("budgetId")Integer budgetId,
+                                             @RequestParam(value = "year", required = false) String year,
+                                             @RequestParam(value = "month", required = false) String month) {
 
-    @CrossOrigin
-    @GetMapping("/exits/total/year")
-    public @ResponseBody  Double getExitsByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.exitByYear(id, year); }
+        if(month != null && !month.isEmpty()){
+            if (year != null && !year.isEmpty()){
+                if(month.length() == 1){
+                    month = "0"+month;
+                }
+                month = month + "/" + year;
+                year = null;
+                return SERVICE.totalExit(budgetId,month,year);
+            }else{
+                throw new ExitNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
+            }
+        }else if(year != null && !year.isEmpty()){
+            month = null;
+            return SERVICE.totalExit(budgetId,month,year);
+        }else{
+            throw new ExitNotFoundException("ERROR: INSERIMENTO DATI NON CORETTI");
+        }
+    }
 
     @CrossOrigin
     @PostMapping("/exits")
@@ -66,19 +83,24 @@ public class ExitController{
     //restituisce totale per ogni anno utile al grafico
     @CrossOrigin
     @GetMapping("/exits/filter/mouthlist")
-    public @ResponseBody List<FilterExitListTotalDTO> getExitsTotalMouthListByYear(@RequestParam Integer id, @RequestParam String year) {
+    public @ResponseBody List<FilterExitListTotalDTO> getExitsTotalMouthListByYear(@RequestParam Integer id,
+                                                                                   @RequestParam String year) {
         return SERVICE.exitListTotalMonthByYear(id, year);
     }
 
     @CrossOrigin
     @GetMapping("/exits/filter/category")
-    public @ResponseBody List<ExitDTO> getAllExitByCategory(@RequestParam Integer id, @RequestParam ExitCategories category){
+    public @ResponseBody List<ExitDTO> getAllExitByCategory(@RequestParam Integer id,
+                                                            @RequestParam ExitCategories category){
         return SERVICE.exitListByIdBudgetAndCategory(id,category);
     }
 
     @CrossOrigin
     @GetMapping("/exits/bybudgetid/{budgetId}")
-    public List<ExitDTO> getExitsByBudgetIdAndYearOrMonth(@PathVariable("budgetId")Integer budgetId, @RequestParam(value = "year", required = false) String year, @RequestParam(value = "month", required = false) String month, @RequestParam(value = "category", required = false) ExitCategories category) {
+    public List<ExitDTO> getExitsByBudgetIdAndYearOrMonth(@PathVariable("budgetId")Integer budgetId,
+                                                          @RequestParam(value = "year", required = false) String year,
+                                                          @RequestParam(value = "month", required = false) String month,
+                                                          @RequestParam(value = "category", required = false) ExitCategories category) {
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
@@ -92,6 +114,7 @@ public class ExitController{
                 throw new ExitNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
             }
         }else if(year != null && !year.isEmpty()){
+            month = null;
             return SERVICE.exitListByIdBudgetAndDate(budgetId, year, month , category);
         }else if(category != null && !category.isEmpty()){
             return SERVICE.exitListByIdBudgetAndCategory(budgetId,category);
@@ -101,8 +124,10 @@ public class ExitController{
     }
 
     @CrossOrigin
-    @GetMapping("/exits/totalforbudgetid/{budgetId}")
-    public @ResponseBody List<FilterExitDTO> getTotalCategoryByBudgetId(@PathVariable("budgetId")Integer budgetId, @RequestParam(value = "year", required = false) String year, @RequestParam(value = "month", required = false) String month) {
+    @GetMapping("/exits/totalcategory/bybudgetid/{budgetId}")
+    public @ResponseBody List<FilterExitDTO> getTotalCategoryByBudgetId(@PathVariable("budgetId")Integer budgetId,
+                                                                        @RequestParam(value = "year", required = false) String year,
+                                                                        @RequestParam(value = "month", required = false) String month) {
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
@@ -116,11 +141,13 @@ public class ExitController{
                 throw new ExitNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
             }
         }else if(year != null && !year.isEmpty()){
+            month = null;
             return SERVICE.exitTotalByCategory(budgetId, month, year);
         }else{
             throw new ExitNotFoundException("ERROR: INSERIMENTO DATI NON CORETTI");
         }
     }
+
     //Exception---------
 
     @ExceptionHandler

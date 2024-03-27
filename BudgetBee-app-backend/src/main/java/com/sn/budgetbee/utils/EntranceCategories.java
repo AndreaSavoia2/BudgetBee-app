@@ -5,5 +5,9 @@ public enum EntranceCategories {
     RIMBORSI,
     REGALI,
     STIPENDIO,
-    ALTRO
+    ALTRO;
+
+    public boolean isEmpty() {
+        return values().length == 0;
+    }
 }

@@ -159,24 +159,15 @@ public class EntranceServiceImpl implements EntranceService{
     }
 
     @Override
-    public List<FilterEntranceDTO> entranceListByCategoryAndMonth(Integer id, String month) {
-        return ENTRANCE_DAO.findTotalEntranceByCategoryAndMonth(id, month);
+    public List<FilterEntranceDTO> entranceTotalByCategory(Integer idBudget, String month, String year) {
+        return ENTRANCE_DAO.findTotalEntranceByCategory(idBudget,month,year);
     }
 
     @Override
-    public List<FilterEntranceDTO> entranceListByCategoryAndYear(Integer id, String year) {
-        return ENTRANCE_DAO.findTotalEntranceByCategoryAndYear(id, year);
+    public Double totalEntrance(Integer idBudget, String month, String year) {
+        return ENTRANCE_DAO.findTotalEntrance(idBudget,month,year);
     }
 
-    @Override
-    public Double entraceByMonth(Integer id, String month) {
-        return ENTRANCE_DAO.findTotalEntraceByMonth(id, month);
-    }
-
-    @Override
-    public Double entraceByYear(Integer id, String year) {
-        return ENTRANCE_DAO.findTotalEntraceByYear(id, year);
-    }
 
     @Override
     public List<EntranceDTO> entranceListByIdBudgetAndCategory(Integer id, EntranceCategories category) {
@@ -199,6 +190,29 @@ public class EntranceServiceImpl implements EntranceService{
                     link));
         }
 
+        return entrancesDTO;
+    }
+
+    @Override
+    public List<EntranceDTO> entranceListByIdBudgetAndDate(Integer id, String year, String month, EntranceCategories category) {
+
+        List<Entrance> entrances = ENTRANCE_DAO.findEntranceByBudgetIdAndYearOrMonth(id,year,month,category);
+        List<EntranceDTO> entrancesDTO = new ArrayList<>();
+
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+
+        for (Entrance entrance : entrances){
+            String link = ICON_DAO.findLink(entrance.getCategory());
+            entrancesDTO.add(new EntranceDTO(
+                    entrance.getId(),
+                    entrance.getTransaction(),
+                    entrance.getDescription(),
+                    entrance.getTransactionDate().format(formatterDate),
+                    entrance.getTransactionDate().format(formatterHor),
+                    entrance.getCategory(),
+                    link));
+        }
         return entrancesDTO;
     }
 

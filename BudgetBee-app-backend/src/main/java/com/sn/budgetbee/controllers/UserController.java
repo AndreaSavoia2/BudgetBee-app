@@ -66,7 +66,8 @@ public class UserController{
 
     @CrossOrigin
     @GetMapping("/users/login")
-    public @ResponseBody UserDTO login(@RequestParam String username, @RequestParam String password) {
+    public @ResponseBody UserDTO login(@RequestParam String username,
+                                       @RequestParam String password) {
         return SERVICE.checkLogin(username, password);
     }
 

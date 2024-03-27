@@ -3,6 +3,7 @@ package com.sn.budgetbee.services;
 import com.sn.budgetbee.dto.EntranceDTO;
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
+import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.utils.EntranceCategories;
 import com.sn.budgetbee.utils.ExitCategories;
@@ -21,14 +22,11 @@ public interface EntranceService {
 
     List<EntranceDTO> entranceListByIdBudget(Integer id);
 
-    List<FilterEntranceDTO> entranceListByCategoryAndMonth(Integer id, String month);
+    List<FilterEntranceDTO> entranceTotalByCategory(Integer idBudget, String month, String year);
 
-    List<FilterEntranceDTO> entranceListByCategoryAndYear(Integer id, String year);
-
-    Double entraceByMonth(Integer id, String month);
-
-    Double entraceByYear(Integer id, String year);
-
+    Double totalEntrance(Integer idBudget, String month, String year);
     List<EntranceDTO> entranceListByIdBudgetAndCategory(Integer id, EntranceCategories category);
+
+    List<EntranceDTO> entranceListByIdBudgetAndDate(Integer id, String year, String month, EntranceCategories category);
 
 }

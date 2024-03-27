@@ -3,6 +3,7 @@ package com.sn.budgetbee.controllers;
 import com.sn.budgetbee.dto.EntranceDTO;
 import com.sn.budgetbee.dto.ExitDTO;
 import com.sn.budgetbee.dto.FilterEntranceDTO;
+import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.entities.Entrance;
 import com.sn.budgetbee.exception.EntranceNotFoundException;
 import com.sn.budgetbee.exception.ErrorResponseData;
@@ -39,29 +40,54 @@ public class EntranceController{
     }
 
     @CrossOrigin
-    @GetMapping("/entrances/budgetid/{budgetId}")
-    public List<EntranceDTO> getEntrancesByBudgetId(@PathVariable("budgetId") Integer id) { return SERVICE.entranceListByIdBudget(id); }
+    @GetMapping("/entrances/totalcategory/bybudgetid/{budgetId}")
+    public @ResponseBody List<FilterEntranceDTO> getTotalCategoryByBudgetId(@PathVariable("budgetId")Integer budgetId,
+                                                                            @RequestParam(value = "year", required = false) String year,
+                                                                            @RequestParam(value = "month", required = false) String month) {
 
-    @CrossOrigin
-    @GetMapping("/entrances/filter/month")
-    public @ResponseBody List<FilterEntranceDTO> getEntrancesByBudgetIdAndMonth(@RequestParam Integer id, @RequestParam String month) {
-        return SERVICE.entranceListByCategoryAndMonth(id, month);
+        if(month != null && !month.isEmpty()){
+            if (year != null && !year.isEmpty()){
+                if(month.length() == 1){
+                    month = "0"+month;
+                }
+                month = month + "/" + year;
+                year = null;
+                return SERVICE.entranceTotalByCategory(budgetId, month, year);
+            }else{
+                throw new EntranceNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
+            }
+        }else if(year != null && !year.isEmpty()){
+            month = null;
+            return SERVICE.entranceTotalByCategory(budgetId, month, year);
+        }else{
+            throw new EntranceNotFoundException("ERROR: INSERIMENTO DATI NON CORETTI");
+        }
     }
 
     @CrossOrigin
-    @GetMapping("/entrances/filter/year")
-    public @ResponseBody List<FilterEntranceDTO> getEntrancesByBudgetIdAndYear(@RequestParam Integer id, @RequestParam String year) {
-        return SERVICE.entranceListByCategoryAndYear(id, year);
+    @GetMapping("/entrances/total/bybudgetid/{budgetId}")
+    public @ResponseBody Double getTotalEntrance(@PathVariable("budgetId")Integer budgetId,
+                                                 @RequestParam(value = "year", required = false) String year,
+                                                 @RequestParam(value = "month", required = false) String month) {
+
+        if(month != null && !month.isEmpty()){
+            if (year != null && !year.isEmpty()){
+                if(month.length() == 1){
+                    month = "0"+month;
+                }
+                month = month + "/" + year;
+                year = null;
+                return SERVICE.totalEntrance(budgetId,month,year);
+            }else{
+                throw new EntranceNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
+            }
+        }else if(year != null && !year.isEmpty()){
+            month = null;
+            return SERVICE.totalEntrance(budgetId,month,year);
+        }else{
+            throw new EntranceNotFoundException("ERROR: INSERIMENTO DATI NON CORETTI");
+        }
     }
-
-    @CrossOrigin
-    @GetMapping("/entrances/total/month")
-    public @ResponseBody Double getEntrancesByMonth(@RequestParam Integer id, @RequestParam String month) { return SERVICE.entraceByMonth(id, month); }
-
-    @CrossOrigin
-    @GetMapping("/entrances/total/year")
-    public @ResponseBody Double getEntrancesByYear(@RequestParam Integer id, @RequestParam String year) { return SERVICE.entraceByYear(id, year); }
-
     @CrossOrigin
     @PostMapping("/entrances")
     public Entrance setEntrance(@RequestBody Entrance entrance) {
@@ -83,8 +109,37 @@ public class EntranceController{
 
     @CrossOrigin
     @GetMapping("/entrances/filter/category")
-    public @ResponseBody List<EntranceDTO> getAllentranceByCategory(@RequestParam Integer id, @RequestParam EntranceCategories category){
+    public @ResponseBody List<EntranceDTO> getAllentranceByCategory(@RequestParam Integer id,
+                                                                    @RequestParam EntranceCategories category){
         return SERVICE.entranceListByIdBudgetAndCategory(id,category);
+    }
+
+    @CrossOrigin
+    @GetMapping("/entrances/bybudgetid/{budgetId}")
+    public List<EntranceDTO> getEntrancesByBudgetIdAndYearOrMonth(@PathVariable("budgetId")Integer budgetId,
+                                                                  @RequestParam(value = "year", required = false) String year,
+                                                                  @RequestParam(value = "month", required = false) String month,
+                                                                  @RequestParam(value = "category", required = false) EntranceCategories category) {
+
+        if(month != null && !month.isEmpty()){
+            if (year != null && !year.isEmpty()){
+                if(month.length() == 1){
+                    month = "0"+month;
+                }
+                month = month + "/" + year;
+                year = null;
+                return SERVICE.entranceListByIdBudgetAndDate(budgetId, year, month, category);
+            }else{
+                throw new EntranceNotFoundException("ERROR: PARAMETRO YEAR NON SPECIFICATO VUOTO O NULLO " + year);
+            }
+        }else if(year != null && !year.isEmpty()){
+            month = null;
+            return SERVICE.entranceListByIdBudgetAndDate(budgetId, year, month , category);
+        }else if(category != null && !category.isEmpty()){
+            return SERVICE.entranceListByIdBudgetAndCategory(budgetId,category);
+        }else{
+            return SERVICE.entranceListByIdBudget(budgetId);
+        }
     }
 
     //Exception---------

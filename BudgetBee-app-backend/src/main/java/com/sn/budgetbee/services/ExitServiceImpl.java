@@ -165,13 +165,8 @@ public class ExitServiceImpl implements ExitService{
     }
 
     @Override
-    public  Double exitByMonth(Integer id, String month) {
-        return EXIT_DAO.findTotalExitByMonth(id, month);
-    }
-
-    @Override
-    public  Double exitByYear(Integer id, String year) {
-        return  EXIT_DAO.findTotalExitByYear(id, year);
+    public Double totalExit(Integer idBudget, String month, String year) {
+        return EXIT_DAO.findTotalExit(idBudget,month,year);
     }
 
     @Override

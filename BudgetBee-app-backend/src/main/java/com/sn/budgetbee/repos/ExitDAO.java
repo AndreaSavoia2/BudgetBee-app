@@ -25,7 +25,8 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "WHERE b.id = :budgetId " +
             "AND x.category = :category " +
             "ORDER BY FUNCTION('DATE_FORMAT', x.transactionDate, '%d/%m/%Y') DESC")
-    List<Exit> findExitsByBudgetIdAndCategory(@Param("budgetId") Integer budgetId, @Param("category") ExitCategories category);
+    List<Exit> findExitsByBudgetIdAndCategory(@Param("budgetId") Integer budgetId,
+                                              @Param("category") ExitCategories category);
 
     @Query("SELECT x " +
             "FROM Exit x " +
@@ -35,7 +36,10 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "OR :month IS NULL AND DATE_FORMAT(x.transactionDate, '%Y') = :year) " +
             "AND (:category IS NULL OR x.category = :category) " +
             "ORDER BY FUNCTION('DATE_FORMAT', x.transactionDate, '%d/%m/%Y') DESC")
-    List<Exit> findExitsByBudgetIdAndYearOrMonth(@Param("budgetId") Integer budgetId, @Param("year") String year, @Param("month") String month, @Param("category") ExitCategories category);
+    List<Exit> findExitsByBudgetIdAndYearOrMonth(@Param("budgetId") Integer budgetId,
+                                                 @Param("year") String year,
+                                                 @Param("month") String month,
+                                                 @Param("category") ExitCategories category);
 
     @Query("SELECT NEW com.sn.budgetbee.dto.FilterExitDTO(x.category, SUM(x.transaction)) " +
             "FROM Exit x " +
@@ -44,21 +48,19 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "AND (:year IS NULL AND DATE_FORMAT(x.transactionDate, '%m/%Y') = :month " +
             "OR :month IS NULL AND DATE_FORMAT(x.transactionDate, '%Y') = :year) " +
             "GROUP BY x.category ")
-    List<FilterExitDTO> findTotalExitByCategory(@Param("budgetId") Integer budgetId, @Param("month") String month, @Param("year") String year);
+    List<FilterExitDTO> findTotalExitByCategory(@Param("budgetId") Integer budgetId,
+                                                @Param("month") String month,
+                                                @Param("year") String year);
 
     @Query("SELECT SUM(x.transaction) " +
             "FROM Exit x " +
             "RIGHT JOIN x.budget b " +
             "WHERE b.id = :budgetId " +
-            "AND DATE_FORMAT(x.transactionDate, '%Y/%m') = :month ")
-    Double findTotalExitByMonth(@Param("budgetId") Integer budgetId, @Param("month") String month);
-
-    @Query("SELECT SUM(x.transaction) " +
-            "FROM Exit x " +
-            "RIGHT JOIN x.budget b " +
-            "WHERE b.id = :budgetId " +
-            "AND DATE_FORMAT(x.transactionDate, '%Y') = :year ")
-    Double findTotalExitByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
+            "AND (:year IS NULL AND DATE_FORMAT(x.transactionDate, '%m/%Y') = :month " +
+            "OR :month IS NULL AND DATE_FORMAT(x.transactionDate, '%Y') = :year) ")
+    Double findTotalExit(@Param("budgetId") Integer budgetId,
+                           @Param("month") String month,
+                           @Param("year") String year);
 
     @Query("SELECT FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y') AS month, " +
             "SUM(e.transaction) AS total " +
@@ -68,6 +70,7 @@ public interface ExitDAO extends JpaRepository<Exit, Integer> {
             "AND FUNCTION('DATE_FORMAT', e.transactionDate, '%Y') = :year " +
             "GROUP BY FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y')" +
             "ORDER BY FUNCTION('DATE_FORMAT', e.transactionDate, '%m/%Y') ASC")
-    List<Object[]> findTotalMonthExitListByYear(@Param("budgetId") Integer budgetId, @Param("year") String year);
+    List<Object[]> findTotalMonthExitListByYear(@Param("budgetId") Integer budgetId,
+                                                @Param("year") String year);
 
 }
