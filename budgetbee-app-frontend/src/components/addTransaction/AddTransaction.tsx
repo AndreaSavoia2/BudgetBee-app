@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Header from "../header/Header";
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { Bounce, ToastContainer, toast } from "react-toastify";
 import { postTransaction } from "../../services/fetchTransaction";
 
 const AddTransaction = () => {
@@ -29,6 +29,25 @@ const AddTransaction = () => {
     }));
   };
 
+  const handleTransactionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let { value } = event.target;
+    value = value.replace(/,/g, ".");
+    const decimalCount = (value.match(/,/g) || []).length;
+    if (decimalCount > 1) {
+      return;
+    }
+    const [, decimals] = value.split(".");
+    if (decimals && decimals.length > 2) {
+      return;
+    }
+    setFormData((prevState) => ({
+      ...prevState,
+      transaction: value,
+    }));
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -40,29 +59,31 @@ const AddTransaction = () => {
         category: "",
         budget: { id: parse.budget.id },
       });
-      window.location.href = "/"
+      window.location.href = "/";
     } catch (error) {
       console.error("Error while posting transaction:", error);
-      toast.error("C'è stato un errore durante l'invio della transazione. Controlla i campi e riprova.", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
+      toast.error(
+        "C'è stato un errore durante l'invio della transazione. Controlla i campi e riprova.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        }
+      );
     }
   };
-  
+
   return (
     <>
       <Header />
       <div className="container mt-20 items-center">
-      <ToastContainer
-    />
+        <ToastContainer />
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group">
             <label
@@ -89,7 +110,7 @@ const AddTransaction = () => {
               placeholder=" "
               required
               value={formData.transaction}
-              onChange={handleSelectChange}
+              onChange={handleTransactionChange}
             />
             <label
               htmlFor="transaction"

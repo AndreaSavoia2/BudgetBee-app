@@ -1,7 +1,7 @@
 
 import { apiUrlBudget, basicAuthHeader } from './apiUrl';
 
-export const fetchUserData = async (budgetId: string) => {
+export const fetchUserData = async (budgetId: any) => {
   try {
     const response = await fetch(`${apiUrlBudget}/${budgetId}`, {
       method: "GET",
