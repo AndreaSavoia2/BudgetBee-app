@@ -5,19 +5,16 @@ import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.dto.FilterExitListTotalDTO;
 import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.entities.Exit;
-import com.sn.budgetbee.exception.EntranceNotFoundException;
 import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.ExitDAO;
 import com.sn.budgetbee.repos.ExitIconDAO;
 import com.sn.budgetbee.utils.ExitCategories;
+import com.sn.budgetbee.utils.NumberManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,27 +25,26 @@ public class ExitServiceImpl implements ExitService{
 
     private final ExitDAO EXIT_DAO;
     private final ExitIconDAO ICON_DAO;
-    private final BudgetDAO BADGET_DAO;
+    private final BudgetDAO BUDGET_DAO;
+    private final NumberManager NUMBER_MANAGER;
 
     @Autowired
-    public ExitServiceImpl(ExitDAO EXIT_DAO, ExitIconDAO ICON_DAO, BudgetDAO BADGET_DAO) {
+    public ExitServiceImpl(ExitDAO EXIT_DAO, ExitIconDAO ICON_DAO, BudgetDAO BUDGET_DAO, NumberManager NUMBER_MANAGER) {
         this.EXIT_DAO = EXIT_DAO;
         this.ICON_DAO = ICON_DAO;
-        this.BADGET_DAO = BADGET_DAO;
+        this.BUDGET_DAO = BUDGET_DAO;
+        this.NUMBER_MANAGER = NUMBER_MANAGER;
     }
 
     @Override
     public Exit saveExit(Exit exit) {
 
-        BigDecimal truncatedTransaction = BigDecimal.valueOf(exit.getTransaction()).setScale(2, RoundingMode.DOWN);
-        exit.setTransaction(truncatedTransaction.doubleValue());
-
-        double resultSign = Math.signum(exit.getTransaction());
-        exit.setTransaction(resultSign == 1.0 ? exit.getTransaction() * -1 : exit.getTransaction());
+        exit.setTransaction(NUMBER_MANAGER.truncateDouble(exit.getTransaction(),2));
+        exit.setTransaction(NUMBER_MANAGER.assignSign(exit.getTransaction(),true));
 
         if(exit.getId() == 0){
 
-            Optional<Budget> result = BADGET_DAO.findById(exit.getBudget().getId());
+            Optional<Budget> result = BUDGET_DAO.findById(exit.getBudget().getId());
             if (result.isPresent()){
                 Budget budget = result.get();
                 budget.setBudget(budget.getBudget() + exit.getTransaction());
@@ -62,7 +58,7 @@ public class ExitServiceImpl implements ExitService{
         }else {
 
             Optional<Exit> resultExit = EXIT_DAO.findById(exit.getId());
-            Optional<Budget> resultBudget = BADGET_DAO.findById(exit.getBudget().getId());
+            Optional<Budget> resultBudget = BUDGET_DAO.findById(exit.getBudget().getId());
             if(resultExit.isPresent() && resultBudget.isPresent()){
                 Exit rintegrescionExit = resultExit.get();
                 Budget budget = resultBudget.get();

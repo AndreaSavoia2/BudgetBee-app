@@ -13,6 +13,7 @@ import com.sn.budgetbee.repos.EntranceDAO;
 import com.sn.budgetbee.repos.EntranceIconDAO;
 import com.sn.budgetbee.utils.EntranceCategories;
 import com.sn.budgetbee.utils.ExitCategories;
+import com.sn.budgetbee.utils.NumberManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,22 +30,21 @@ public class EntranceServiceImpl implements EntranceService{
     private final EntranceDAO ENTRANCE_DAO;
     private final EntranceIconDAO ICON_DAO;
     private final BudgetDAO BUDGET_DAO;
+    private final NumberManager NUMBER_MANAGER;
 
     @Autowired
-    public EntranceServiceImpl(EntranceDAO ENTRANCE_DAO, EntranceIconDAO ICON_DAO, BudgetDAO BUDGET_DAO) {
+    public EntranceServiceImpl(EntranceDAO ENTRANCE_DAO, EntranceIconDAO ICON_DAO, BudgetDAO BUDGET_DAO, NumberManager NUMBER_MANAGER) {
         this.ENTRANCE_DAO = ENTRANCE_DAO;
         this.ICON_DAO = ICON_DAO;
         this.BUDGET_DAO = BUDGET_DAO;
+        this.NUMBER_MANAGER = NUMBER_MANAGER;
     }
 
     @Override
     public Entrance saveEntrance(Entrance entrance) {
 
-        BigDecimal truncatedTransaction = BigDecimal.valueOf(entrance.getTransaction()).setScale(2, RoundingMode.DOWN);
-        entrance.setTransaction(truncatedTransaction.doubleValue());
-
-        double resultSign = Math.signum(entrance.getTransaction());
-        entrance.setTransaction(resultSign == -1.0 ? entrance.getTransaction() * -1 : entrance.getTransaction());
+        entrance.setTransaction(NUMBER_MANAGER.truncateDouble(entrance.getTransaction(),2));
+        entrance.setTransaction(NUMBER_MANAGER.assignSign(entrance.getTransaction(),false));
 
         if(entrance.getId() == 0){
 
