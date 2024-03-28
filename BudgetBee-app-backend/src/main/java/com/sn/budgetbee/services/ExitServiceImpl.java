@@ -15,6 +15,8 @@ import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,17 +39,19 @@ public class ExitServiceImpl implements ExitService{
 
     @Override
     public Exit saveExit(Exit exit) {
-        double operation;
-        exit.setTransaction(exit.getTransaction() * -1);
+
+        BigDecimal truncatedTransaction = BigDecimal.valueOf(exit.getTransaction()).setScale(2, RoundingMode.DOWN);
+        exit.setTransaction(truncatedTransaction.doubleValue());
+
+        double resultSign = Math.signum(exit.getTransaction());
+        exit.setTransaction(resultSign == 1.0 ? exit.getTransaction() * -1 : exit.getTransaction());
 
         if(exit.getId() == 0){
 
             Optional<Budget> result = BADGET_DAO.findById(exit.getBudget().getId());
             if (result.isPresent()){
                 Budget budget = result.get();
-                operation = budget.getBudget();
-                operation += exit.getTransaction();
-                budget.setBudget(operation);
+                budget.setBudget(budget.getBudget() + exit.getTransaction());
                 exit.setBudget(budget);
                 return EXIT_DAO.save(exit);
 
@@ -62,11 +66,10 @@ public class ExitServiceImpl implements ExitService{
             if(resultExit.isPresent() && resultBudget.isPresent()){
                 Exit rintegrescionExit = resultExit.get();
                 Budget budget = resultBudget.get();
-                operation = budget.getBudget();
                 double rintegrescion =  (rintegrescionExit.getTransaction() * -1) + exit.getTransaction();
-                operation += rintegrescion;
-                budget.setBudget(operation);
+                budget.setBudget(budget.getBudget() + rintegrescion);
                 exit.setBudget(budget);
+                exit.setTransactionDate(rintegrescionExit.getTransactionDate());
                 return EXIT_DAO.save(exit);
             }else{
                 throw new ExitNotFoundException("NO ID EXIT FOUND: " + exit.getId());

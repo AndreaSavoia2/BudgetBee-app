@@ -16,6 +16,8 @@ import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +39,19 @@ public class EntranceServiceImpl implements EntranceService{
 
     @Override
     public Entrance saveEntrance(Entrance entrance) {
-        double operation;
+
+        BigDecimal truncatedTransaction = BigDecimal.valueOf(entrance.getTransaction()).setScale(2, RoundingMode.DOWN);
+        entrance.setTransaction(truncatedTransaction.doubleValue());
+
+        double resultSign = Math.signum(entrance.getTransaction());
+        entrance.setTransaction(resultSign == -1.0 ? entrance.getTransaction() * -1 : entrance.getTransaction());
 
         if(entrance.getId() == 0){
 
             Optional<Budget> result = BUDGET_DAO.findById(entrance.getBudget().getId());
             if (result.isPresent()){
                 Budget budget = result.get();
-                operation = budget.getBudget();
-                operation += entrance.getTransaction();
-                budget.setBudget(operation);
+                budget.setBudget(budget.getBudget() + entrance.getTransaction());
                 entrance.setBudget(budget);
                 return ENTRANCE_DAO.save(entrance);
 
@@ -61,11 +66,10 @@ public class EntranceServiceImpl implements EntranceService{
             if(resultEntrance.isPresent() && resultBudget.isPresent()){
                 Entrance rintegrescionEntrance = resultEntrance.get();
                 Budget budget = resultBudget.get();
-                operation = budget.getBudget();
                 double rintegrescion =  (rintegrescionEntrance.getTransaction() * -1) + entrance.getTransaction();
-                operation += rintegrescion;
-                budget.setBudget(operation);
+                budget.setBudget(budget.getBudget() + rintegrescion);
                 entrance.setBudget(budget);
+                entrance.setTransactionDate(rintegrescionEntrance.getTransactionDate());
                 return ENTRANCE_DAO.save(entrance);
             }else{
                 throw new UserNotFoundException("NO ID USER FOUND: " + entrance.getId());
