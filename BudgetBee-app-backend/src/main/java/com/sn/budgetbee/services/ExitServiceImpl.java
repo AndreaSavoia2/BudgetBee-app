@@ -48,6 +48,7 @@ public class ExitServiceImpl implements ExitService{
             if (result.isPresent()){
                 Budget budget = result.get();
                 budget.setBudget(budget.getBudget() + exit.getTransaction());
+                NUMBER_MANAGER.truncateDouble(budget.getBudget(),2);
                 exit.setBudget(budget);
                 return EXIT_DAO.save(exit);
 
@@ -64,6 +65,7 @@ public class ExitServiceImpl implements ExitService{
                 Budget budget = resultBudget.get();
                 double rintegrescion =  (rintegrescionExit.getTransaction() * -1) + exit.getTransaction();
                 budget.setBudget(budget.getBudget() + rintegrescion);
+                NUMBER_MANAGER.truncateDouble(budget.getBudget(),2);
                 exit.setBudget(budget);
                 exit.setTransactionDate(rintegrescionExit.getTransactionDate());
                 return EXIT_DAO.save(exit);

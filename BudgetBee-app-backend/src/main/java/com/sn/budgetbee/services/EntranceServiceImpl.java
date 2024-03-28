@@ -52,6 +52,7 @@ public class EntranceServiceImpl implements EntranceService{
             if (result.isPresent()){
                 Budget budget = result.get();
                 budget.setBudget(budget.getBudget() + entrance.getTransaction());
+                NUMBER_MANAGER.truncateDouble(budget.getBudget(),2);
                 entrance.setBudget(budget);
                 return ENTRANCE_DAO.save(entrance);
 
@@ -68,6 +69,7 @@ public class EntranceServiceImpl implements EntranceService{
                 Budget budget = resultBudget.get();
                 double rintegrescion =  (rintegrescionEntrance.getTransaction() * -1) + entrance.getTransaction();
                 budget.setBudget(budget.getBudget() + rintegrescion);
+                NUMBER_MANAGER.truncateDouble(budget.getBudget(),2);
                 entrance.setBudget(budget);
                 entrance.setTransactionDate(rintegrescionEntrance.getTransactionDate());
                 return ENTRANCE_DAO.save(entrance);
