@@ -1,4 +1,3 @@
-// components/Card.tsx
 import React, { useEffect, useState } from "react";
 import "./Card.css";
 import { Link } from "react-router-dom";
@@ -63,7 +62,7 @@ const Card = () => {
             transactions.slice(0, 5).map((transaction: any) => (
               <div
                 key={transaction.id}
-                className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 mb-10 text-center sm:w-screen w-80"
+                className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 text-center sm:w-screen w-80"
               >
                 <div className="px-6 py-4 h-full flex flex-col justify-between">
                     <div className="font-bold text-xl mb-2">
