@@ -44,9 +44,7 @@ public class ExitController{
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
-                if(month.length() == 1){
-                    month = "0"+month;
-                }
+                month = (month.length() == 1) ? "0" + month : month;
                 month = month + "/" + year;
                 year = null;
                 return SERVICE.totalExit(budgetId,month,year);
@@ -104,9 +102,7 @@ public class ExitController{
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
-                if(month.length() == 1){
-                    month = "0"+month;
-                }
+                month = (month.length() == 1) ? "0" + month : month;
                 month = month + "/" + year;
                 year = null;
                 return SERVICE.exitListByIdBudgetAndDate(budgetId, year, month, category);
@@ -131,9 +127,7 @@ public class ExitController{
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
-                if(month.length() == 1){
-                    month = "0"+month;
-                }
+                month = (month.length() == 1) ? "0" + month : month;
                 month = month + "/" + year;
                 year = null;
                 return SERVICE.exitTotalByCategory(budgetId, month, year);

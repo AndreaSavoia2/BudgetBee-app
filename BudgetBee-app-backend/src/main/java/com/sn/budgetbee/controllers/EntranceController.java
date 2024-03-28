@@ -47,9 +47,7 @@ public class EntranceController{
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
-                if(month.length() == 1){
-                    month = "0"+month;
-                }
+                month = (month.length() == 1) ? "0" + month : month;
                 month = month + "/" + year;
                 year = null;
                 return SERVICE.entranceTotalByCategory(budgetId, month, year);
@@ -72,9 +70,7 @@ public class EntranceController{
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
-                if(month.length() == 1){
-                    month = "0"+month;
-                }
+                month = (month.length() == 1) ? "0" + month : month;
                 month = month + "/" + year;
                 year = null;
                 return SERVICE.totalEntrance(budgetId,month,year);
@@ -123,9 +119,7 @@ public class EntranceController{
 
         if(month != null && !month.isEmpty()){
             if (year != null && !year.isEmpty()){
-                if(month.length() == 1){
-                    month = "0"+month;
-                }
+                month = (month.length() == 1) ? "0" + month : month;
                 month = month + "/" + year;
                 year = null;
                 return SERVICE.entranceListByIdBudgetAndDate(budgetId, year, month, category);
