@@ -33,7 +33,10 @@ public class EntranceServiceImpl implements EntranceService{
     private final NumberManager NUMBER_MANAGER;
 
     @Autowired
-    public EntranceServiceImpl(EntranceDAO ENTRANCE_DAO, EntranceIconDAO ICON_DAO, BudgetDAO BUDGET_DAO, NumberManager NUMBER_MANAGER) {
+    public EntranceServiceImpl(EntranceDAO ENTRANCE_DAO,
+                               EntranceIconDAO ICON_DAO,
+                               BudgetDAO BUDGET_DAO,
+                               NumberManager NUMBER_MANAGER) {
         this.ENTRANCE_DAO = ENTRANCE_DAO;
         this.ICON_DAO = ICON_DAO;
         this.BUDGET_DAO = BUDGET_DAO;
@@ -55,7 +58,6 @@ public class EntranceServiceImpl implements EntranceService{
                 NUMBER_MANAGER.truncateDouble(budget.getBudget(),2);
                 entrance.setBudget(budget);
                 return ENTRANCE_DAO.save(entrance);
-
             }else {
                 throw new UserNotFoundException("NO ID BUDGET FOUND: " + entrance.getId());
             }
@@ -76,6 +78,7 @@ public class EntranceServiceImpl implements EntranceService{
             }else{
                 throw new UserNotFoundException("NO ID USER FOUND: " + entrance.getId());
             }
+            
         }
     }
 

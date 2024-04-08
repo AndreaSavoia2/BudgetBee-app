@@ -10,7 +10,7 @@ import java.util.TimeZone;
 
 @Entity
 @Table(name = "table_exits")
-public class Exit {
+public class Exit{
 
     @Id
     @Column(name = "id")

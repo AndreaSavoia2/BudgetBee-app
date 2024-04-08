@@ -11,7 +11,7 @@ import java.util.TimeZone;
 
 @Entity
 @Table(name = "table_entrances")
-public class Entrance {
+public class Entrance{
 
     @Id
     @Column(name = "id")

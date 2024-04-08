@@ -7,7 +7,7 @@ import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class ExitDTO {
+public class ExitDTO implements TransactionDTO{
 
     private Integer id;
     private Double transaction;

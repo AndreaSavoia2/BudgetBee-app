@@ -1,5 +1,6 @@
 package com.sn.budgetbee.controllers;
 
+import com.sn.budgetbee.dto.TransactionDTO;
 import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.exception.BudgetNotFoundExceprion;
 import com.sn.budgetbee.exception.ErrorResponseData;
@@ -31,6 +32,12 @@ public class BudgetController{
     @GetMapping("/budgets/{budgetId}")
     public Budget getBudgetById(@PathVariable("budgetId") Integer id) {
         return SERVICE.findBudgetById(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/budgets/transaction/{budgetId}")
+    public List<TransactionDTO> getTransactionByBudgetId(@PathVariable("budgetId") Integer id) {
+        return SERVICE.findAllByBudgetId(id);
     }
 
     @CrossOrigin

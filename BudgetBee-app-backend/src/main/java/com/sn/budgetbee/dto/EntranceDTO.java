@@ -4,7 +4,7 @@ import com.sn.budgetbee.utils.EntranceCategories;
 
 import java.util.Date;
 
-public class EntranceDTO {
+public class EntranceDTO implements TransactionDTO{
 
     private Integer id;
     private Double transaction;

@@ -1,5 +1,6 @@
 package com.sn.budgetbee.services;
 
+import com.sn.budgetbee.dto.TransactionDTO;
 import com.sn.budgetbee.entities.Budget;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface BudgetService {
     boolean deleteBudgetById(Integer id);
 
     Budget movementOnBudget(Integer id,Double movement);
+
+    List<TransactionDTO> findAllByBudgetId(Integer id);
 }
