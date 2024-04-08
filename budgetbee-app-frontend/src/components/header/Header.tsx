@@ -58,10 +58,10 @@ const Header = () => {
         <img
           src={icon}
           alt=""
-          className="h-20 absolute mb-20 md:mb-10 right-0"
+          className="h-20 absolute mb-60 sm:mt-16 md:mb-40 right-0"
         />
         <div
-          className="hamburger absolute mb-20 md:mb-10 ml-5"
+          className="hamburger absolute sm:mt-16 mb-60 md:mb-40 ml-5"
           onClick={handleMenuToggle}
         >
           <div className={`line ${menuOpen ? "open" : ""}`}></div>

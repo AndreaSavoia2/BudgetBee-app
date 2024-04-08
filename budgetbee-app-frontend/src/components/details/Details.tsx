@@ -7,13 +7,13 @@ import {
   userData,
 } from "../../services/apiUrl";
 
+import { Bounce, ToastContainer, toast } from "react-toastify";
+
 const Details = () => {
   const [transactionType, setTransactionType] = useState<string>("Entrata");
-  const [month, setMonth] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [selectedYear, setSelectedYear] = useState<number>(
-    new Date().getFullYear()
-  );
+  const [selectedMonth, setSelectedMonth] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedYear, setSelectedYear] = useState<number| "">("");
   const [transactions, setTransactions] = useState<any>(null);
 
   const generateYearOptions = (startYear: any, endYear: any) => {
@@ -33,11 +33,11 @@ const Details = () => {
     if (selectedYear) {
       queryParams.push(`year=${selectedYear}`);
     }
-    if (month) {
-      queryParams.push(`month=${month}`);
+    if (selectedMonth) {
+      queryParams.push(`month=${selectedMonth}`);
     }
-    if (category) {
-      queryParams.push(`category=${category}`);
+    if (selectedCategory) {
+      queryParams.push(`category=${selectedCategory}`);
     }
 
     const queryString = queryParams.join("&");
@@ -64,6 +64,20 @@ const Details = () => {
       return data;
     } catch (error) {
       console.error("Fetching user data failed.", error);
+      toast.error(
+        "C'è stato un errore durante l'invio della richiesta. Controlla i campi e riprova.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        }
+      );
     }
   };
 
@@ -74,6 +88,7 @@ const Details = () => {
 
   return (
     <>
+    <ToastContainer />
       <Header />
       <div className="container mt-20">
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
@@ -103,7 +118,7 @@ const Details = () => {
             <select
               id="category"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => setSelectedCategory(e.target.value)}
             >
               <option value="">Categoria:</option>
               {transactionType === "Uscita" && (
@@ -126,7 +141,7 @@ const Details = () => {
               {transactionType === "Entrata" && (
                 <>
                   <option value="BONIFICO">BONIFICO</option>
-                  <option value="RIMBORSO">RIMBORSO</option>
+                  <option value="RIMBORSI">RIMBORSI</option>
                   <option value="REGALI">REGALI</option>
                   <option value="STIPENDIO">STIPENDIO</option>
                   <option value="ALTRO">ALTRO</option>
@@ -144,7 +159,7 @@ const Details = () => {
             <select
               id="monthSelect"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
-              onChange={(e) => setMonth(e.target.value)}
+              onChange={(e) => setSelectedMonth(e.target.value)}
             >
               <option value="">Seleziona il mese</option>
               <option value="1">Gennaio</option>
@@ -174,6 +189,7 @@ const Details = () => {
               onChange={(e) => setSelectedYear(parseInt(e.target.value))}
               value={selectedYear}
             >
+              <option value="">Anno:</option>
               {years.map((year, index) => (
                 <option key={index} value={year}>
                   {year}

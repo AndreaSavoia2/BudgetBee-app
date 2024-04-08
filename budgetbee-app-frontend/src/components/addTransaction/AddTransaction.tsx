@@ -174,7 +174,7 @@ const AddTransaction = () => {
               {transactionType === "Entrata" && (
                 <>
                   <option value="BONIFICO">BONIFICO</option>
-                  <option value="RIMBORSO">RIMBORSO</option>
+                  <option value="RIMBORSI">RIMBORSI</option>
                   <option value="REGALI">REGALI</option>
                   <option value="STIPENDIO">STIPENDIO</option>
                   <option value="ALTRO">ALTRO</option>
