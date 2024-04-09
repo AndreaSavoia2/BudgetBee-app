@@ -10,6 +10,9 @@ import com.sn.budgetbee.repos.TransactionDAO;
 import com.sn.budgetbee.utils.EntranceCategories;
 import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.format.DateTimeFormatter;
@@ -31,33 +34,39 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-   public List<TransactionDTO> findAll(Integer id) {
-       List<Transaction> transactions = TRANSACTION_DAO.findTransactionsByBudgetId(id);
-       List<TransactionDTO> transactionsDTO = new ArrayList<>();
-       String link = null;
+    public List<TransactionDTO> findAll(Integer id, Integer max) {
+        Pageable pageable;
+        if (max != null) {
+            pageable = PageRequest.of(0, max, Sort.by("transactionDate").descending());
+        } else {
+            pageable = Pageable.unpaged(); // Nessun limite
+        }
+        List<Transaction> transactions = TRANSACTION_DAO.findTransactionsByBudgetId(id,pageable);
+        List<TransactionDTO> transactionsDTO = new ArrayList<>();
+        String link = null;
 
-       DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-       DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
 
-       for (Transaction transaction : transactions){
+        for (Transaction transaction : transactions){
 
-           if (transaction.getType().equalsIgnoreCase("exit")){
-               link = EXIT_ICON_DAO.findLink(ExitCategories.valueOf(transaction.getCategory()));
-           }
+            if (transaction.getType().equalsIgnoreCase("exit")){
+                link = EXIT_ICON_DAO.findLink(ExitCategories.valueOf(transaction.getCategory()));
+            }
 
-           if(transaction.getType().equalsIgnoreCase("entrance")){
-               link = ENRANCE_ICON_DAO.findLink(EntranceCategories.valueOf(transaction.getCategory()));
-           }
+            if(transaction.getType().equalsIgnoreCase("entrance")){
+                link = ENRANCE_ICON_DAO.findLink(EntranceCategories.valueOf(transaction.getCategory()));
+            }
 
-           transactionsDTO.add(new TransactionDTO(
-                   transaction.getId(),
-                   transaction.getTransaction(),
-                   transaction.getDescription(),
-                   transaction.getTransactionDate().format(formatterDate),
-                   transaction.getTransactionDate().format(formatterHor),
-                   transaction.getCategory(),
-                   link));
-       }
-       return transactionsDTO;
-   }
+            transactionsDTO.add(new TransactionDTO(
+                    transaction.getId(),
+                    transaction.getTransaction(),
+                    transaction.getDescription(),
+                    transaction.getTransactionDate().format(formatterDate),
+                    transaction.getTransactionDate().format(formatterHor),
+                    transaction.getCategory(),
+                    link));
+        }
+        return transactionsDTO;
+    }
 }

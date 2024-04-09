@@ -22,7 +22,8 @@ public class TransactionController {
 
     @CrossOrigin
     @GetMapping("/transaction/{budgetId}")
-    public List<TransactionDTO> getAll(@PathVariable("budgetId") Integer id) {
-        return SERVICE.findAll(id);
+    public List<TransactionDTO> getAll(@PathVariable("budgetId") Integer id,
+                                       @RequestParam(value = "max", required = false) Integer max) {
+        return SERVICE.findAll(id,max);
     }
 }
