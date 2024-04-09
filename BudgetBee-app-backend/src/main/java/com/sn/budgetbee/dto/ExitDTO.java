@@ -1,13 +1,8 @@
 package com.sn.budgetbee.dto;
 
 import com.sn.budgetbee.utils.ExitCategories;
-import jakarta.persistence.CascadeType;
 
-import javax.xml.crypto.Data;
-import java.time.LocalDateTime;
-import java.util.Date;
-
-public class ExitDTO implements TransactionDTO{
+public class ExitDTO {
 
     private Integer id;
     private Double transaction;

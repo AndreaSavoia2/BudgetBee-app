@@ -1,33 +1,102 @@
 package com.sn.budgetbee.entities;
 
 import com.sn.budgetbee.utils.ExitCategories;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-public interface Transaction <T>{
+@Entity
+@Table(name = "budget_transactions_view")
+public class Transaction {
 
-    public T getCategory();
+    @Id
+    @Column(name = "id")
+    private Integer id;
 
-    public void setCategory(T t);
+    @Column(name = "transaction")
+    private Double transaction;
 
-    public Budget getBudget();
+    @Column(name = "description")
+    private String description;
 
-    public void setBudget(Budget budget);
+    @Column(name = "transaction_date")
+    private LocalDateTime transactionDate;
 
-    public Integer getId();
+    @Column(name="category")
+    private String category;
 
-    public void setId(Integer id);
+    @Column(name="link")
+    private String type;
 
-    public Double getTransaction();
+    @Column(name="budget_id")
+    private Integer budgetId;
 
-    public void setTransaction(Double transaction);
+    public Transaction(Integer id, Double transaction, String description, LocalDateTime transactionDate, String category, String type, Integer budgetId) {
+        this.id = id;
+        this.transaction = transaction;
+        this.description = description;
+        this.transactionDate = transactionDate;
+        this.category = category;
+        this.type = type;
+        this.budgetId = budgetId;
+    }
 
-    public String getDescription();
+    public String getType() {
+        return type;
+    }
 
-    public void setDescription(String description);
+    public void setType(String type) {
+        this.type = type;
+    }
 
-    public LocalDateTime getTransactionDate();
+    public Transaction() {
+    }
 
-    public void setTransactionDate(LocalDateTime  transactionDate);
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Double getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Double transaction) {
+        this.transaction = transaction;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(LocalDateTime transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getBudgetId() {
+        return budgetId;
+    }
+
+    public void setBudgetId(Integer budgetId) {
+        this.budgetId = budgetId;
+    }
 }

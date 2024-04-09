@@ -2,9 +2,7 @@ package com.sn.budgetbee.dto;
 
 import com.sn.budgetbee.utils.EntranceCategories;
 
-import java.util.Date;
-
-public class EntranceDTO implements TransactionDTO{
+public class EntranceDTO {
 
     private Integer id;
     private Double transaction;

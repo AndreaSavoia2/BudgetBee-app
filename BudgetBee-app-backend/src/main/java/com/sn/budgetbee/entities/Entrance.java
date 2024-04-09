@@ -1,17 +1,14 @@
 package com.sn.budgetbee.entities;
 
 import com.sn.budgetbee.utils.EntranceCategories;
-import com.sn.budgetbee.utils.ExitCategories;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 @Entity
 @Table(name = "table_entrances")
-public class Entrance{
+public class Entrance {
 
     @Id
     @Column(name = "id")

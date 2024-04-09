@@ -1,10 +1,8 @@
 package com.sn.budgetbee.controllers;
 
-import com.sn.budgetbee.dto.TransactionDTO;
 import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.exception.BudgetNotFoundExceprion;
 import com.sn.budgetbee.exception.ErrorResponseData;
-import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.services.BudgetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +30,6 @@ public class BudgetController{
     @GetMapping("/budgets/{budgetId}")
     public Budget getBudgetById(@PathVariable("budgetId") Integer id) {
         return SERVICE.findBudgetById(id);
-    }
-
-    @CrossOrigin
-    @GetMapping("/budgets/transaction/{budgetId}")
-    public List<TransactionDTO> getTransactionByBudgetId(@PathVariable("budgetId") Integer id) {
-        return SERVICE.findAllByBudgetId(id);
     }
 
     @CrossOrigin

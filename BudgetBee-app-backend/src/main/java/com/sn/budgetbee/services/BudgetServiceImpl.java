@@ -1,25 +1,14 @@
 package com.sn.budgetbee.services;
 
-import com.sn.budgetbee.dto.EntranceDTO;
-import com.sn.budgetbee.dto.ExitDTO;
-import com.sn.budgetbee.dto.TransactionDTO;
 import com.sn.budgetbee.entities.Budget;
-import com.sn.budgetbee.entities.Entrance;
-import com.sn.budgetbee.entities.Exit;
-import com.sn.budgetbee.entities.Transaction;
 import com.sn.budgetbee.exception.BudgetNotFoundExceprion;
 import com.sn.budgetbee.repos.BudgetDAO;
 import com.sn.budgetbee.repos.EntranceIconDAO;
 import com.sn.budgetbee.repos.ExitIconDAO;
-import com.sn.budgetbee.utils.EntranceCategories;
-import com.sn.budgetbee.utils.ExitCategories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BudgetServiceImpl implements BudgetService{
@@ -80,48 +69,5 @@ public class BudgetServiceImpl implements BudgetService{
         return this.saveBudget(budget);
     }
 
-    @Override
-    public List<TransactionDTO> findAllByBudgetId(Integer id) {
-
-        List<Object[]> transactions = BUDGET_DAO.findExitsAndEntrancesByBudgetId(id);
-        List<TransactionDTO> transactionsDTO = new ArrayList<>();
-
-
-        DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatterHor = DateTimeFormatter.ofPattern("HH:mm");
-
-        for (Object[] objects : transactions) {
-            Exit exit = (Exit) objects[0];
-            Entrance entrance = (Entrance) objects[1];
-
-            if (exit != null) {
-                String link = EXIT_ICON_DAO.findLink(exit.getCategory());
-                transactionsDTO.add(new ExitDTO(
-                        exit.getId(),
-                        exit.getTransaction(),
-                        exit.getDescription(),
-                        exit.getTransactionDate().format(formatterDate),
-                        exit.getTransactionDate().format(formatterHor),
-                        exit.getCategory(),
-                        link));
-            }
-
-            if (entrance != null) {
-                String link = ENTRANCE_ICON_DAO.findLink(entrance.getCategory());
-                transactionsDTO.add(new EntranceDTO(
-                        entrance.getId(),
-                        entrance.getTransaction(),
-                        entrance.getDescription(),
-                        entrance.getTransactionDate().format(formatterDate),
-                        entrance.getTransactionDate().format(formatterHor),
-                        entrance.getCategory(),
-                        link));
-            }
-
-
-        }
-
-        return transactionsDTO;
-    }
 
 }
