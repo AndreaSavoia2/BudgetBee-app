@@ -15,6 +15,7 @@ export const apiUrlLogin: any = process.env.REACT_APP_API_URL_LOGIN;
 
 /* CARD TRANSACTION */
 export const apiUrlExit: any = process.env.REACT_APP_API_URL_EXIT;
+export const apiUrlTransaction: any = process.env.REACT_APP_API_URL_TRANSACTIONS;
 
 /* CARD ENTRANCES */
 export const apiUrlEntrance: any = process.env.REACT_APP_API_URL_ENTRANCE

@@ -59,7 +59,7 @@ const Card = () => {
             </div>
           )}
           {transactions !== null &&
-            transactions.slice(0, 5).map((transaction: any) => (
+            transactions.map((transaction: any) => (
               <div
                 key={transaction.id}
                 className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 text-center sm:w-screen w-80"

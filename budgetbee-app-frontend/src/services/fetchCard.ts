@@ -1,8 +1,8 @@
-import { apiUrlExit, basicAuthHeader } from './apiUrl';
+import { apiUrlTransaction, basicAuthHeader } from './apiUrl';
 
-export const fetchTransactions = async (budgetId: string) => {
+export const fetchTransactions = async (budgetId: any) => {
   try {
-    const response = await fetch(`${apiUrlExit}/${budgetId}`, {
+    const response = await fetch(`${apiUrlTransaction}/${budgetId}?max=5`, {
       method: "GET",
       headers: {
         Authorization: basicAuthHeader,
