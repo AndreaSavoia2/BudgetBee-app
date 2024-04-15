@@ -86,7 +86,7 @@ public class ExitServiceImpl implements ExitService{
         if(result.isPresent()){
             Exit exit = result.get();
             Budget budget = BUDGET_DAO.findById(exit.getBudget().getId()).orElseThrow();
-            budget.setBudget(exit.getBudget().getBudget() - NUMBER_MANAGER.assignSign(exit.getTransaction(),true));
+            budget.setBudget(exit.getBudget().getBudget() - NUMBER_MANAGER.assignSign(exit.getTransaction(),false));
             EXIT_DAO.deleteById(id);
             return true;
         }else{
