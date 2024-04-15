@@ -25,3 +25,7 @@ export const apiUrlBudget: any = process.env.REACT_APP_API_URL_BUDGET;
 /* ADD TRANSACTION */
 export const apiUrlPostExit: any = process.env.REACT_APP_API_URL_POST_EXIT;
 export const apiUrlPostEntrance: any = process.env.REACT_APP_API_URL_POST_ENTRANCE;
+
+/*  DELETE TRANSACTION  */
+export const apiUrlDeleteExit: any = process.env.REACT_APP_API_URL_DELETE_EXIT;
+export const apiUrlDeleteEntrance: any = process.env.REACT_APP_API_URL_DELETE_ENTRANCE;

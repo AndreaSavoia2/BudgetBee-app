@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import Header from "../header/Header";
 import {
+  apiUrlDeleteEntrance,
+  apiUrlDeleteExit,
   apiUrlEntrance,
   apiUrlExit,
   basicAuthHeader,
   userData,
 } from "../../services/apiUrl";
-
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { BsTrash } from "react-icons/bs";
 
 const Details = () => {
   const [transactionType, setTransactionType] = useState<string>("Entrata");
   const [selectedMonth, setSelectedMonth] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedYear, setSelectedYear] = useState<number| "">("");
+  const [selectedYear, setSelectedYear] = useState<number | "">("");
   const [transactions, setTransactions] = useState<any>(null);
 
   const generateYearOptions = (startYear: any, endYear: any) => {
@@ -86,9 +88,64 @@ const Details = () => {
     await fetchDetailsData();
   };
 
+  const handleDelete = async (transactionId: any) => {
+    try {
+      const apiUrl =
+        transactionType === "Uscita" ? apiUrlDeleteExit : apiUrlDeleteEntrance;
+      const response = await fetch(`${apiUrl}/${transactionId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: basicAuthHeader,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      setTransactions(
+        transactions.filter(
+          (transaction: any) => transaction.id !== transactionId
+        )
+      );
+
+      toast.success("Transazione eliminata con successo", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000)
+    } catch (error) {
+      console.error("Errore durante l'eliminazione della transazione:", error);
+      toast.error(
+        "C'è stato un errore durante l'eliminazione della transazione. Riprova",
+        {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+        }
+      );
+    }
+  };
+
   return (
     <>
-    <ToastContainer />
+      <ToastContainer />
       <Header />
       <div className="container mt-20">
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
@@ -207,23 +264,29 @@ const Details = () => {
         <div className="max-w-3xl mx-auto flex items-center justify-center">
           <div>
             {Array.isArray(transactions) &&
-              transactions.slice(0, 5).map((transaction: any) => (
+              transactions.map((transaction: any) => (
                 <div
                   key={transaction.id}
-                  className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 text-center sm:w-screen w-80"
+                  className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 text-center sm:w-screen w-80 relative"
                 >
-                  <div className="px-6 py-4 h-full flex flex-col justify-between">
-                    <div className="font-bold text-xl mb-2">
+                  <div className="px-6 py-4 h-full flex flex-col justify-between relative">
+                    <div className="font-bold text-xl mb-2 flex">
                       {transaction?.description}
                     </div>
                     <p className="text-gray-700 text-base">
-                      <span className="flex justify-center">
+                      <span className="flex">
                         {transaction.transactionDate}
                       </span>
                     </p>
-                    <p className="text-gray-700 text-base">
+                    <p className="text-gray-700 text-base absolute right-0 top-5 mr-2 mb-2">
                       {transaction.transaction}€
                     </p>
+                    <button
+                      onClick={() => handleDelete(transaction.id)}
+                      className="rounded-lg text-white absolute right-0 mt-10 mr-2 mb-2"
+                    >
+                      <BsTrash className="w-8 h-8 text-black" />
+                    </button>
                   </div>
                 </div>
               ))}
@@ -233,5 +296,4 @@ const Details = () => {
     </>
   );
 };
-
 export default Details;
