@@ -5,6 +5,7 @@ import com.sn.budgetbee.dto.FilterExitDTO;
 import com.sn.budgetbee.dto.FilterExitListTotalDTO;
 import com.sn.budgetbee.entities.Budget;
 import com.sn.budgetbee.entities.Exit;
+import com.sn.budgetbee.exception.BudgetNotFoundExceprion;
 import com.sn.budgetbee.exception.ExitNotFoundException;
 import com.sn.budgetbee.exception.UserNotFoundException;
 import com.sn.budgetbee.repos.BudgetDAO;
@@ -77,6 +78,23 @@ public class ExitServiceImpl implements ExitService{
     }
 
     @Override
+    public boolean deleteExitById(Integer id) {
+
+        Optional<Exit> result = EXIT_DAO.findById(id);
+
+
+        if(result.isPresent()){
+            Exit exit = result.get();
+            Budget budget = BUDGET_DAO.findById(exit.getBudget().getId()).orElseThrow();
+            budget.setBudget(exit.getBudget().getBudget() - NUMBER_MANAGER.assignSign(exit.getTransaction(),true));
+            EXIT_DAO.deleteById(id);
+            return true;
+        }else{
+            throw new ExitNotFoundException("NO ID EXIT FOUND: " + id);
+        }
+    }
+
+    @Override
     public ExitDTO findExitById(Integer id) {
         Optional<Exit> result = EXIT_DAO.findById(id);
         Exit exit = null;
@@ -124,18 +142,6 @@ public class ExitServiceImpl implements ExitService{
         }
 
         return exitsDTO;
-    }
-
-    @Override
-    public boolean deleteExitById(Integer id) {
-        Optional<Exit> result = EXIT_DAO.findById(id);
-
-        if(result.isPresent()){
-            EXIT_DAO.deleteById(id);
-            return true;
-        }else{
-            throw new ExitNotFoundException("NO ID EXIT FOUND: " + id);
-        }
     }
 
     @Override
