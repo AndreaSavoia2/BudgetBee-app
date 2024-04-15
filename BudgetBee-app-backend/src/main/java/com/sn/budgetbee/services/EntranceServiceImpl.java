@@ -136,6 +136,9 @@ public class EntranceServiceImpl implements EntranceService{
         Optional<Entrance> result = ENTRANCE_DAO.findById(id);
 
         if(result.isPresent()){
+            Entrance entrance = result.get();
+            Budget budget = BUDGET_DAO.findById(entrance.getBudget().getId()).orElseThrow();
+            budget.setBudget(entrance.getBudget().getBudget() - NUMBER_MANAGER.assignSign(entrance.getTransaction(),true));
             ENTRANCE_DAO.deleteById(id);
             return true;
         }else{
