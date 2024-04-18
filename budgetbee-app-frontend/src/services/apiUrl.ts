@@ -7,29 +7,29 @@ export const jsonString: any = localStorage.getItem("user");
 export const userData = JSON.parse(jsonString);
 
 /* REGISTRATION  */
-export const apiUrlRegister: any = "https://budget-bee.vercel.app/api/users"
-export const apiUrlCheckUser: any = "https://budget-bee.vercel.app/api/users/checkusers";
+export const apiUrlRegister: any = process.env.REACT_APP_API_URL_REGISTER
+export const apiUrlCheckUser: any = process.env.REACT_APP_API_URL_CHECKUSER;
 
 /* LOGIN */
-export const apiUrlLogin: any = "https://budget-bee.vercel.app/api/users/login";
+export const apiUrlLogin: any = process.env.REACT_APP_API_URL_LOGIN;
 
 /* CARD TRANSACTION */
-export const apiUrlExit: any = "https://budget-bee.vercel.app/api/exits/bybudgetid";
-export const apiUrlTransaction: any = "https://budget-bee.vercel.app/api/transaction";
+export const apiUrlExit: any = process.env.REACT_APP_API_URL_EXIT;
+export const apiUrlTransaction: any = process.env.REACT_APP_API_URL_TRANSACTIONS;
 
 /* CARD ENTRANCES */
-export const apiUrlEntrance: any = "https://budget-bee.vercel.app/api/entrances/bybudgetid"
+export const apiUrlEntrance: any = process.env.REACT_APP_API_URL_ENTRANCE
 /* HEADER BUDGET */
-export const apiUrlBudget: any = "https://budget-bee.vercel.app/api/budgets";
+export const apiUrlBudget: any = process.env.REACT_APP_API_URL_BUDGET;
 
 /* ADD TRANSACTION */
-export const apiUrlPostExit: any = "https://budget-bee.vercel.app/api/exits";
-export const apiUrlPostEntrance: any = "https://budget-bee.vercel.app/api/entrances";
+export const apiUrlPostExit: any = process.env.REACT_APP_API_URL_POST_EXIT;
+export const apiUrlPostEntrance: any = process.env.REACT_APP_API_URL_POST_ENTRANCE;
 
 /*  DELETE TRANSACTION  */
-export const apiUrlDeleteExit: any = "https://budget-bee.vercel.app/api/exits";
-export const apiUrlDeleteEntrance: any = "https://budget-bee.vercel.app/api/entrances";
+export const apiUrlDeleteExit: any = process.env.REACT_APP_API_URL_DELETE_EXIT;
+export const apiUrlDeleteEntrance: any = process.env.REACT_APP_API_URL_DELETE_ENTRANCE;
 
 /* PIE CHART  */
-export const apiUrlChartExit: any = "https://budget-bee.vercel.app/api/exits/totalcategory/bybudgetid";
-export const apiUrlChartEntrance: any = "https://budget-bee.vercel.app/api/entrances/totalcategory/bybudgetid";
+export const apiUrlChartExit: any = process.env.REACT_APP_API_URL_CHART_EXIT;
+export const apiUrlChartEntrance: any = process.env.REACT_APP_API_URL_CHART_ENTRANCE;
