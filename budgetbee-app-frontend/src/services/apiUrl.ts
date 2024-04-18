@@ -29,3 +29,7 @@ export const apiUrlPostEntrance: any = process.env.REACT_APP_API_URL_POST_ENTRAN
 /*  DELETE TRANSACTION  */
 export const apiUrlDeleteExit: any = process.env.REACT_APP_API_URL_DELETE_EXIT;
 export const apiUrlDeleteEntrance: any = process.env.REACT_APP_API_URL_DELETE_ENTRANCE;
+
+/* PIE CHART  */
+export const apiUrlChartExit: any = process.env.REACT_APP_API_URL_CHART_EXIT;
+export const apiUrlChartEntrance: any = process.env.REACT_APP_API_URL_CHART_ENTRANCE;

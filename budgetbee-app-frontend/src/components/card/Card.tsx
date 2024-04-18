@@ -36,6 +36,14 @@ const Card = () => {
     };
   }, []);
 
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    } else {
+      return text;
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between sm:mt-20 mt-10">
@@ -67,8 +75,8 @@ const Card = () => {
                 className="max-w-sm cardColor rounded-2xl overflow-hidden shadow-lg h-full mt-10 text-center sm:w-screen w-80 relative" // Aggiunta classe 'relative'
               >
                 <div className="px-6 py-4 h-full flex flex-col justify-between relative">
-                  <div className="font-bold text-xl mb-2 flex">
-                    {transaction?.description}
+                  <div className="font-bold text-base mb-2 flex">
+                    {truncateText(transaction?.description, 30)} {/* Limita il testo della descrizione a 20 caratteri */}
                   </div>
                   <p className="text-gray-700 text-base">
                     <span className="flex">{transaction.transactionDate}</span>
