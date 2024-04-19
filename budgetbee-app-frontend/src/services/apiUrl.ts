@@ -1,6 +1,6 @@
 /* AUTH DATA */
-export const usernameApi = process.env.REACT_APP_USERNAME;
-export const passwordApi = process.env.REACT_APP_PASSWORD;
+export const usernameApi = "budgetbee";
+export const passwordApi = "javapera";
 
 export const basicAuthHeader = "Basic " + btoa(usernameApi + ":" + passwordApi);
 export const jsonString: any = localStorage.getItem("user");
