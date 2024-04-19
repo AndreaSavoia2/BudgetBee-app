@@ -96,7 +96,8 @@ const Header = () => {
           <div className="flex justify-between mb-5 ml-5 mr-5">
             <Link to="/transaction">
               <button className="rounded-full font-bold bg-black w-32 h-16 text-white">
-                Aggiungi Entrata
+                Aggiungi <br />
+                Entrata
               </button>
             </Link>
             <Link to="/transaction">
