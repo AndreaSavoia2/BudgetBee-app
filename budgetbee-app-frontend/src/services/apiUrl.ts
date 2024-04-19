@@ -7,11 +7,11 @@ export const jsonString: any = localStorage.getItem("user");
 export const userData = JSON.parse(jsonString);
 
 /* REGISTRATION  */
-export const apiUrlRegister: any = process.env.REACT_APP_API_URL_REGISTER
-export const apiUrlCheckUser: any = process.env.REACT_APP_API_URL_CHECKUSER;
+export const apiUrlRegister: any = "https://budgetbee-app-render.onrender.com/api/users"
+export const apiUrlCheckUser: any = "https://budgetbee-app-render.onrender.com/api/users/checkusers";
 
 /* LOGIN */
-export const apiUrlLogin: any = process.env.REACT_APP_API_URL_LOGIN;
+export const apiUrlLogin: any = "https://budgetbee-app-render.onrender.com/api/users/login";
 
 /* CARD TRANSACTION */
 export const apiUrlExit: any = "https://budgetbee-app-render.onrender.com/api/exits/bybudgetid";
