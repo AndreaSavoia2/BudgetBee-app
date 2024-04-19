@@ -145,9 +145,9 @@ const Details = () => {
 
   return (
     <>
-      <ToastContainer />
       <Header />
       <div className="container mt-20 flex justify-center items-center">
+      <ToastContainer />
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group">
             <label
@@ -261,7 +261,8 @@ const Details = () => {
             Invia
           </button>
         </form>
-        <div className="max-w-3xl mx-auto flex items-center justify-center">
+      </div>
+      <div className="max-w-3xl mx-auto flex items-center justify-center">
           <div>
             {Array.isArray(transactions) &&
               transactions.map((transaction: any) => (
@@ -292,7 +293,6 @@ const Details = () => {
               ))}
           </div>
         </div>
-      </div>
     </>
   );
 };
