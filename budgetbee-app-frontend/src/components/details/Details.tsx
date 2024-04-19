@@ -147,7 +147,7 @@ const Details = () => {
     <>
       <ToastContainer />
       <Header />
-      <div className="container mt-20">
+      <div className="container mt-20 flex justify-center">
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group ml-1 md:ml-0">
             <label

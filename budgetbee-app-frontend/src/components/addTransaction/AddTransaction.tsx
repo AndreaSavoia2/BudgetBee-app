@@ -82,7 +82,7 @@ const AddTransaction = () => {
   return (
     <>
       <Header />
-      <div className="container mt-20 items-center">
+      <div className="container mt-20 flex justify-center items-center">
         <ToastContainer />
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <div className="relative z-0 w-full mb-5 group">
