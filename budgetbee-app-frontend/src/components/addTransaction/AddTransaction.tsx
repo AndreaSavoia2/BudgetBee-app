@@ -88,13 +88,13 @@ const AddTransaction = () => {
           <div className="relative z-0 w-full mb-5 group">
             <label
               htmlFor="entranceOrExit"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Seleziona la transazione che vuoi aggiungere
             </label>
             <select
               id="entranceOrExit"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               onChange={(e) => setTransactionType(e.target.value)}
             >
               <option>Entrata</option>
@@ -106,7 +106,7 @@ const AddTransaction = () => {
               type="text"
               name="transaction"
               id="transaction"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               placeholder=" "
               required
               value={formData.transaction}
@@ -124,7 +124,7 @@ const AddTransaction = () => {
               type="text"
               name="description"
               id="description"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               placeholder=" "
               required
               value={formData.description}
@@ -140,13 +140,13 @@ const AddTransaction = () => {
           <div className="relative z-0 w-full mb-5 group">
             <label
               htmlFor="category"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Seleziona la categoria
             </label>
             <select
               id="category"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               value={formData.category}
               onChange={(event) =>
                 setFormData({ ...formData, category: event.target.value })
