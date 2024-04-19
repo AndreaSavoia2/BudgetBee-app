@@ -149,7 +149,7 @@ const Details = () => {
       <Header />
       <div className="container mt-20 flex justify-center items-center">
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
-          <div className="relative z-0 w-full mb-5 group ml-1 md:ml-0">
+          <div className="relative z-0 w-full mb-5 group">
             <label
               htmlFor="entranceOrExit"
               className="block mb-2 text-sm font-medium text-gray-900"
