@@ -152,13 +152,13 @@ const Details = () => {
           <div className="relative z-0 w-full mb-5 group ml-1 md:ml-0">
             <label
               htmlFor="entranceOrExit"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Seleziona il tipo di transazione che vuoi visualizzare
             </label>
             <select
               id="entranceOrExit"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               onChange={(e) => setTransactionType(e.target.value)}
             >
               <option value="Entrata">Entrata</option>
@@ -168,13 +168,13 @@ const Details = () => {
           <div className="relative z-0 w-full mb-5 group ml-1 md:ml-0">
             <label
               htmlFor="category"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Seleziona la categoria
             </label>
             <select
               id="category"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
               <option value="">Categoria:</option>
@@ -209,13 +209,13 @@ const Details = () => {
           <div className="relative z-0 w-full mb-5 group ml-1 md:ml-0">
             <label
               htmlFor="monthSelect"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Seleziona il mese che vuoi visualizzare
             </label>
             <select
               id="monthSelect"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               onChange={(e) => setSelectedMonth(e.target.value)}
             >
               <option value="">Seleziona il mese</option>
@@ -236,13 +236,13 @@ const Details = () => {
           <div className="relative z-0 w-full mb-5 group ml-1 md:ml-0">
             <label
               htmlFor="yearSelect"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-2 text-sm font-medium text-gray-900"
             >
               Seleziona l'anno che vuoi visualizzare
             </label>
             <select
               id="yearSelect"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-black focus:outline-none focus:ring-0 focus:border-black-600 peer"
               onChange={(e) => setSelectedYear(parseInt(e.target.value))}
               value={selectedYear}
             >
